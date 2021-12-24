@@ -1,0 +1,31 @@
+<div class="tobbar desktop">
+    <img src="{{getutality.desktoppic}}" alt="">
+</div>
+<div class="tobbar mobile">
+  <img src="{{getutality.mobilepic}}" alt="">
+</div>
+
+<!-- <div class="row">
+  <div *ngFor="let item of category" (click)="getCatProduct(item.id)" class="column">
+    <div class="card">
+      <h3>{{item.name}}</h3>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="row">
+  <div *ngFor="let item of subcategory" (click)="getsubCatProduct(item.id)" class="column">
+    <div  class="card">
+      <h3>{{item.name}}</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div *ngFor="let item of subsubcategory" (click)="getsubsubCatProduct(item.id)" class="column">
+    <div class="card">
+      <h3>{{item.name}}</h3>
+    </div>
+  </div>
+</div>

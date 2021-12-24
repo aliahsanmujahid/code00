@@ -1,0 +1,171 @@
+input[type=text],input[type=number], select,textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input.ng-dirty.ng-invalid {
+    border-left: 10px solid red;
+  }
+  textarea.ng-dirty.ng-invalid {
+    border-left: 10px solid red;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button{
+    padding: 6px 15px 6px 15px;
+    margin: 8px 0px 17px 0px;
+    font-weight: bold;
+    color: white;
+    background: #6dd6d1a9;
+    box-shadow: 0px 10px 25px #57aba7, 0px -10px 25px #a6fffa, inset 0px -5px 10px #57aba7, inset 0px 5px 10px #a6fffa;
+    border-radius: 5px;
+    border: 2px solid #6dd6d1;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  img{
+    width: 50%;
+  }
+  div {
+    border-radius: 5px;
+    padding: 2px;
+  }
+  .card_item{
+    width: 50%;
+    width: 50%;
+    float: left;
+  }
+
+  ul{
+    display: inline-block;
+  }
+  ul li{
+    display: inline-block;
+    margin: 2px;
+  }
+  .summery li{
+    display: block;
+  }
+  h3{
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .highlight{
+    background-color: red; 
+    color: white;
+  }
+  .highlight2{
+    background-color: rgb(0, 255, 34); 
+    color: white;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+  }
+  .spanmargin{
+    margin-top: 150px;
+  }
+  .summery{
+    display: block;
+    width: 100%;
+    padding-bottom: 200px;
+  }
+  .column .summery{
+    float: left;
+  }
+
+  h4{
+    padding: 3px 5px 3px 5px;
+    background-color: rgb(255, 230, 0);
+    border-radius: 5px;
+    width: 300px;
+    margin: 4px auto 8px auto;
+  }
+  .column{
+    float: left;
+    width: 50%;
+    margin-bottom: 40px;
+  }
+  strong{
+    font-size: 25px;
+  }
+
+  @media (max-width: 800px) {
+    .column{
+      width: 100%;
+      display: block;
+      float: left;
+    }
+    .spanmargin{
+      margin-top: 10px;
+    }
+  }
+
+  @media (max-width: 350px) {
+    
+  h4{
+    width: 270px;
+    margin: 4px auto 8px auto;
+  }
+  }
+
+
+
+  
+  .items li{
+    display: block;
+  }
+
+  .alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

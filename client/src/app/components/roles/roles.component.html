@@ -1,0 +1,27 @@
+<div class="row">
+    <table class="table">
+        <tr>
+            <th style="width: 30%;">Email</th>
+            <th style="width: 40%;">Active roles</th>
+            <th style="width: 30%;"></th>
+        </tr>
+        <tr *ngFor="let user of users">
+            <td>{{user.email}}</td>
+            <td>{{user.roles}}</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <h2>Edit Role</h2>
+    <form #editForm="ngForm" (ngSubmit)="updateUserRoles()" autocomplete="off">
+        <label for="fname">Email</label>
+        <input [(ngModel)]="roles.email" type="text" name="email" placeholder="Email..">
+    
+        <label for="lname">Roles</label>
+        <input [(ngModel)]="roles.roles" type="text" name="roles" placeholder="Roles..">
+
+        <input type="submit" value="Submit">
+      </form>
+      {{roles | json }}
+</div>

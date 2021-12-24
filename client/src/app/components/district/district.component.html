@@ -1,0 +1,27 @@
+<div class="container">
+    <form #disForm="ngForm" (ngSubmit)="createDistrict()" autocomplete="off">
+      <div class="form-group">
+          <input type="text" class="form-control" name="Username" 
+              [(ngModel)]="district.name" placeholder="district"  >
+      </div>
+
+    <div class="form-group text-center">
+        <button class="btn btn-success mr-2" type="submit">Create</button>
+    </div>
+   </form> 
+  </div> 
+  <div class="padding"></div>
+  <hr>
+  <form #f="ngForm" (ngSubmit)="createUpazilla()" >
+    <div class="form-group">
+      <select [(ngModel)]="upazilla.MenuId" class="form-control" name="MenuId" >
+
+        <option *ngFor="let m of districts" value="{{ m.id }}">{{ m.name }}</option>
+      </select>
+        </div>
+        <div class="form-group">
+          <label for="contactName">Sub Menu</label>
+          <input [(ngModel)]="upazilla.Name" id="Name" type="text" class="form-control" name="Name" >
+        </div>
+        <button class="btn btn-success mr-2" type="submit">Create</button>
+      </form>

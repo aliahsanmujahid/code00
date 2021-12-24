@@ -1,0 +1,93 @@
+<div class="padding"></div>
+<div class="topnav">
+     <a (click)="div1Function()" *appHasRole='["Admin"]' class="color">             
+      District
+     </a>
+      <a  (click)="div2Function()"  *appHasRole='["Admin"]' class="color">             
+        Category
+      </a>
+      <a  (click)="div3Function()"  *appHasRole='["Admin"]' class="color">             
+        Roles
+      </a>
+      <a  (click)="div4Function()"  *appHasRole='["Seller"]' class="color">             
+        Products
+      </a>
+      <a  (click)="div5Function()"  *appHasRole='["Seller"]' class="color">             
+        Seller Orders
+      </a>
+      <a  (click)="div6Function()"  *appHasRole='["Admin"]' class="color">             
+        utalities
+      </a>
+      <a  (click)="div7Function()"  *appHasRole='["Admin"]' class="color">             
+        ---test--
+      </a>
+  </div>
+
+  <div class="padding"></div>
+
+  <div class="content2">
+    <div *ngIf="div1">
+        <app-district></app-district>
+    </div>
+
+    <div *ngIf="div2">
+      <app-category></app-category>
+    </div>
+
+    <div *ngIf="div3">
+     <app-roles></app-roles>
+    </div>
+    
+    <div *ngIf="div4">
+      <div class="center">
+        <button *ngIf="productview" (click)="createView()" >Create Product</button>
+        <button *ngIf="productcreate" (click)="createView()" >Products</button>
+      </div>
+      <span *ngIf="productview">
+        <app-product ></app-product>
+      </span>
+      <span *ngIf="productcreate">
+        <app-addeditproduct></app-addeditproduct>
+      </span>
+    </div>
+    <div *ngIf="div5">
+      Seller Orders
+    </div>
+    <div *ngIf="div6">
+      <form #f="ngForm" (ngSubmit)="createUtalitiy()" >
+        
+            <div class="form-group">
+              <label for="contactName">Bikash</label>
+              <input [(ngModel)]="utality.Bikash" id="Name" type="text" class="form-control" name="Name" >
+            </div>
+            <div class="form-group">
+              <label for="contactName">Rocket</label>
+              <input [(ngModel)]="utality.Rocket" id="Name" type="text" class="form-control" name="Name" >
+            </div>
+            <div class="form-group">
+              <label for="contactName">Namgad</label>
+              <input [(ngModel)]="utality.Namgad" id="Name" type="text" class="form-control" name="Name" >
+            </div>
+            <div class="form-group">
+              <label for="contactName">Desktoppic</label>
+              <input [(ngModel)]="utality.Desktoppic" id="Name" type="text" class="form-control" name="Name" >
+            </div>
+            <div class="form-group">
+              <label for="contactName">Mobilepic</label>
+              <input [(ngModel)]="utality.Mobilepic" id="Name" type="text" class="form-control" name="Name" >
+            </div>
+            <button class="btn btn-success mr-2" type="submit">Create</button>
+          </form>
+
+
+          <div class="padding"></div>
+          <h3>Bkash: {{getutality.bikash}}</h3>
+          <h3>Rocket: {{getutality.rocket}}</h3>
+          <h3>Nagad: {{getutality.namgad}}</h3>
+          <h3>mobilepic: {{getutality.mobilepic}}</h3>
+          <h3>desktoppic: {{getutality.desktoppic}}</h3>
+    </div>
+    <div *ngIf="div7">
+      --for use---
+    </div>
+  </div>    

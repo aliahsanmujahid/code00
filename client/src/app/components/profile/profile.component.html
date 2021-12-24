@@ -1,0 +1,99 @@
+    <div class="row">
+      <div class="column" >
+        <span *ngIf="!changenam">
+          <div class="col col-main" *ngIf="(accountService.currentUser$ | async) as user">
+            <img src="{{user.image}}" alt="">
+            <table id="customers" style="table-layout: fixed; width: 100%">
+              <tr>
+                <td>Name</td>
+                <td>{{user.displayName}}</td>
+              </tr>
+              <tr *appHasRole='["Admin", "Moderator","Seller"]'>
+                <td>Role</td>
+                <td>{{user.roles[0]}}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{{user.email}}</td>
+              </tr>
+            </table>
+            <span *appHasRole='["Admin", "Moderator","Seller"]'>
+            <button (click)="changename()">Change Name</button>
+            </span>
+          </div>
+        </span>
+        <span *ngIf="changenam">
+          <form #nameForm="ngForm" (ngSubmit)="setName()" autocomplete="off">
+            <div class="form-group">
+                <input type="text" class="form-control" required name="Name" 
+                    [(ngModel)]="name.name" placeholder="Name"  >
+            </div>
+      
+          <div class="form-group text-center">
+              <button [disabled]="nameForm.invalid" class="btn btn-success mr-2" type="submit">Submit</button>
+              <a (click)="changename()"  type="submit">Cancel</a>
+          </div>
+         </form>
+        </span>
+<!-- //useraddress.length !== 0 -->
+      </div>
+      <div class="column" style="word-wrap: break-word;">
+          <span *ngIf="!noaddress && useraddress !== null">
+          <h2>Address</h2>
+          <table id="customers" style="table-layout: fixed; width: 100%">
+            <tr>
+              <td>Phone Number</td>
+              <td>{{useraddress.phone}}</td>
+            </tr>
+            
+            <tr>
+              <td>Address</td>
+              <td style="word-wrap: break-word">{{useraddress.userAddress}}</td>
+            </tr>
+            <tr>
+              <td>District</td>
+              <td>{{useraddress.district}}</td>
+            </tr>
+            <tr>
+              <td>Upazilla</td>
+              <td>{{useraddress.upazila}}</td>
+            </tr>
+          </table>
+          <button (click)="seeaddress()">Update</button>
+          </span>
+
+          <span *ngIf="useraddress == null && !noaddress">
+                <button (click)="seeaddress()">Set Address</button>
+          </span>
+
+          <span *ngIf="noaddress">
+            <form #addressForm="ngForm" (ngSubmit)="setAddress()" autocomplete="off">
+              <div class="form-group">
+                  <input type="text" class="form-control" required name="phone" 
+                      [(ngModel)]="createaddress.phone" placeholder="Phone"  >
+              </div>
+              <div class="form-group">
+                <textarea type="text" class="form-control" required name="Address" 
+                    [(ngModel)]="createaddress.userAddress" placeholder="Address"  ></textarea>
+            </div>
+            <label for="country">Districct</label>
+            <select  [(ngModel)]="createaddress.district" (change)="ondisChange()" id="country" name="country" required>
+              <option value="None">Select</option>
+              <option *ngFor="let s of districts" value="{{ s.name }}" >{{ s.name }}</option>
+            </select>
+            <label for="upazila">Upazilla</label>
+            <select  [(ngModel)]="createaddress.upazila" (change)="onupaChange()"   id="upazila" name="upazila" required>
+              <option value="None">Select</option>
+              <option *ngFor="let s of upazilla" value="{{ s.name }}" >{{ s.name }}</option>
+            </select>
+          
+        
+            <div class="form-group text-center">
+                <button [disabled]="addressForm.invalid" class="btn btn-success mr-2" type="submit">Submit</button>
+                <a (click)="seeaddress()"  type="submit">Cancel</a>
+            </div>
+           </form> 
+           
+          </span>
+      </div>
+    </div>

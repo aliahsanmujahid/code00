@@ -1,0 +1,222 @@
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="distance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScroll()"
+>
+
+<span *ngIf="sellerid">
+<form #SearchOrderform="ngForm" (ngSubmit)="SearchOrder()" novalidate>
+  <span>
+    <input id="search" type="search" [(ngModel)]="search" type="number" name="search" required minlength="1" placeholder="Search.."> 
+    <button  class="searchbutton" [disabled]="SearchOrderform.invalid" type="submit" >Search</button>  
+  </span>
+</form>
+</span>
+
+<div class="topnav bar">
+    <a (click)="getOrdersByStatus('All')">All</a>
+    <a (click)="getOrdersByStatus('Pending')">Pending</a>
+    <a (click)="getOrdersByStatus('Approved')">Approved</a>
+    <a (click)="getOrdersByStatus('Delevared')">Delevaring</a>
+    <a (click)="getOrdersByStatus('Confirmed')">Confirmed</a>
+    <a (click)="getOrdersByStatus('Rejected')">Rejected</a>
+  
+</div>  
+
+<div class="container">
+  <span *ngIf="!orderview">
+    <div *ngFor="let item of orders" class="topnav" >
+      <span *ngIf="sellerid">
+        <a *appHasRole='["Admin", "Moderator"]'>Id: {{item.id}}</a>
+      </span>
+      <a >Order Id: {{item.randnum}}</a>
+      <a >Status:{{item.status}}</a>
+      <div class="topnav-right">
+        <a (click)="viewOrder(item.id)" >View</a>
+        <!-- <a *appHasRole='["Admin"]' (click)="deleteOrder(item.id)">Delete</a> -->
+      </div>
+    </div> 
+    <div *ngIf="noorder" class="nomore">
+      <h1 >No Orders</h1>
+     </div>
+  </span>
+  
+  <span  *ngIf="orderview">
+
+  <span *ngFor="let item of singleorder">
+  <div class="column">
+    <h2>Order Deatails</h2>
+
+    <table id="customers">
+      <tr>
+        <td>Name</td>
+        <td>{{item.name}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{item.address}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{item.phone}}</td>
+      </tr>
+      <tr>
+        <td>District</td>
+        <td>{{item.district}}</td>
+      </tr>
+      <tr>
+        <td>Upazila</td>
+        <td>{{item.upazila}}</td>
+      </tr>
+      <tr>
+        <td>Order Id</td>
+        <td>{{item.randnum}}</td>
+      </tr>
+      <tr *ngIf="sellerid">
+        <td>Primary Id</td>
+        <td>{{item.id}}</td>
+      </tr>
+    </table>
+
+
+    <h2>Paymeny</h2>
+
+    <span *ngIf="item.cashOnDelevary !== '' ">
+      <h1>Cash On Delevary</h1>
+    </span>
+
+    <span *ngIf="item.bkash !== '' ">
+    <h1>Bkash</h1>
+    <table id="customers">
+      <tr>
+        <td>Number</td>
+        <td>{{item.bkash}}</td>
+      </tr>
+      <tr>
+        <td>Tra.ID</td>
+        <td>{{item.bkashTransactionID}}</td>
+      </tr>
+    </table>
+    </span>
+
+    <span *ngIf="item.rocket !== '' ">
+      <h1>Rocket</h1>
+      <table id="customers" style="table-layout: fixed; width: 100%">
+        <tr>
+          <td>Number</td>
+          <td>{{item.rocket}}</td>
+        </tr>
+        <tr>
+          <td>Tra.ID</td>
+          <td>{{item.rocketTransactionID}}</td>
+        </tr>
+      </table>
+      </span>
+
+
+      <span *ngIf="item.nagad !== '' ">
+        <h1>Nagad</h1>
+        <table id="customers">
+          <tr>
+            <td>Number</td>
+            <td>{{item.nagad}}</td>
+          </tr>
+          <tr>
+            <td>Tra.ID</td>
+            <td>{{item.nagadTransactionID}}</td>
+          </tr>
+        </table>
+        </span>
+
+
+        <h2>Order Summary</h2>
+
+
+        <table id="customers">
+          <tr>
+            <td>Status</td>
+            <td>{{item.status}}</td>
+          </tr>
+          <tr *ngIf="sellerid">
+            <td>Date</td>
+            <td>{{item.orderDate}}</td>
+          </tr>
+          <tr>
+            <td>SubTotal</td>
+            <td>{{item.subtotal}}</td>
+          </tr>
+          <tr>
+            <td>Delivery</td>
+            <td>{{item.delivery}}</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>{{item.total}}</td>
+          </tr>
+        </table>
+
+    <span *ngIf="customerid">
+      <div class="margin2"></div>
+      <h4 *ngIf="item.status === 'Delevared'">Confirm the Order Only After The Product Received</h4>
+      <h4 *ngIf="item.status === 'Confirmed'">The Order Is Confirmed</h4>
+      <h4 *ngIf="item.status === 'Confirmed'">Thank You For Being With Us. Contact With Us AnyTime For AnyThing</h4>
+    <div class="topnav margin2">
+          <span *ngIf="item.status === 'Delevared' ">
+            <a  (click)="changeStatus(item.id,'Confirmed')">Confirm Order</a>
+          </span>
+    </div> 
+  </span>    
+    <span *ngIf="sellerid">
+    <div class="topnav margin2">
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Pending')">Pending</a>
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Approved')">Approve</a>
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delevared')">Delevar</a>
+      
+      <!-- <span *ngIf="item.status === 'Delevared' ">
+        <a *appHasRole='["Admin","Member"]' (click)="changeStatus(item.id,'Confirmed')">Confirm</a>
+      </span> -->
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Rejected')">Reject</a>
+    </div>  
+  </span>
+
+  <div class="padding">
+
+  </div>
+
+  </div>
+  <div class="column">
+    <h2>Purchased</h2>
+    <span *ngFor="let p of item.orderItems">
+      <table id="customers">
+        <tr>
+          <td>Name</td>
+          <td>{{p.name}}</td>
+        </tr>
+        <tr *ngIf="p.color !== '' ">
+          <td>Color</td>
+          <td>{{p.color}}</td>
+        </tr>
+        <tr *ngIf="p.size !== '' ">
+          <td>Size</td>
+          <td>{{p.size}}</td>
+        </tr>
+        <tr>
+          <td>Quantity</td>
+          <td>{{p.quantity}}</td>
+        </tr>
+        <tr>
+          <td>Price</td>
+          <td>{{p.price}}</td>
+        </tr>
+        <tr>
+          <td>TotalPrice</td>
+          <td>{{p.totalPrice}}</td>
+        </tr>
+      </table>
+      <div class="margin2"></div>
+    </span>
+  </div>
+  </span>
+</span>
+</div> 

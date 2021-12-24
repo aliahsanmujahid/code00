@@ -1,0 +1,24 @@
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="distance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScroll()"
+>
+
+
+
+
+<h2>All Sellers</h2>
+<div class="row">
+    <div *ngFor="let item of sellers" class="column">
+      <div (click)="getsellerProduct(item.id,item.displayName)" class="card">
+        <h3>{{item.displayName}}</h3>
+      </div>
+      <button (click)="seeorders(item.id)"  *appHasRole='["Admin", "Moderator"]'>See Orders</button>
+      <button (click)="seeproducts(item.id)" *appHasRole='["Admin", "Moderator"]'>See Products</button>
+    </div>
+  </div>
+
+  <div *ngIf="noseller" class="nomore">
+    <h1 >No Seller</h1>
+   </div>

@@ -1,0 +1,166 @@
+<div class="row">
+   <span (click)="backClick()">
+      <button class="goback">
+         <img src="../../../assets/back.png" alt="">
+         Go Back
+      </button>
+   </span>
+    <div class="column">
+        <div class="div">
+         <div id="slider">
+            <input type="radio" *ngIf="product.image1" name="slider" id="slide1" checked>
+            <input type="radio" *ngIf="product.image2" name="slider" id="slide2">
+            <input type="radio" *ngIf="product.image3" name="slider" id="slide3">
+            <input type="radio" *ngIf="product.image4" name="slider" id="slide4">
+            <div id="slides">
+               <div id="overflow">
+                  <div class="inner">
+                    <div *ngIf="product.image1" class="slide ">
+                        <img class="img" src="{{product.image1}}" alt="">
+                     </div>
+                     <div *ngIf="product.image2" class="slide ">
+                        <img class="img" src="{{product.image2}}" alt="">
+                     </div>
+                     <div *ngIf="product.image3" class="slide ">
+                        <img class="img" src="{{product.image3}}"  alt="">
+                     </div>
+                     <div *ngIf="product.image4" class="slide ">
+                        <img class="img" src="{{product.image4}}"  alt="">
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- <div id="controls">
+               <label  for="slide1"></label>
+               <label  for="slide2"></label>
+               <label  for="slide3"></label>
+               <label  for="slide4"></label>
+            </div> -->
+            <div id="bullets">
+               <label *ngIf="product.image1" for="slide1">
+                  <img class="bulletimg" src="{{product.image1}}" alt="">
+               </label>
+               <label *ngIf="product.image2" for="slide2">
+                  <img class="bulletimg" src="{{product.image2}}" alt="">
+               </label>
+               <label *ngIf="product.image3" for="slide3">
+                  <img class="bulletimg" src="{{product.image3}}" alt="">
+               </label>
+               <label *ngIf="product.image4" for="slide4">
+                  <img class="bulletimg" src="{{product.image4}}" alt="">
+               </label>
+            </div>
+         </div>
+        </div>
+    
+
+    </div>
+    
+    <div class="column">
+      <div class="name">
+         <h1>{{product.name}}</h1>
+      </div>
+      <div class="price">
+        <h2 class="delprice">৳{{product.discPrice}}</h2>
+        <h2 class="mainprice">৳{{product.price}}</h2>
+        <h2 style="color: rgb(255, 0, 179);">&#8722;{{product.disCount}}%</h2>
+      </div>
+      <div class="price">
+         <h4> Save ৳{{product.discPrice-product.price}} Taka</h4>
+       </div>
+      <div id="header">
+         <ul class="ul">
+            <span *ngFor="let h of product.highLights.split('#')" >
+               <li   class="highlight">
+                  <span class="label warning">{{h}}</span>
+               </li>
+            </span>
+          </ul>
+         
+         </div>
+         
+         <div id="content">
+         
+            
+      <div  class="div" *ngIf="product.colors">
+
+         <ul class="vari">
+
+            <span *ngFor="let c of product.colors">
+
+            <li  class="varicolor" *ngIf="c.quantity !== 0">
+            <label class="container">
+               <input (click)="setColor(c, $event)" type="radio" name="radio" 
+               style="background-color:{{c.colorCode}}" >
+               <span style="background-color:{{c.colorCode}}" class="checkmark"></span>
+             </label>
+            </li>
+         </span>
+        </ul>
+
+      </div>
+
+      <div  class="div" *ngIf="product.sizes">
+
+         <ul class="vari">
+            <span *ngFor="let c of product.sizes">
+            <li  *ngIf="c.quantity !== 0">
+               <label class="container2">
+                  <input (click)="setSize(c, $event)" type="radio" name="radio" >
+                  <span class="checkmark2">{{c.name}}</span>
+                </label> 
+            </li>
+         </span>
+        </ul>
+      </div>
+
+         </div>
+         <div id="footer">
+            <div class="div">
+               <div *ngIf="alert" class="alert">
+                  <span class="closebtn" (click)="hidealert()">&times;</span> 
+                  <strong *ngIf="product.colors.length > 0">Select Color</strong>
+                  <strong *ngIf="product.sizes.length > 0">Select Size</strong>
+                </div>
+
+               
+                     <button (click)="addItemToBasket()" *ngIf="product.quantity !== 0" class="glow-on-hover" type="button"><h3>
+                        Add To Cart
+                     </h3></button>
+                     <br>
+                  <!-- <button class="button" (click)="addFav(product.id)" *ngIf="!fav">
+                     <h3>Add To Favorite</h3>
+                  </button>
+                  <button class="button" (click)="removeFav(product.id)" *ngIf="fav">
+                     <h3>Your Favorite</h3>
+                  </button> -->
+                  
+            </div>
+            
+         </div>
+
+
+
+         <div id="header">
+            <ul class="description">
+               <span *ngFor="let h of product.description.split('#')" >
+                  <li >
+                     <span class="label2">{{h}}</span>
+                  </li>
+               </span>
+             </ul>
+            
+            </div>
+
+    
+    </div>
+  </div>
+  
+
+  <div *ngIf="product.youtubeLink" class="youtube">
+     <h1>YouTube Video</h1>
+     <iframe width="560" height="315" [src]='youtubeURL()'
+     title="YouTube video player" frameborder="0" allow="accelerometer;
+      autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen safe></iframe>
+  </div>

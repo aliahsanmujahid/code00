@@ -1,0 +1,97 @@
+/* Layout: */
+*{
+    text-align: center;
+  }
+  .col-main {
+    flex: 1;  
+  }  
+  
+  .col-complementary {
+    flex: 1;  
+  }
+  
+  .container {
+    /* max-width: 60em; */
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .col {
+    padding: 1em;
+    margin: 0 2px 2px 0;
+  }
+  img{
+    border-radius: 50%;
+  }
+  .topnav a{
+    padding: 10px;
+    background-color: blue;
+    margin: 5px;
+  }
+  
+  /* Responsive: */
+  
+  @media only screen and (min-width: 640px) {
+    .layout {
+      display: flex;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   /* Create three equal columns that floats next to each other */
+   .column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+  }
+  .padding{
+    padding-top: 30px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  input{
+    width: 300px;
+    margin: 10px;
+    padding:10px;
+  }
+  select{
+    width: 100px;
+    padding:10px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

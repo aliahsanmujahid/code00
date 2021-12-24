@@ -1,0 +1,164 @@
+<div class="container">
+  {{product | json}}
+  <!-- {{ProductForm.value | json}} -->
+  {{ProductForm.status | json}}
+
+    <div class="layout">
+      <div class="leftlayout">
+    <p>Create Product</p>
+      <div>
+          <form  #ProductForm="ngForm"  (ngSubmit)="createProduct(ProductForm)" novalidate>
+
+            <select [(ngModel)]="product.cateId" class="form-control" (change)="onCateChange()" name="cate">
+              <option>Select</option>
+              <option *ngFor="let c of categoryes" value="{{ c.id }}" >{{ c.name }}</option>
+            </select>
+
+            <select [(ngModel)]="product.subcateId" class="form-control" (change)="onsubCateChange()" name="SubCate" >
+              <option>Select</option>
+              <option *ngFor="let s of subcategoryes" value="{{ s.id }}" >{{ s.name }}</option>
+            </select>
+
+            <select [(ngModel)]="product.subsubcateId" class="form-control" name="SubSubCate" >
+              <option>Select</option>
+              <option *ngFor="let ss of subsubcategoryes" value="{{ ss.id }}">{{ ss.name }}</option>
+            </select>
+
+            <label for="name">Product Name</label>
+            <input [(ngModel)]="product.name" name="name" required minlength="5" placeholder="Name..">
+        
+            <label for="name">Product Details</label>
+            <textarea [(ngModel)]="product.description" required minlength="15" name="description" rows="4" cols="60">
+             </textarea>
+           
+             
+            
+            <label for="lname">Product HighLights</label>
+            <textarea [(ngModel)]="product.highLights"  id="w3review" required minlength="15" name="w3review" rows="4" cols="60">
+            </textarea>
+            
+            <span >
+              <label for="lname">Original Price</label>
+              <input [(ngModel)]="product.discPrice" type="number" name="price" required min="2" placeholder="Price..">  
+            </span>
+            <hr>
+            <span >
+              <label for="lname">Discount Price</label>
+              <input [(ngModel)]="product.price" type="number" name="discPrice" required min="2" placeholder="Price..">  
+            </span>
+            <hr>
+            <span *ngIf="quantityShow()">
+              <label for="lname">Quantity</label>
+              <input [(ngModel)]="product.quantity" type="number" name="quantity" required min="1" placeholder="Price..">  
+            </span>
+  
+            <input [disabled]="ProductForm.invalid" type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+      <div class="rightlayout">
+                <div class="row">
+                  <div  (click)="addColors()" class="column" style="background-color:rgb(250, 250, 250);">
+                    <h2>Add Colors</h2>
+                  </div>
+                  <div  (click)="addSizes()" class="column" style="background-color:rgb(255, 255, 255);">
+                    <h2>Add Sizes</h2>
+                  </div>
+                </div>        
+        <div>
+          
+        </div>        
+       
+        
+        <div *ngIf="isColor">
+          
+
+          <div>
+            <ul *ngFor="let item of product.colors">
+              <li>
+                <div style="width:10px;height:10px;background-color:{{item.colorCode}}"></div>
+                Color Name: {{item.name}}
+                Quantity: {{item.quantity}}
+              <h1 (click)="removeColor(item.name)">Remove</h1>
+              </li>
+          </ul>
+          </div>
+
+          
+          <div>
+            <form #SetColor="ngForm" (ngSubmit)="setColor()" autocomplete="off">
+            <label for="fname">Select Color</label>
+            <input class="color" [(colorPicker)]="colors.colorCode" required cpWidth='230px' cpHeight="100px"
+              [style.background]="colors.colorCode" />
+            <br>
+            <label for="lname">Quantity</label>
+            <input   [(ngModel)]="colors.name" required minlength="3" type="text" name="colorName" placeholder="Color Name..">
+            
+            <label for="lname">Quantity</label>
+            <input   [(ngModel)]="colors.quantity" required min="1" type="number" name="colorquantity" placeholder="Quantity..">
+      
+            <input [disabled]="SetColor.invalid"  type="submit" value="Add">
+          </form>
+          </div>
+
+        </div>
+
+
+      
+      <div  *ngIf="!isSize && !isColor">
+        Only Color or Size
+      </div>
+       <div  *ngIf="isSize">
+        <div>
+          <ul *ngFor="let item of product.sizes">
+            <li>
+              <p>{{item.name}}</p>
+              Quantity: {{item.quantity}}
+            <h1 (click)="removeSize(item.name)">Remove</h1>
+            </li>
+        </ul>
+        </div>
+
+        <div>
+                <form #SetSize="ngForm" (ngSubmit)="setSize()" novalidate>
+                <input [(ngModel)]="sizes.name" type="text" name="size" required minlength="1" placeholder="Size..">  
+                <label for="lname">Quantity</label>
+                <input   [(ngModel)]="sizes.quantity" required min="1" type="number" name="sizeQuantity" placeholder="Quantity..">
+      
+                <input [disabled]="SetSize.invalid" type="submit" value="Add">
+                </form> 
+                 {{SetSize.value | json}}
+                 {{SetSize.status | json}}             
+      </div>
+       </div>
+
+       <div class="col-md-3">
+         <h1>Add Image Link</h1>
+         <span >
+          <label for="lname">Image 1</label>
+          <input [(ngModel)]="product.image1" type="text" name="image1" required minlength="5" placeholder="Imgae 1..">  
+        </span>
+        <span >
+          <label for="lname">Image 2</label>
+          <input [(ngModel)]="product.image2" type="text" name="image2" required minlength="5" placeholder="Imgae 2..">  
+        </span>
+        <span >
+          <label for="lname">Image 3</label>
+          <input [(ngModel)]="product.image3" type="text" name="image3" required minlength="5" placeholder="Imgae 3..">  
+        </span>
+        <span >
+          <label for="lname">Image 4</label>
+          <input [(ngModel)]="product.image4" type="text" name="image4" required minlength="5" placeholder="Imgae 4..">  
+        </span>
+        <span >
+          <label for="lname">Youtube Link</label>
+          <input [(ngModel)]="product.youtubeLink" type="text" name="youtubeLink" required minlength="5" placeholder="Youtube Link..">  
+        </span>
+        <hr>
+      </div>
+            
+      </div> 
+
+
+  </div>
+</div>  

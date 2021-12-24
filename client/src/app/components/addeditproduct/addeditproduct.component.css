@@ -1,0 +1,164 @@
+.container {
+    max-width: 70em;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .layout{
+    display: flex;
+  }
+  
+  .leftlayout, .rightlayout{
+    width: 50%;
+  }
+  
+  
+  @media (max-width: 800px) {
+    .layout{
+      display: block;
+    }
+    .leftlayout, .rightlayout{
+      width: 100%;
+    }
+  }
+  
+  
+  input, select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  
+    
+  @media (max-width: 1024px) {
+      .container{
+          width: 80%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .container{
+          width: 90%;
+      }
+    }
+    
+    @media (max-width: 528px) {
+      .container{
+          width: 100%;
+      }
+    }
+  
+  
+    /* //Addons */
+  
+  #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+    .color {
+      -webkit-appearance: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+    }
+    textarea.ng-dirty.ng-invalid {
+      border-left: 10px solid red;
+    }
+
+    input.ng-dirty.ng-invalid {
+      border-left: 10px solid red;
+    }
+    /* input.ng-invalid{
+      border-left: 10px solid red;
+    } 
+    textarea.ng-invalid{
+      border-left: 10px solid red;
+    }  */
+    .column {
+      float: left;
+      width: 50%;
+      padding: 7px;
+    }
+    
+    ul { list-style: none outside none; }
+    ul li {float: left; }
+
+    
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+ul li{
+  margin: 10px;
+}
+.img{
+  width: 100px;
+  height: 100px;
+}
+.img{
+  display: block;
+}
+
+
+
+
+
+
+

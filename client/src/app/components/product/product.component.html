@@ -1,0 +1,39 @@
+<div
+infinite-scroll
+[infiniteScrollDistance]="distance"
+[infiniteScrollThrottle]="throttle"
+(scrolled)="onScroll()"
+>
+
+
+  <div class="wrapper">
+    <div class="cards_wrap">
+      
+      <div *ngFor="let item of products" class="card_item">
+        <div class="card_inner">
+          <div class="card_top">
+            <img src="{{item.image1}}"  alt=""> 
+          </div>
+          <div class="psummer">
+            <span>Name: {{item.name}}</span> 
+           <div >
+            <span>Price: {{item.discPrice}} tk</span>
+           </div>
+          </div>
+          <div>
+            <button (click)="deleteProduct(item.id)">Remove</button>
+            <button routerLink="/edit/{{item.id}}" >Edit</button>
+          </div>
+        </div>
+      </div>
+  
+      
+    </div>
+  </div>
+
+
+
+  <div *ngIf="noproduct" class="nomore">
+    <h1 >No Product</h1>
+   </div>
+  

@@ -1,0 +1,54 @@
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="distance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScroll()"
+>
+
+<div *ngIf="showseller" class="seller">
+  <h2>All Products of {{params.sellername}}</h2>
+</div>
+
+<div class="wrapper">
+  <div class="cards_wrap">
+    <div *ngFor="let item of products" class="card_item">
+      <div  routerLink="/single/{{item.id}}">
+      <div class="card_inner">
+        <div class="card_top">
+          <img src="{{item.image1}}"  alt="">
+      </div>
+      </div>
+    
+
+      <h4>
+        {{item.name}}
+      </h4>
+
+      <div class="price">
+        
+        <div class="highlight">
+          <h4 *ngFor="let h of item.highLights.split('#',2)" class="label warning">{{h}}</h4>
+        </div>
+        <span class="delprice">৳{{item.discPrice}}</span>
+        <span class="mainprice">৳{{item.price}}</span>
+        <span style="color: rgb(255, 0, 179);">&#8722;{{item.disCount}}%</span>
+      </div>
+    </div>
+
+      <div class="cartbutton">
+        <button (click)="addItemToBasket(item)" *ngIf="item.colors.length == 0 && item.sizes.length == 0 && !isinBasket(item.id) && item.quantity !== 0">Add To Cart</button>
+        <button routerLink="/single/{{item.id}}" *ngIf="(item.colors.length >= 1 || item.sizes.length >= 1) && !isinBasket(item.id) && item.quantity !== 0">Select</button>
+        <button class="added" *ngIf="isinBasket(item.id)">Added</button>
+        <button *ngIf="item.quantity == 0">No Quantity</button>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<div *ngIf="noproduct" class="nomore">
+  <h1 >No Product</h1>
+ </div>
