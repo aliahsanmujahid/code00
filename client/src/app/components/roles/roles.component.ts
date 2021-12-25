@@ -14,10 +14,12 @@ export class RolesComponent implements OnInit {
     email: '',
     roles:[]
   }; 
+  totaluser = 0
   constructor(public roleService: RoleService) { }
 
   ngOnInit(): void {
     this.getUsersWithRoles();
+    this.getmemberscount();
   }
 
   updateUserRoles(){
@@ -29,6 +31,11 @@ export class RolesComponent implements OnInit {
   getUsersWithRoles() {
     this.roleService.getUsersWithRoles().subscribe(users => {
       this.users = users;
+    })
+  }
+  getmemberscount(){
+    this.roleService.getmemberscount().subscribe(count => {
+      this.totaluser = count;
     })
   }
 

@@ -159,10 +159,20 @@
     </div>
     <div class="bigcolumn" >
       <div class="bigcontent">
-      <h4>{{item.productName}}</h4>
-      <p *ngIf="item.color.length > 0 " >Color: {{item.color[0].name | uppercase }}</p>
-      <p *ngIf="item.size.length > 0 " >Size: {{item.size[0].name | uppercase }}</p>
-      <h4>৳{{item.price * item.quantity}}</h4>
+        <table id="customers" style="table-layout: fixed; width: 100%">
+          <tr>
+            <td>{{item.productName}}</td>
+          </tr>
+          <tr *ngIf="item.color.length > 0 " >
+            <td>Color: {{item.color[0].name | uppercase }}</td>
+          </tr>
+          <tr *ngIf="item.size.length > 0 ">
+            <td>Size: {{item.size[0].name | uppercase }}</td>
+          </tr>
+          <tr>
+            <td>৳{{item.price * item.quantity}}</td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="smcolumn" >
@@ -173,17 +183,26 @@
   </div>
 </span> 
 
+<span *ngIf="(basketTotal$ | async)">
+<h1>Order Summary</h1>
+
+<table id="customers2" style="table-layout: fixed; width: 100%">
+  <tr>
+    <td>Order SubTotal</td>
+    <td>৳{{(basketTotal$ | async).subtotal}}</td>
+  </tr>
+  <tr>
+    <td>Delivery Charge</td>
+    <td>৳{{(basketTotal$ | async).delevary}}</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td>৳{{(basketTotal$ | async).total }}</td>
+  </tr>
+</table>
+</span>
+
 <ul class="items" *ngIf="(basketTotal$ | async)">
-  <h1>Order Summary</h1>
-  <li class="">
-      <h4 >Order SubTotal: ৳{{(basketTotal$ | async).subtotal}}</h4>
-  </li>
-  <li >
-      <h4>Delivery Charge: ৳{{(basketTotal$ | async).delevary}}</h4>
-  </li>
-  <li >
-      <h4> Total: ৳{{(basketTotal$ | async).total }}</h4>
-  </li>
   <label for="check2">
     <h1 class="checkout" routerLink='checkout' >Place Order</h1>
   </label> 

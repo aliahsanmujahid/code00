@@ -129,7 +129,7 @@ export class SingleComponent implements OnInit {
   addItemToBasket(){
     if(this.product.appUserId === this.UserId){
       console.log("You Can Not Buy Your Own Product",this.UserId);
-      this.toastr.info('You Can,t Buy Your Own Product');
+      this.toastr.warning('You Can,t Buy Your Own Product');
     }else{
     if(this.product.colors.length !== 0 || this.product.sizes.length !== 0){
      if(this.product.colors.length !== 0 && this.cartProduct.colors.length === 0){

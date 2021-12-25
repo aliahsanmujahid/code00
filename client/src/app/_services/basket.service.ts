@@ -52,7 +52,7 @@ export class BasketService {
      this.basketTotalSource.next(null);
      localStorage.removeItem('basket');
      console.log("Need To Be Same Shop");
-     this.toastr.info('Basket Deleted','Need To Be Same Shop');
+     this.toastr.warning('Basket Deleted','Need To Be Same Shop');
     }
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity);
     const basket = this.getCurrentBasketValue() ?? this.createBasket();

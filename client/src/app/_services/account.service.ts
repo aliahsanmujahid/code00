@@ -20,6 +20,7 @@ export class AccountService {
 
   
   login(model: any) {
+    window.scrollTo(0, 0);
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
@@ -65,6 +66,7 @@ export class AccountService {
   
 
   logout() {
+    window.scrollTo(0, 0);
     localStorage.removeItem('eidhatuser');
     this.currentUserSource.next(null);
     location.reload();

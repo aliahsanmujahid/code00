@@ -68,7 +68,7 @@ export class ShopComponent implements OnInit {
   addItemToBasket(item: Product) {
     if(item.appUserId === this.UserId){
       console.log("You Can Not Buy Your Own Product",this.UserId);
-      this.toastr.info('You Can,t Buy Your Own Product');
+      this.toastr.warning('You Can,t Buy Your Own Product');
     }else{
       this.basketService.addItemToBasket(item);
     }

@@ -300,9 +300,15 @@ namespace API.Controllers
         public int getchangeid()
         {
 
-         var cid =  _context.ChangeIds.First();
+         try{
+             var cid =  _context.ChangeIds.First();
 
-         return cid.Cid;
+             return cid.Cid;
+         }catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return 0;
+        }
          
         }
 
@@ -334,7 +340,13 @@ namespace API.Controllers
         [HttpGet("getUtails")]
         public Utlites getUtails()
         {
-          return _context.Utlites.First();
+          try{
+             return _context.Utlites.First();
+         }catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+           }
         }
 
         

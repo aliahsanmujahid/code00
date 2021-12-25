@@ -92,10 +92,8 @@ export class ProfileComponent implements OnInit {
       this.useraddress = address;
      }else{
       this.accountService.getaddress().subscribe(res =>{
-        if(res !== null){
           this.useraddress = res;
           localStorage.setItem('address'+this.userId , JSON.stringify(res));
-        }
      });
      }
   }

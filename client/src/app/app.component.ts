@@ -106,7 +106,7 @@ export class AppComponent {
       if(items.shopId == this.UserId){
         this.basketService.deleteBasket();
         this.router.navigateByUrl('');
-        this.toastr.info('You Can,t Buy Your Own Product');
+        this.toastr.warning('You Can,t Buy Your Own Product');
       }else{
         this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
           if(res == true){

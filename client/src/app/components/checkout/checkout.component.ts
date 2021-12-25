@@ -57,6 +57,7 @@ export class CheckoutComponent implements OnInit {
     public orderService: OrderService,private router: Router,private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.QuantityCheck();
     this.accountService.currentUser$.subscribe( x => {
       this.orderCreate.name = x.displayName;
@@ -68,42 +69,40 @@ export class CheckoutComponent implements OnInit {
       var address = JSON.parse(localStorage.getItem('address'+this.user.id));
       if(address){
         this.address = address;
-        console.log("pppppppppppppppp",address);
-        this.orderCreate.phone = address.phone;
-        this.orderCreate.address = address.userAddress;
-        this.orderCreate.district = address.district;
-        this.orderCreate.upazila = address.upazila;
- 
-      }else if(!address){
+        //console.log("pppppppppppppppp",address);
+        this.orderCreate.phone = this.address.phone;
+        this.orderCreate.address = this.address.userAddress;
+        this.orderCreate.district = this.address.district;
+        this.orderCreate.upazila = this.address.upazila;
+      }else{
           this.accountService.getaddress().subscribe(res =>{
-          if(res !== null){
-            address = res;
-            console.log("addresssssssssssss====",address);
-            this.orderCreate.phone = address.phone;
-            this.orderCreate.address = address.userAddress;
-            this.orderCreate.district = address.district;
-            this.orderCreate.upazila = address.upazila;
+            if(res){
+            this.address = res;
+            console.log("addresssssssssssss====",this.address);
+            this.orderCreate.phone = this.address.phone;
+            this.orderCreate.address = this.address.userAddress;
+            this.orderCreate.district = this.address.district;
+            this.orderCreate.upazila = this.address.upazila;
             localStorage.setItem('address'+this.UserId , JSON.stringify(res));
             console.log("Order Create000000====",this.orderCreate);
-          }
+            }else{
+              this.address = null;
+            }
        }); 
-      }
-      else{
-       this.address = null;
       }
      }
 
 
     const disupa = JSON.parse(localStorage.getItem('disupa'));
     if(disupa && this.user){
-      console.log("Order Create1111111111====",this.orderCreate);
+      ///console.log("Order Create1111111111====",this.orderCreate);
       this.districts = disupa;
-      console.log("district catch--",disupa);
-      console.log("district catch--",this.orderCreate.district);
+      ///console.log("district catch--",disupa);
+      ///console.log("district catch--",this.orderCreate.district);
       const selected = this.districts.find(m => m.name === this.orderCreate.district);
-      console.log("district selected--",selected);
+     /// console.log("district selected--",selected);
       this.upazilla = selected ? selected.subDto : [];
-      console.log(";;;;;;;;;;;;;;upazila res", this.upazilla);
+      //console.log(";;;;;;;;;;;;;;upazila res", this.upazilla);
     }
     if(!disupa && this.user){
       this.categoryService.getdisrictsandupazilla().subscribe(res =>{
@@ -111,7 +110,7 @@ export class CheckoutComponent implements OnInit {
         this.districts = res;
         const selected = this.districts.find(m => m.name === this.orderCreate.district);
         this.upazilla = selected ? selected.subDto : [];
-        console.log("+++++++++++++upazila res", this.upazilla);
+        //console.log("+++++++++++++upazila res", this.upazilla);
       });
     }
     
@@ -135,14 +134,14 @@ export class CheckoutComponent implements OnInit {
     if(items.shopId == this.UserId){
       this.basketService.deleteBasket();
       this.router.navigateByUrl('');
-      this.toastr.info('You Can,t Buy Your Own Product');
+      this.toastr.warning('You Can,t Buy Your Own Product');
     }else{  
     this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
       if(res == true){
         this.basketService.deleteBasket();
         this.router.navigateByUrl('');
       }
-      console.log("QuantityCheck----------------------",res);
+     /// console.log("QuantityCheck----------------------",res);
     })
     }
     }
@@ -151,7 +150,7 @@ export class CheckoutComponent implements OnInit {
 
   onChange(){
     const selected = this.districts.find(m => m.name === this.orderCreate.district);
-    console.log(this.orderCreate.district);
+    //console.log(this.orderCreate.district);
     this.upazilla = selected ? selected.subDto : [];
   }
 
@@ -211,12 +210,12 @@ export class CheckoutComponent implements OnInit {
     const utails = JSON.parse(localStorage.getItem('utails'));
     if(utails){
       this.getutality = utails;
-      console.log("utails catch----------",utails);
+      //console.log("utails catch----------",utails);
     }else{
       this.categoryService.getUtails().subscribe( res => {
       this.getutality = res;
       localStorage.setItem('utails', JSON.stringify(res));
-      console.log("utails res----------",res);
+      //console.log("utails res----------",res);
     })
   }
   }
@@ -277,7 +276,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   order(){
-    console.log("EEEEEEEEEE");
+    console.log("EEEEEEEEEE",this.address );
     if(
       this.orderCreate.cashOnDelevary == '' && 
       this.orderCreate.rocket == ''&& this.orderCreate.rocketTransactionID == '' &&
@@ -285,13 +284,13 @@ export class CheckoutComponent implements OnInit {
       this.orderCreate.nagad == '' && this.orderCreate.nagad == '' ){
          this.alert = true;
     }else{
-      console.log("------------",this.orderCreate);
+     // console.log("------------",this.orderCreate);
       this.orderService.orderCreate(this.orderCreate).subscribe(res =>{
-      console.log(res);
+      //console.log(res);
       this.basketService.deleteBasket();
       this.ordersucces = true;
     })
-    if(this.address === null && !this.user.roles.some(x => x === "Seller")){
+    if(this.address == null  && !this.user.roles.some(x => x === "Seller")){
       console.log("---------Adress Null----------");
       this.createaddress = {
         phone: this.orderCreate.phone,
@@ -308,7 +307,7 @@ export class CheckoutComponent implements OnInit {
     }
 
 
-  
+    window.scrollTo(0, 0);
   }
 
 }

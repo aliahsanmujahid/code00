@@ -20,6 +20,9 @@ export class RoleService {
   getUsersWithRoles() {
     return this.http.get<Partial<User[]>>(this.baseUrl + 'admin/users-with-roles');
   }
+  getmemberscount() {
+    return this.http.get<number>(this.baseUrl + 'admin/getmemberscount');
+  }
   getSellers(page : number) {
     
     var response = this.sellerCache.get(Object.values(['seller' +page]).join('-'));

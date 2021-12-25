@@ -19,7 +19,7 @@
     <span *ngIf="(accountService.currentUser$ | async) === null">
       <h4  class="spanmargin">Please LogIn</h4>
       Checkout Form is Hidden From UnAuthorized User
-      <p>Our Only Login option is by Gmail</p>
+      <h4>Our Only Login option is by Gmail</h4>
     </span>
 
     <span  *ngIf="(accountService.currentUser$ | async) && ordersucces === false">
@@ -71,7 +71,7 @@
       <h4>Bkash Personal: <strong>{{getutality.bikash}}</strong></h4>  
       <span>[Send Money <span class="highlight">(Not Payment)</span>]</span>
       <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
-      <h4>Then Fill This Form With Number and Transaction Id</h4>
+      <h4>Then Fill This Form With Number and Transaction ID</h4>
      
       <label for="Bkash">Bkash Number</label>
       <input  [(ngModel)]="orderCreate.bkash" type="text" id="Bkash" name="Bkash" required minlength="11"  maxlength="11"  placeholder="Bkash Number..">
@@ -83,7 +83,7 @@
         <h4>Rocket Personal: <strong> {{getutality.rocket}}</strong></h4>  
         <span>[Send Money<span class="highlight" >(Not Payment)</span>]</span>
         <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
-        <h4>Then Fill This Form With Number and Transaction Id</h4>
+        <h4>Then Fill This Form With Number and Transaction ID</h4>
         
       
         <label for="Rocket">Rocket Number</label>
@@ -96,7 +96,7 @@
           <h4>Nagad Personal: <strong>{{getutality.namgad}}</strong></h4>  
           <span>[Send Money<span class="highlight">(Not Payment)</span>]</span>
           <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
-          <h4>Then Fill This Form With Number and Transaction Id</h4>
+          <h4>Then Fill This Form With Number and Transaction ID</h4>
          
           <label for="Nagad">Nagad Number</label>
           <input  [(ngModel)]="orderCreate.nagad" type="text" id="Nagad" required minlength="11"  maxlength="11"  name="Nagad" placeholder="Nagad Number..">
@@ -127,30 +127,60 @@
               <img src="{{item.pictureUrl}}"  alt="">
           </div>
           </div>
-          <p>Name: {{item.productName}}</p>
-          <p *ngIf="item.color.length > 0 " >Color: {{item.color[0].name | uppercase }}</p>
-          <p *ngIf="item.size.length > 0 " >Size: {{item.size[0].name | uppercase }}</p>
-          <p>Quantity: {{item.quantity}}</p>
-          <p>Price: ৳{{item.price}}</p>
-          <p>Total: ৳{{item.price * item.quantity}}</p>
+          <table id="customers2" style="table-layout: fixed; width: 100%">
+            <tr>
+              <td>Name</td>
+              <td>{{item.productName}}</td>
+            </tr>
+            <tr *ngIf="item.color.length > 0 " >
+              <td>Color</td>
+              <td>{{item.color[0].name | uppercase }}</td>
+            </tr>
+            <tr *ngIf="item.size.length > 0 ">
+              <td>Size</td>
+              <td>{{item.size[0].name | uppercase }}</td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+              <td>{{item.quantity}}</td>
+            </tr>
+            <tr>
+              <td>Price</td>
+              <td>৳{{item.price}}</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>৳{{item.price * item.quantity}}</td>
+            </tr>
+          </table>
         </div>
         </div>
    
       </span>
 
+      
+
 
         <ul class="summery" *ngIf="(basketTotal$ | async)">
-          <h1>Order Summary</h1>
-          <li class="">
-              <h4 >Order Subtotal: ৳{{(basketTotal$ | async).subtotal}}</h4>
-          </li>
-          <li >
-              <h4 >Delevary Charge: ৳{{(basketTotal$ | async).delevary}}</h4>
-          </li>
-          <li >
-              <h4 > Total: ৳{{(basketTotal$ | async).total }}</h4>
+          <h2>Order Summary</h2>
+          <li>
+              <table id="customers2" style="table-layout: fixed; width: 100%">
+                <tr>
+                  <td>Order SubTotal</td>
+                  <td>৳{{(basketTotal$ | async).subtotal}}</td>
+                </tr>
+                <tr>
+                  <td>Delivery Charge</td>
+                  <td>৳{{(basketTotal$ | async).delevary}}</td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>৳{{(basketTotal$ | async).total }}</td>
+                </tr>
+              </table>
           </li>
         </ul>
+
 
     </span> 
   </div>

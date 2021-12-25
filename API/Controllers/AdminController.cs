@@ -64,6 +64,14 @@ namespace API.Controllers
             return sellers;     
 
         }
+        
+        [HttpGet("getmemberscount")]
+        public int getmemberscount(int page)
+        {
+
+          return _userManager.Users.Count();
+ 
+        }
 
         // [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{email}")]
