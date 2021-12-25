@@ -27,7 +27,6 @@ export class RoleService {
     
     var response = this.sellerCache.get(Object.values(['seller' +page]).join('-'));
     if (response) {
-      //console.log("sellerCache--",this.sellerCache);
       return of(response);
     }
     return this.http.get<Partial<User[]>>(this.baseUrl + 'admin/getsellers/'+ page).pipe(map(response => {

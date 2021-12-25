@@ -31,7 +31,6 @@ export class ProductService {
     .find((product: Product) => product.id === Number(id));
 
   if (product) {
-   // console.log("returning product");
     return of(product);
   }
 
@@ -49,7 +48,6 @@ export class ProductService {
 
         this.newproduct.push(response[i]);
       }
-      // console.log("new post",this.newproduct);
      
       return of(this.newproduct);
     }
@@ -73,40 +71,25 @@ export class ProductService {
   getuserProducts(id,page){
      var response = this.productCache.get(Object.values(['userProducts'+ id+page]).join('-'));
      if(page == 1 && response){
-      console.log("---------sellerproducr response",this.productCache);
       this.newproduct = [];
       for (var i = 0; i < this.skip; i++) {
         if(response[i]){
           this.newproduct.push(response[i]);
         }
       }
-      // console.log("new post",this.newproduct);
      
       return of(this.newproduct);
     }
     if (response && page !== 1) {
-      console.log("---------sellerproducr response",this.productCache);
       return of(response);
     }else{
       return this.http.get<Product[]>(this.baseUrl + 'product/getUserProducts/' + id +"/"+ page).pipe(map(response => {
         this.productCache.set(Object.values(['userProducts'+ id+page]).join('-'), response);
-        //console.log("productcatch------",this.productCache);
         return response;
       }))
     }
   }
-//   getfavProducts(){
-//     var response = this.productCache.get(Object.values('[userProducts]').join('-'));
-//    if (response) {
-//     // console.log("Products-Catching--",this.productCache);
-//      return of(response);
-//    }
-//    return this.http.get<Product[]>(this.baseUrl + 'product/getFavProducts/').pipe(map(response => {
-//      this.productCache.set(Object.values('[userProducts]').join('-'), response);
-//      //console.log(this.productCache);
-//      return response;
-//    }))
-//  }
+
  deleteProduct(id:number){
   return this.http.delete(this.baseUrl + 'product/deleteproduct/'+id);
  }
@@ -125,14 +108,12 @@ export class ProductService {
  getcateProducts(id: number,page){
   var response = this.productCache.get(Object.values(['cate'+id+page]).join('-'));
   if(page == 1 && response){
-   // console.log("---------response post",this.productCache);
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
       if(response[i]){
         this.newproduct.push(response[i]);
       }
     }
-    // console.log("new post",this.newproduct);
    
     return of(this.newproduct);
   }
@@ -141,7 +122,6 @@ export class ProductService {
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/getCateProduct/' + id +"/"+ page).pipe(map(response => {
       this.productCache.set(Object.values(['cate'+id+page]).join('-'), response);
-      //console.log(this.productCache);
       return response;
     }))
   }
@@ -150,14 +130,12 @@ export class ProductService {
 getsubcateProducts(id: number,page){
   var response = this.productCache.get(Object.values(['subcate'+id+page]).join('-'));
   if(page == 1 && response){
-    //console.log("---------response post",this.productCache);
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
       if(response[i]){
         this.newproduct.push(response[i]);
       }
     }
-    // console.log("new post",this.newproduct);
    
     return of(this.newproduct);
   }
@@ -166,7 +144,6 @@ getsubcateProducts(id: number,page){
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/getsubCateProduct/' + id + "/"+ page).pipe(map(response => {
       this.productCache.set(Object.values(['subcate'+id+page]).join('-'), response);
-      //console.log(this.productCache);
       return response;
     }))
   }
@@ -174,14 +151,12 @@ getsubcateProducts(id: number,page){
 getsubsubcateProducts(id: number,page){
   var response = this.productCache.get(Object.values(['catesubsubProducts'+id+page]).join('-'));
   if(page == 1 && response){
-    //console.log("---------response post",this.productCache);
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
       if(response[i]){
         this.newproduct.push(response[i]);
       }
     }
-    // console.log("new post",this.newproduct);
    
     return of(this.newproduct);
   }
@@ -190,7 +165,6 @@ getsubsubcateProducts(id: number,page){
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/getsubsubCateProduct/' + id + "/"+ page).pipe(map(response => {
       this.productCache.set(Object.values(['catesubsubProducts'+id+page]).join('-'), response);
-      //console.log(this.productCache);
       return response;
     }))
   }
@@ -198,14 +172,12 @@ getsubsubcateProducts(id: number,page){
 searchProducts(text: string,page){
   var response = this.productCache.get(Object.values(['searchProducts'+text.toLowerCase()+page]).join('-'));
   if(page == 1 && response){
-    //console.log("---------response post",this.productCache);
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
       if(response[i]){
         this.newproduct.push(response[i]);
       }
     }
-    // console.log("new post",this.newproduct);
    
     return of(this.newproduct);
   }
@@ -214,7 +186,6 @@ searchProducts(text: string,page){
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/searchProduct/' + text + "/" + page).pipe(map(response => {
       this.productCache.set(Object.values(['searchProducts'+text.toLowerCase()+page]).join('-'), response);
-      //console.log(this.productCache);
       return response;
     }))
   }

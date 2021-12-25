@@ -57,7 +57,7 @@ export class CheckoutComponent implements OnInit {
     public orderService: OrderService,private router: Router,private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     this.QuantityCheck();
     this.accountService.currentUser$.subscribe( x => {
       this.orderCreate.name = x.displayName;
@@ -71,7 +71,7 @@ export class CheckoutComponent implements OnInit {
       if(address && disupa){
         this.address = address;
         this.districts = disupa;
-        //console.log("pppppppppppppppp",address);
+
         this.orderCreate.phone = this.address.phone;
         this.orderCreate.address = this.address.userAddress;
         this.orderCreate.district = this.address.district;
@@ -79,20 +79,18 @@ export class CheckoutComponent implements OnInit {
 
 
         const selected = this.districts.find(m => m.name === this.orderCreate.district);
-        /// console.log("district selected--",selected);
+
         this.upazilla = selected ? selected.subDto : [];
 
       }else{
           this.accountService.getaddress().subscribe(res =>{
             if(res){
             this.address = res;
-            console.log("addresssssssssssss====",this.address);
             this.orderCreate.phone = this.address.phone;
             this.orderCreate.address = this.address.userAddress;
             this.orderCreate.district = this.address.district;
             this.orderCreate.upazila = this.address.upazila;
             localStorage.setItem('address'+this.UserId , JSON.stringify(res));
-            console.log("Order Create000000====",this.orderCreate);
             }else{
               this.address = null;
             }
@@ -103,7 +101,6 @@ export class CheckoutComponent implements OnInit {
         this.districts = res;
         const selected = this.districts.find(m => m.name === this.orderCreate.district);
         this.upazilla = selected ? selected.subDto : [];
-        console.log("+++++++++++++upazila res", this.upazilla);
       });
       
       }
@@ -136,7 +133,7 @@ export class CheckoutComponent implements OnInit {
         this.basketService.deleteBasket();
         this.router.navigateByUrl('');
       }
-     /// console.log("QuantityCheck----------------------",res);
+
     })
     }
     }
@@ -145,7 +142,7 @@ export class CheckoutComponent implements OnInit {
 
   onChange(){
     const selected = this.districts.find(m => m.name === this.orderCreate.district);
-    //console.log(this.orderCreate.district);
+
     this.upazilla = selected ? selected.subDto : [];
   }
 
@@ -172,21 +169,20 @@ export class CheckoutComponent implements OnInit {
         size_id:0,
         size_name:'',
       }
-      //console.log(item);
 
       OrderItem.id = item.id;
       OrderItem.productName = item.productName;
       OrderItem.price = item.price;
       OrderItem.quantity = item.quantity;
       if(item.color.length !== 0){
-      //console.log("Color Ace");
+
       OrderItem.color_id = item.color[0].id;
       OrderItem.color_name = item.color[0].name;
       }
       if(item.size.length !== 0){
         OrderItem.size_id = item.size[0].id;
         OrderItem.size_name = item.size[0].name;
-      //console.log("Size Ace");
+
       }
   
       
@@ -196,7 +192,7 @@ export class CheckoutComponent implements OnInit {
      
     });
     this.orderCreate.seller_id = items.shopId;
-    //console.log(this.orderCreate);
+ 
     
     
   }
@@ -205,12 +201,10 @@ export class CheckoutComponent implements OnInit {
     const utails = JSON.parse(localStorage.getItem('utails'));
     if(utails){
       this.getutality = utails;
-      //console.log("utails catch----------",utails);
     }else{
       this.categoryService.getUtails().subscribe( res => {
       this.getutality = res;
       localStorage.setItem('utails', JSON.stringify(res));
-      //console.log("utails res----------",res);
     })
   }
   }
@@ -271,7 +265,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   order(){
-    console.log("EEEEEEEEEE",this.address );
     if(
       this.orderCreate.cashOnDelevary == '' && 
       this.orderCreate.rocket == ''&& this.orderCreate.rocketTransactionID == '' &&
@@ -279,14 +272,11 @@ export class CheckoutComponent implements OnInit {
       this.orderCreate.nagad == '' && this.orderCreate.nagad == '' ){
          this.alert = true;
     }else{
-     // console.log("------------",this.orderCreate);
       this.orderService.orderCreate(this.orderCreate).subscribe(res =>{
-      //console.log(res);
       this.basketService.deleteBasket();
       this.ordersucces = true;
     })
     if(this.address == null  && !this.user.roles.some(x => x === "Seller")){
-      console.log("---------Adress Null----------");
       this.createaddress = {
         phone: this.orderCreate.phone,
         userAddress: this.orderCreate.address,
@@ -295,7 +285,7 @@ export class CheckoutComponent implements OnInit {
       }
       this.accountService.create(this.createaddress).subscribe(res=>{
             localStorage.setItem('address'+this.user.id , JSON.stringify(res));
-            console.log("----------setting new Address----------");
+  
         });
     }
     

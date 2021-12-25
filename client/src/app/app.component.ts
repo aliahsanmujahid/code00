@@ -112,7 +112,6 @@ export class AppComponent {
           if(res == true){
             this.basketService.deleteBasket();
           }
-          console.log("QuantityCheck----------------------",res);
         })
       }
     }
@@ -175,15 +174,13 @@ export class AppComponent {
 
 
       }, (error) => {
-        alert(JSON.stringify(error, undefined, 2));
+        alert(JSON.stringify("Login Fail By Google"));
       });
   }
 
   login() {
     this.accountService.login(this.model).subscribe(response => {
-      //console.log(response);
     }, error => {
-      console.log(error);
     })
   }
   logout() {
@@ -195,13 +192,11 @@ export class AppComponent {
   getCategoryes(){
     const cate = JSON.parse(localStorage.getItem('eidhatcategory'));
     if(cate){
-      console.log("cate getting from local");
       this.category = cate;
     }else{
       this.categoryService.getCategories().subscribe( res => {
         this.category = res;
         localStorage.setItem('eidhatcategory', JSON.stringify(res));
-        console.log(this.category );
       })
     }
   }

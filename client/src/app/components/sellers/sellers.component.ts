@@ -54,7 +54,6 @@ export class SellersComponent implements OnInit {
     this.noseller = false;
     this.roleService
       .getSellers(++this.page).subscribe( res => {
-       //console.log("res",res);
        this.sellers.push(...res);
       //  if(res.length === 0 || res.length < 10 ){
       //   this.noseller = true;

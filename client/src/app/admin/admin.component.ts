@@ -139,22 +139,18 @@ div7Function(){
 createUtalitiy(){
   this.categoryService.createUtails(this.utality).subscribe( res => {
     this.getutality = res;
-    console.log("utality create----------",res);
   }),
   error => {
-    console.log(error);
   };
 }
 getUtails(){
   const utails = JSON.parse(localStorage.getItem('utails'));
   if(utails){
     this.getutality = utails;
-    console.log("utails catch----------",utails);
   }else{
     this.categoryService.getUtails().subscribe( res => {
     this.getutality = res;
     localStorage.setItem('utails', JSON.stringify(res));
-    console.log("utails res----------",res);
   })
  }
 }

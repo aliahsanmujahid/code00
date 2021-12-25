@@ -36,22 +36,17 @@ export class OrderService {
     return this.http.get<IOrder[]>(this.baseUrl + 'orders/getSellerOrders/' + id +'/' +page+'/'+status);
   }
   getCustomerOrders(id: number,page: number,status:string,neworder) {
-    console.log("neworder--------",neworder);
-    console.log("seller id-----------",id);
-    console.log("status-----------",status);
     if(neworder){
       this.customerorderCache = new Map();
     }
     var response = this.customerorderCache.get(Object.values(page+status).join('-'));
     if(page == 1 && response){
-      // console.log("---------response post",this.productCache);
        this.filterorder = [];
        for (var i = 0; i < this.skip; i++) {
          if(response[i]){
            this.filterorder.push(response[i]);
          }
        }
-       // console.log("new post",this.newproduct);
       
        return of(this.filterorder);
      }
@@ -60,7 +55,6 @@ export class OrderService {
      }else{
       return this.http.get<IOrder[]>(this.baseUrl + 'orders/getCustomerOrders/' + id +'/' +page+'/'+status).pipe(map(response => {
         this.customerorderCache.set(Object.values(page+status).join('-'), response);
-        console.log(this.customerorderCache);
         return response;
       }))
     }

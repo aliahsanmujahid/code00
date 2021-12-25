@@ -37,10 +37,8 @@ export class OrderComponent implements OnInit {
     const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
     if(user){
       this.user = user;
-      console.log("user ace=============");
       this.route.params.subscribe(params => {
         if (Object.keys(params).length === 2) {
-          console.log("params true");
           this.neworder = true;
         }else{
           this.neworder = false;
@@ -61,7 +59,6 @@ export class OrderComponent implements OnInit {
       
     });
     }else{
-      console.log("user nai=============");
       this.router.navigateByUrl('');
     }
 
@@ -69,18 +66,14 @@ export class OrderComponent implements OnInit {
 
   viewOrder(id:number){
     this.singleorder = [];
-    console.log("-----------id",id);
-    console.log("-----------all orders",this.orders);
     this.singleorder = this.orders.filter(i => i.id == id);
 
-    console.log("===========Single Order=======",this.singleorder);
     this.orderview = true;
   }
   // deleteOrder(id:number){
 
   //   this.orderService.deleteOrder(id).subscribe( res=>{
   //     this.orders.splice(this.orders.findIndex(m => m.id === id), 1);
-  //     console.log("----------Deleted--------");
   //   });
 
   // }
@@ -97,10 +90,8 @@ export class OrderComponent implements OnInit {
   
   changeStatus(id:number,status:string){
    this.orderService.changeStatus(id,this.user.id,status).subscribe(res => {
-      console.log("res coming........",res);
       var newo =  this.orders.find(i => i.id == id);
       newo.status = status;
-      console.log("after change status",newo);
    });
 
   }
@@ -111,8 +102,6 @@ export class OrderComponent implements OnInit {
     this.stopscroll = false;
     this.orderService.getOrderById(this.search).subscribe(res =>{
       this.orders.push(res);
-      console.log("yyyyy",res);
-      console.log(this.orders);
       if(res == null){
         this.orders = null;
         this.noorder = true;
@@ -134,12 +123,8 @@ export class OrderComponent implements OnInit {
     this.stopscroll = false;
 
     if(this.sellerid){
-      // console.log("this Page--------",this.page);
-      // console.log("this seller id-----------",this.sellerid);
-      // console.log("this status-----------",this.status);
        this.orderService.getSellerOrders(this.sellerid,this.page,this.status).subscribe(res =>{
          this.orders  = res;
-         console.log(res);
          if(this.orders.length === 0 || res.length < 10 ){
           this.noorder = true;
           this.stopscroll = true;
@@ -150,13 +135,9 @@ export class OrderComponent implements OnInit {
        });
     }
     if(this.customerid){
-      // console.log("Page--------",this.page);
-      // console.log("customer id-----------",this.customerid);
-      // console.log("status-----------",this.status);
 
        this.orderService.getCustomerOrders(this.customerid,this.page,this.status,this.neworder).subscribe(res =>{
          this.orders  = res;
-         console.log("order res-------",res);
          this.neworder = false;
          if(this.orders.length === 0 || res.length < 10 ){
           this.noorder = true;
@@ -177,10 +158,7 @@ export class OrderComponent implements OnInit {
     
       if(this.sellerid){
         this.orderService.getSellerOrders(this.sellerid,++this.page,this.status).subscribe( res => {
-          //console.log("res",res);
-          console.log("Page--------",this.page);
           this.orders.push(...res);
-          console.log("-----------all orders",this.orders);
           if(res.length === 0 || res.length < 10 ){
             this.noorder = true;
             this.stopscroll = true;
@@ -193,10 +171,8 @@ export class OrderComponent implements OnInit {
       }
       if(this.customerid){
         this.orderService.getCustomerOrders(this.customerid,++this.page,this.status,this.neworder).subscribe( res => {
-          //console.log("res",res);
-          console.log("Page--------",this.page);
+
           this.orders.push(...res);
-          console.log("-----------scroll all orders",this.orders);
           if(res.length === 0 || res.length < 10 ){
             this.noorder = true;
             this.stopscroll = true;

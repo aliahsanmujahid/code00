@@ -18,12 +18,10 @@ export class FavoriteService {
   getfavProducts(){
     var response = this.favproductCache.get(Object.values('[userProducts]').join('-'));
    if (response) {
-    // console.log("Products-Catching--",this.productCache);
      return of(response);
    }
    return this.http.get<Product[]>(this.baseUrl + 'product/getFavProducts/').pipe(map(response => {
      this.favproductCache.set(Object.values('[userProducts]').join('-'), response);
-     //console.log(this.productCache);
      return response;
    }))
  }

@@ -26,9 +26,7 @@ export class BasketService {
 
 
   getBasket() {
-    //console.log("Basket Initilizing");
     const basket: Basket = JSON.parse(localStorage.getItem('basket'));
-    //console.log("Basket",basket);
     if(basket){
     this.basketSource.next(basket);
     this.calculateTotals();
@@ -42,7 +40,6 @@ export class BasketService {
 
   }
   getCurrentBasketValue() {
-    //console.log("Getting getCurrentBasketValue");
     return this.basketSource.value;
   }
   addItemToBasket(item: Product, quantity = 1) {
@@ -51,12 +48,10 @@ export class BasketService {
      this.basketSource.next(null);
      this.basketTotalSource.next(null);
      localStorage.removeItem('basket');
-     console.log("Need To Be Same Shop");
      this.toastr.warning('Basket Deleted','Need To Be Same Shop');
     }
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity);
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
-    //console.log("Basket----",basket);
     basket.shopId = item.appUserId;
     basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     this.setBasket(basket);
@@ -65,20 +60,15 @@ export class BasketService {
   private addOrUpdateItem(items: IBasketItem[], itemToAdd: IBasketItem, quantity: number): IBasketItem[] {
     const item = items.filter(i => i.id === itemToAdd.id);
     if(item.length === 0){
-      console.log("item",item);
-      console.log("itemToAdd",itemToAdd);
 
       itemToAdd.quantity = quantity;
       items.push(itemToAdd);
     }else{
       var notsame:Number = 0;
       var notsame2:Number = 1;
-      console.log("item",item);
-      console.log("itemToAdd",itemToAdd);
       item.forEach( i => {
       if(JSON.stringify(i.color) === JSON.stringify(itemToAdd.color)
       && JSON.stringify(i.size) === JSON.stringify(itemToAdd.size)){
-        console.log("Same........");
         i.quantity += quantity;
         notsame = 0;
         notsame2 = 0;
@@ -88,7 +78,6 @@ export class BasketService {
       }
       });
       if(notsame == 1 && notsame2 == 1){
-        console.log("Not Same........", notsame);
         itemToAdd.quantity = quantity;
         items.push(itemToAdd);
       }
@@ -99,15 +88,13 @@ export class BasketService {
   }
 
   private createBasket(): IBasket {
-    //console.log("--------Creting Basket");
     const basket = new Basket();
     localStorage.setItem('basket', JSON.stringify(basket));
     return basket;
   }
-  //////////////
+
   private calculateTotals() {
     const basket = this.getCurrentBasketValue();
-    //console.log("----calculating value", basket);
     const delevary = this.delevary;
     const subtotal = basket.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
     const total = subtotal + delevary;

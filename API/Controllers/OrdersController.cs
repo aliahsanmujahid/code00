@@ -44,8 +44,6 @@ namespace API.Controllers
             var roles = await _userManager.GetRolesAsync(user);
               foreach(var role in roles){
                     if(role != "Admin" && role != "Moderator"){
-
-                     Console.WriteLine("roles----------------"+role);
                      return Unauthorized();
                     }
               }
@@ -84,8 +82,6 @@ namespace API.Controllers
             var roles = await _userManager.GetRolesAsync(user);
               foreach(var role in roles){
                     if(role != "Admin" && role != "Moderator"){
-
-                     Console.WriteLine("roles----------------"+role);
                      return Unauthorized();
                     }
               }
@@ -152,7 +148,6 @@ namespace API.Controllers
             var roles = await _userManager.GetRolesAsync(user);
               foreach(var role in roles){
                     if(role != "Admin" && role != "Moderator"){
-                     Console.WriteLine("roles----------------"+role);
                      return Unauthorized();
                     }
               }

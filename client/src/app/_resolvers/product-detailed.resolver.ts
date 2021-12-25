@@ -12,8 +12,6 @@ export class ProductDetailedResolver implements Resolve<Product> {
     constructor(private productService: ProductService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Product> {
-        console.log("resolver...");
-    
         return this.productService.getProduct(route.paramMap.get('id'));
     }
 

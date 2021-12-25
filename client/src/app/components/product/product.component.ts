@@ -27,7 +27,6 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
-     // console.log("---------------",this.params);
     // Object.keys(this.search).length === 0 && this.search.constructor === Object
       if (Object.keys(params).length === 0) {
         this.accountService.currentUser$.subscribe( x => {
@@ -57,17 +56,15 @@ export class ProductComponent implements OnInit {
         }
       }),
       error => {
-        console.log(error);
+
       };
 
   }
   deleteProduct(id:number){
     this.productService.deleteProduct(id).subscribe( res =>{
       this.products.splice(this.products.findIndex(m => m.id === id), 1);
-      console.log("deleted");
     }),
     error => {
-      console.log(error);
     };
   }
 
@@ -84,7 +81,7 @@ export class ProductComponent implements OnInit {
          }
   }),
   error => {
-    console.log(error);
+
   };
     }
   }

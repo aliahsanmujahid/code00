@@ -24,7 +24,7 @@ export class RolesComponent implements OnInit {
 
   updateUserRoles(){
     this.roleService.updateUserRoles(this.roles.email,this.roles.roles).subscribe(res => {
-       //console.log(res);
+
     })
   }
 

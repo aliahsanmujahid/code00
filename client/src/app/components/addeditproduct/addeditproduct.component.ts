@@ -66,19 +66,14 @@ export class AddeditproductComponent implements OnInit {
     this.getsubsubmenu();
 
     this.route.params.subscribe(p => {
-      //console.log("-----",p.id | 0);
       if(p.id != 0 && p.id != null){
         this.updateproductId = p.id;
         this.productService.getProduct(p.id).subscribe(res =>{
           this.product = res;
-
-         //console.log("edit product------",res);
         });
       }
 
     });
-    
-    console.log("----------product----------",this.product);
     
     this.product.highLights = 'Good Product#High Febric#Collor Guaranty'
   }
@@ -86,28 +81,22 @@ export class AddeditproductComponent implements OnInit {
   getmainmenu(){
     this.categoryService.getmainmenu().subscribe( res => {
       this.categoryes = res;
-       //console.log("main----------",res);
     }),
     error => {
-      //console.log(error);
     };
   }
   getsubmenu(){
     this.categoryService.getsubmenu().subscribe( res => {
       this.subcategoryes = res;
-       //console.log("main----------",res);
     }),
     error => {
-      console.log(error);
     };
   }
   getsubsubmenu(){
     this.categoryService.getsubsubmenu().subscribe( res => {
       this.subsubcategoryes = res;
-       //console.log("main----------",res);
     }),
     error => {
-      console.log(error);
     };
   }
  
@@ -116,20 +105,16 @@ export class AddeditproductComponent implements OnInit {
       this.subcategoryes = res;
       this.product.subcateId = null;
       this.product.subsubcateId = null;
-      // console.log(res);
     }),
     error => {
-      console.log(error);
     };
   }
   onsubCateChange(){
     this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
       this.subsubcategoryes = res;
       this.product.subsubcateId = null;
-      // console.log(res);
     }),
     error => {
-      console.log(error);
     };
   }
  
@@ -138,27 +123,23 @@ export class AddeditproductComponent implements OnInit {
 
     if(this.product.id == 0){
       if(this.product.image1 !== ''){
-        console.log("Creting..................",this.product);
         if(ProductForm.valid){
           this.productService.createProduct(this.product).subscribe( res =>{
-           console.log(res);
-           // location.reload();
+
          }),
          error => {
-           console.log(error);
+ 
          };
        }
       }else{
-        console.log("You Must Select an Image");
       }
     }else{
-      console.log("Updating..................",this.product);
       if(ProductForm.valid){
         this.productService.updateproduct(this.updateproductId,this.product).subscribe( res =>{
-        console.log(res);
+
        }),
        error => {
-         console.log(error);
+
        };
      }
     }

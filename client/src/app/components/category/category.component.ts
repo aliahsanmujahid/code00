@@ -25,17 +25,14 @@ export class CategoryComponent implements OnInit {
 
   changeMade(){
     this.categoryService.setchangeid().subscribe(res =>{
-      console.log("------------------------------------",res);
     });
   }
 
   createCategory(){
     this.categoryService.creatmenu(this.category).subscribe( res => {
       this.categoryes.push(res);
-      // console.log("category----------",res);
     }),
     error => {
-      console.log(error);
     };
   }
 
@@ -45,10 +42,8 @@ export class CategoryComponent implements OnInit {
 createSubCategory(){
   this.categoryService.creatsubmenu(this.subcategory).subscribe( res => {
     this.subcategoryes.push(res);
-    //console.log("Subcategory----------",res);
   }),
   error => {
-    console.log(error);
   };
 }
 createSubSubCategory(){
@@ -56,34 +51,31 @@ createSubSubCategory(){
     this.subsubcategoryes.push(res);
   }),
   error => {
-    console.log(error);
   };
 }
 getmainmenu(){
   this.categoryService.getmainmenu().subscribe( res => {
     this.categoryes = res;
-    // console.log(res);
   }),
   error => {
-    console.log(error);
+
   };
 }
 getsubmenu(){
   this.categoryService.getsubmenu().subscribe( res => {
     this.subcategoryes = res;
-    // console.log(res);
   }),
   error => {
-    console.log(error);
+
   };
 }
 getsubsubmenu(){
   this.categoryService.getsubsubmenu().subscribe( res => {
     this.subsubcategoryes = res;
-    // console.log(res);
+
   }),
   error => {
-    console.log(error);
+
   };
 }
 
@@ -92,29 +84,26 @@ getsubsubmenu(){
 
 delete1(id:number){
   this.categoryService.delete1(id).subscribe( res => {
-    // this.subsubcategoryes = res;
-     //console.log(res);
+
   }),
   error => {
-    console.log(error);
+ 
   };
 }
 delete2(id:number){
   this.categoryService.delete2(id).subscribe( res => {
-    // this.subsubcategoryes = res;
-     //console.log(res);
+
   }),
   error => {
-    console.log(error);
+
   };
 }
 delete3(id:number){
   this.categoryService.delete3(id).subscribe( res => {
-    // this.subsubcategoryes = res;
-    // console.log(res);
+
   }),
   error => {
-    console.log(error);
+
   };
 }
 
