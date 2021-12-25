@@ -44,7 +44,7 @@ input[type=text],input[type=number], select,textarea {
   }
   div {
     border-radius: 5px;
-    padding: 3px;
+    padding: 2px;
   }
   .card_item{
     width: 50%;

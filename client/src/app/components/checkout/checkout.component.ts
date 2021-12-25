@@ -57,23 +57,31 @@ export class CheckoutComponent implements OnInit {
     public orderService: OrderService,private router: Router,private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     this.QuantityCheck();
     this.accountService.currentUser$.subscribe( x => {
       this.orderCreate.name = x.displayName;
       this.user = x;
       this.UserId = x.id;
     });
-   
+
      if(this.user){
       var address = JSON.parse(localStorage.getItem('address'+this.user.id));
-      if(address){
+      var disupa = JSON.parse(localStorage.getItem('disupa'));
+      if(address && disupa){
         this.address = address;
+        this.districts = disupa;
         //console.log("pppppppppppppppp",address);
         this.orderCreate.phone = this.address.phone;
         this.orderCreate.address = this.address.userAddress;
         this.orderCreate.district = this.address.district;
         this.orderCreate.upazila = this.address.upazila;
+
+
+        const selected = this.districts.find(m => m.name === this.orderCreate.district);
+        /// console.log("district selected--",selected);
+        this.upazilla = selected ? selected.subDto : [];
+
       }else{
           this.accountService.getaddress().subscribe(res =>{
             if(res){
@@ -89,30 +97,17 @@ export class CheckoutComponent implements OnInit {
               this.address = null;
             }
        }); 
-      }
-     }
 
-
-    const disupa = JSON.parse(localStorage.getItem('disupa'));
-    if(disupa && this.user){
-      ///console.log("Order Create1111111111====",this.orderCreate);
-      this.districts = disupa;
-      ///console.log("district catch--",disupa);
-      ///console.log("district catch--",this.orderCreate.district);
-      const selected = this.districts.find(m => m.name === this.orderCreate.district);
-     /// console.log("district selected--",selected);
-      this.upazilla = selected ? selected.subDto : [];
-      //console.log(";;;;;;;;;;;;;;upazila res", this.upazilla);
-    }
-    if(!disupa && this.user){
-      this.categoryService.getdisrictsandupazilla().subscribe(res =>{
+       this.categoryService.getdisrictsandupazilla().subscribe(res =>{
         localStorage.setItem('disupa', JSON.stringify(res));
         this.districts = res;
         const selected = this.districts.find(m => m.name === this.orderCreate.district);
         this.upazilla = selected ? selected.subDto : [];
-        //console.log("+++++++++++++upazila res", this.upazilla);
+        console.log("+++++++++++++upazila res", this.upazilla);
       });
-    }
+      
+      }
+     }
     
       
       if(!localStorage.getItem('basket')){
