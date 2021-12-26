@@ -48,8 +48,12 @@ input[type=text],input[type=number], select,textarea {
   }
   .card_item{
     width: 50%;
-    width: 50%;
     float: left;
+  }
+  .width100{
+    width:100%;
+    padding-left: 10%;
+    padding-right: 10%;
   }
 
   ul{

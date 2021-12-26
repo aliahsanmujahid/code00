@@ -10,17 +10,17 @@
           <form  #ProductForm="ngForm"  (ngSubmit)="createProduct(ProductForm)" novalidate>
 
             <select [(ngModel)]="product.cateId" class="form-control" (change)="onCateChange()" name="cate">
-              <option>Select</option>
+              <option value="-1">Select</option>
               <option *ngFor="let c of categoryes" value="{{ c.id }}" >{{ c.name }}</option>
             </select>
 
             <select [(ngModel)]="product.subcateId" class="form-control" (change)="onsubCateChange()" name="SubCate" >
-              <option>Select</option>
+              <option value="-1">Select</option>
               <option *ngFor="let s of subcategoryes" value="{{ s.id }}" >{{ s.name }}</option>
             </select>
 
             <select [(ngModel)]="product.subsubcateId" class="form-control" name="SubSubCate" >
-              <option>Select</option>
+              <option value="-1">Select</option>
               <option *ngFor="let ss of subsubcategoryes" value="{{ ss.id }}">{{ ss.name }}</option>
             </select>
 

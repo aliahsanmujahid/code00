@@ -63,7 +63,7 @@ export class ShopComponent implements OnInit {
   }
   addItemToBasket(item: Product) {
     if(item.appUserId === this.UserId){
-      this.toastr.warning('You Can,t Buy Your Own Product');
+      this.toastr.warning('You Can,t Buy Your Product');
     }else{
       this.basketService.addItemToBasket(item);
     }

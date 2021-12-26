@@ -118,43 +118,85 @@
   <div class="column">
     <span *ngIf="basket$ | async">
       <span *ngFor="let item of (basket$ | async).items" class="row">
+        
+        <span *ngIf="(basketService.basket$ | async) as basket" >
+              <span *ngIf="basket.items.length == 1">
+                <div  class="card_item width100">
+                  <div  >
+                  <div class="card_inner">
+                    <div class="card_top">
+                      <img src="{{item.pictureUrl}}"  alt="">
+                  </div>
+                  </div>
+                  <table id="customers2" style="table-layout: fixed; width: 100%">
+                    <tr>
+                      <td>Name</td>
+                      <td>{{item.productName}}</td>
+                    </tr>
+                    <tr *ngIf="item.color.length > 0 " >
+                      <td>Color</td>
+                      <td>{{item.color[0].name | uppercase }}</td>
+                    </tr>
+                    <tr *ngIf="item.size.length > 0 ">
+                      <td>Size</td>
+                      <td>{{item.size[0].name | uppercase }}</td>
+                    </tr>
+                    <tr>
+                      <td>Quantity</td>
+                      <td>{{item.quantity}}</td>
+                    </tr>
+                    <tr>
+                      <td>Price</td>
+                      <td>৳{{item.price}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>৳{{item.price * item.quantity}}</td>
+                    </tr>
+                  </table>
+                </div>
+                </div>
+              </span>
 
-
-        <div  class="card_item">
-          <div  >
-          <div class="card_inner">
-            <div class="card_top">
-              <img src="{{item.pictureUrl}}"  alt="">
+        <span *ngIf="basket.items.length > 1">
+          <div  class="card_item">
+            <div  >
+            <div class="card_inner">
+              <div class="card_top">
+                <img src="{{item.pictureUrl}}"  alt="">
+            </div>
+            </div>
+            <table id="customers2" style="table-layout: fixed; width: 100%">
+              <tr>
+                <td>Name</td>
+                <td>{{item.productName}}</td>
+              </tr>
+              <tr *ngIf="item.color.length > 0 " >
+                <td>Color</td>
+                <td>{{item.color[0].name | uppercase }}</td>
+              </tr>
+              <tr *ngIf="item.size.length > 0 ">
+                <td>Size</td>
+                <td>{{item.size[0].name | uppercase }}</td>
+              </tr>
+              <tr>
+                <td>Quantity</td>
+                <td>{{item.quantity}}</td>
+              </tr>
+              <tr>
+                <td>Price</td>
+                <td>৳{{item.price}}</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>৳{{item.price * item.quantity}}</td>
+              </tr>
+            </table>
           </div>
           </div>
-          <table id="customers2" style="table-layout: fixed; width: 100%">
-            <tr>
-              <td>Name</td>
-              <td>{{item.productName}}</td>
-            </tr>
-            <tr *ngIf="item.color.length > 0 " >
-              <td>Color</td>
-              <td>{{item.color[0].name | uppercase }}</td>
-            </tr>
-            <tr *ngIf="item.size.length > 0 ">
-              <td>Size</td>
-              <td>{{item.size[0].name | uppercase }}</td>
-            </tr>
-            <tr>
-              <td>Quantity</td>
-              <td>{{item.quantity}}</td>
-            </tr>
-            <tr>
-              <td>Price</td>
-              <td>৳{{item.price}}</td>
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>৳{{item.price * item.quantity}}</td>
-            </tr>
-          </table>
-        </div>
-        </div>
+        </span>
+      </span>
+
    
       </span>
 

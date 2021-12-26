@@ -95,6 +95,13 @@ export class OrderComponent implements OnInit {
    });
 
   }
+  changecutomerstatus(id:number,status:string){
+    this.orderService.changecutomerstatus(id,this.user.id,status).subscribe(res => {
+       var newo =  this.orders.find(i => i.id == id);
+       newo.status = status;
+    });
+ 
+   }
   SearchOrder(){
     this.orders = [];
     this.noorder = false;

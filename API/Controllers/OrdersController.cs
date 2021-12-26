@@ -112,16 +112,23 @@ namespace API.Controllers
           
         }
         [HttpGet("getOrderById/{id}")]
-        public  Order getOrderById(int id){
+        public async  Task<Order> getOrderById(int id){
 
           try{
            var orderd = _context.Orders
            .Include(v => v.OrderItems)
            .First(i => i.Id == id || i.Randnum == id);
 
+          var user = _context.Users.Find(User.GetUserId());
 
           if(orderd.Seller_id != User.GetUserId()){
-                   return null;
+
+              var roles = await _userManager.GetRolesAsync(user);
+              foreach(var role in roles){
+                    if(role != "Admin" && role != "Moderator"){
+                     return null;
+                    }
+              }
            }
           
   
@@ -143,22 +150,69 @@ namespace API.Controllers
         public async Task<ActionResult<Order>> update(int id,int userid,string status){
            
          var user = _context.Users.Find(User.GetUserId());
-         
-         if(user.Id != userid){
-            var roles = await _userManager.GetRolesAsync(user);
+     
+
+          if(user.Id != userid){
+               return Unauthorized();
+           }
+
+          var roles = await _userManager.GetRolesAsync(user);
               foreach(var role in roles){
-                    if(role != "Admin" && role != "Moderator"){
-                     return Unauthorized();
+                    if(role != "Admin" && role != "Moderator" && role != "Seller"){
+                       return Unauthorized();
                     }
               }
-         } 
 
           var order  = _context.Orders.Find(id);
+          
+          foreach(var role in roles){
+                    if(role == "Seller"){
+                       if(order.Seller_id != user.Id){
+                           return Unauthorized();
+                       }
+                    }
+              }
+
+
           order.Status = status;
           _context.SaveChanges();
           return Ok(order);
 
         }
+        [HttpPut("changecutomerstatus/{id}/{userid}/{status}")]
+        public  ActionResult<Order> changecutomerstatus(int id,int userid,string status){
+           
+         var user = _context.Users.Find(User.GetUserId());
+         
+
+        if(user.Id != userid){
+               return  Unauthorized();
+        }
+
+         if(status == "Confirmed"){
+             var order  = _context.Orders.Find(id);
+             order.Status = status;
+             _context.SaveChanges();
+             return Ok(order);  
+         } 
+         if(status == "Delivered"){
+             var order  = _context.Orders.Find(id);
+             order.Status = status;
+             _context.SaveChanges();
+             return Ok(order);  
+         } 
+          return BadRequest();
+
+        }
+
+
+
+
+
+
+
+
+
         // [HttpDelete("deleteOrder/{id}")]
         // public  ActionResult deleteOrder(int id){
 

@@ -101,21 +101,25 @@ export class AddeditproductComponent implements OnInit {
   }
  
   onCateChange(){
-    this.categoryService.getsubmenuid(this.product.cateId).subscribe( res => {
-      this.subcategoryes = res;
-      this.product.subcateId = null;
-      this.product.subsubcateId = null;
-    }),
-    error => {
-    };
+    if(this.product.cateId !== 0 && this.product.cateId !== -1){
+      this.categoryService.getsubmenuid(this.product.cateId).subscribe( res => {
+        this.subcategoryes = res;
+        this.product.subcateId = null;
+        this.product.subsubcateId = null;
+      }),
+      error => {
+      };
+    }
   }
   onsubCateChange(){
-    this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
-      this.subsubcategoryes = res;
-      this.product.subsubcateId = null;
-    }),
-    error => {
-    };
+    if(this.product.subcateId !== 0 && this.product.subcateId !== -1){
+      this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
+        this.subsubcategoryes = res;
+        this.product.subsubcateId = null;
+      }),
+      error => {
+      };
+    }
   }
  
 

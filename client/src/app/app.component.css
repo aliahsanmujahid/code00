@@ -715,7 +715,6 @@ outline: none;
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
   word-wrap: break-word;
   
 }
@@ -747,7 +746,6 @@ outline: none;
 #customers2 {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
   word-wrap: break-word;
   
 }

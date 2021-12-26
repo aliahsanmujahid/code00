@@ -60,7 +60,7 @@ export class BasketService {
   private addOrUpdateItem(items: IBasketItem[], itemToAdd: IBasketItem, quantity: number): IBasketItem[] {
     const item = items.filter(i => i.id === itemToAdd.id);
     if(item.length === 0){
-
+      this.toastr.info('Product Added');
       itemToAdd.quantity = quantity;
       items.push(itemToAdd);
     }else{
@@ -72,7 +72,7 @@ export class BasketService {
         i.quantity += quantity;
         notsame = 0;
         notsame2 = 0;
-        
+        this.toastr.info('Product Added.Quantity: '+i.quantity.toString());
       }else{
         notsame = 1;
       }
@@ -80,6 +80,7 @@ export class BasketService {
       if(notsame == 1 && notsame2 == 1){
         itemToAdd.quantity = quantity;
         items.push(itemToAdd);
+        this.toastr.info('Product Added');
       }
       
     }

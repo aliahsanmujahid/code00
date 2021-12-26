@@ -18,7 +18,7 @@
     <a (click)="getOrdersByStatus('All')">All</a>
     <a (click)="getOrdersByStatus('Pending')">Pending</a>
     <a (click)="getOrdersByStatus('Approved')">Approved</a>
-    <a (click)="getOrdersByStatus('Delevared')">Delevaring</a>
+    <a (click)="getOrdersByStatus('Delivered')">Delivering</a>
     <a (click)="getOrdersByStatus('Confirmed')">Confirmed</a>
     <a (click)="getOrdersByStatus('Rejected')">Rejected</a>
   
@@ -158,12 +158,18 @@
 
     <span *ngIf="customerid">
       <div class="margin2"></div>
-      <h4 *ngIf="item.status === 'Delevared'">Confirm the Order Only After The Product Received</h4>
-      <h4 *ngIf="item.status === 'Confirmed'">The Order Is Confirmed</h4>
-      <h4 *ngIf="item.status === 'Confirmed'">Thank You For Being With Us. Contact With Us AnyTime For AnyThing</h4>
+      <h4 *ngIf="item.status === 'Delivered'">We are Delivering this Order</h4>
+      <h4 *ngIf="item.status === 'Delivered'">Confirm this Order Only After The Product Received</h4>
+      
+      <h4 *ngIf="item.status === 'Confirmed'">This Order Is Confirmed</h4>
+      <h4 *ngIf="item.status === 'Confirmed'">Thank You For Being With Us</h4>
+      <h4 *ngIf="item.status === 'Confirmed'">Contact If You Need Any Help</h4>
     <div class="topnav margin2">
-          <span *ngIf="item.status === 'Delevared' ">
-            <a  (click)="changeStatus(item.id,'Confirmed')">Confirm Order</a>
+          <span *ngIf="item.status === 'Delivered'">
+            <a  (click)="changecutomerstatus(item.id,'Confirmed')">Confirm Order</a>
+          </span>
+          <span *ngIf="item.status === 'Confirmed'">
+            <a  (click)="changecutomerstatus(item.id,'Delivered')">Not Confirmed Yet</a>
           </span>
     </div> 
   </span>    
@@ -171,9 +177,9 @@
     <div class="topnav margin2">
       <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Pending')">Pending</a>
       <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Approved')">Approve</a>
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delevared')">Delevar</a>
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delivered')">Delevar</a>
       
-      <!-- <span *ngIf="item.status === 'Delevared' ">
+      <!-- <span *ngIf="item.status === 'Delivered' ">
         <a *appHasRole='["Admin","Member"]' (click)="changeStatus(item.id,'Confirmed')">Confirm</a>
       </span> -->
       <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Rejected')">Reject</a>

@@ -65,6 +65,11 @@ export class OrderService {
   changeStatus(id: number,userid: number,status:string) {
     return this.http.put(this.baseUrl + 'orders/changeStatus/' + id +'/' + userid +'/' +status,{});
   }
+
+
+  changecutomerstatus(id: number,userid: number,status:string) {
+    return this.http.put(this.baseUrl + 'orders/changecutomerstatus/' + id +'/' + userid +'/' +status,{});
+  }
   
   
 

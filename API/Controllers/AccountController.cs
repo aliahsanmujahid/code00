@@ -45,7 +45,11 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-               
+               user.DisplayName = loginDto.username;
+               user.Image = loginDto.image;
+
+               _context.SaveChanges();
+
                 return await CreateUserObject(user);
             }
             // }

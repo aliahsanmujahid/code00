@@ -19,6 +19,7 @@ export class SingleComponent implements OnInit {
   fav = false;
   alert = false;
   error = false;
+  descriptions = [];
   product: Product;
   UserId: Number;
   cartProduct: Product = {
@@ -74,8 +75,16 @@ export class SingleComponent implements OnInit {
     colors : [],
     sizes : [],
     };
+
+    this.spliting();
     
 
+  }
+
+  spliting(){
+    this.product.description.split('#').forEach(i => {
+      this.descriptions.push(i);
+    });
   }
 
   hidealert(){
@@ -119,7 +128,7 @@ export class SingleComponent implements OnInit {
   }
   addItemToBasket(){
     if(this.product.appUserId === this.UserId){
-      this.toastr.warning('You Can,t Buy Your Own Product');
+      this.toastr.warning('You Can,t Buy Your Product');
     }else{
     if(this.product.colors.length !== 0 || this.product.sizes.length !== 0){
      if(this.product.colors.length !== 0 && this.cartProduct.colors.length === 0){
