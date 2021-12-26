@@ -37,6 +37,7 @@ export class SellersComponent implements OnInit {
     this.noseller = false;
     this.roleService.getSellers(this.page).subscribe(res =>{
          this.sellers = res;
+         console.log(res);
         //  if(res.length == 0 || res.length < 10){
         //   this.noseller = true;
         // }else{
@@ -45,8 +46,8 @@ export class SellersComponent implements OnInit {
     });
   }
 
-  getsellerProduct(id,sellername){
-    this.router.navigate(['shop', { 'id':id , 'sellername':sellername}]);
+  getsellerProduct(id,sellername,phone){
+    this.router.navigate(['shop', { 'id':id , 'sellername':sellername,'phone':phone}]);
   }
 
 

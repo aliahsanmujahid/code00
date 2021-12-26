@@ -2,7 +2,7 @@ import { FavoriteService } from './../../_services/favorite.service';
 import { ProductService } from './../../_services/product.service';
 import { BasketService } from './../../_services/basket.service';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/_models/product';
 import { Location } from '@angular/common';
 import { AccountService } from 'src/app/_services/account.service';
@@ -45,7 +45,8 @@ export class SingleComponent implements OnInit {
   
   constructor(private route: ActivatedRoute,private basketService: BasketService,
     private favoriteService: FavoriteService,public accountService: AccountService,
-    private location: Location,private sanitizer: DomSanitizer,private toastr: ToastrService, ) { }
+    private location: Location,private sanitizer: DomSanitizer,private toastr: ToastrService, 
+    public router:Router) { }
 
 
   ngOnInit(): void {
@@ -55,7 +56,11 @@ export class SingleComponent implements OnInit {
 
     this.route.data.subscribe(data => {
       this.product = data.product;
+      console.log(this.product);
     })
+
+
+
     this.cartProduct = {
     id: this.product.id,
     appUserId: this.product.appUserId,
@@ -89,6 +94,10 @@ export class SingleComponent implements OnInit {
 
   hidealert(){
     this.alert = !this.alert;
+  }
+
+  viewseller(id:number){
+    this.router.navigate(['shop', { 'id':id , 'sellername':'null',}]);
   }
   
   backClick() {

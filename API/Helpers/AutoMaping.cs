@@ -19,7 +19,13 @@ namespace API.Helpers
 
 
         CreateMap<Upazilla,SubMenuDto>();
-        CreateMap<AppUser,SellerDto>();
+        CreateMap<AppUser,SellerDto>()
+        .ForMember(vr => vr.Phone, opt => opt.MapFrom( vf => vf.Address.Phone) )
+        .ForMember(vr => vr.DistrictId, opt => opt.MapFrom( vf => vf.Address.DistrictId) )
+        .ForMember(vr => vr.District, opt => opt.MapFrom( vf => vf.Address.District) )
+        .ForMember(vr => vr.UpazilaId, opt => opt.MapFrom( vf => vf.Address.UpazilaId) )
+        .ForMember(vr => vr.Upazila, opt => opt.MapFrom( vf => vf.Address.Upazila) );
+        
 
         CreateMap<District,MenuDto>()
          .ForMember(vr => vr.SubDto, opt => opt.MapFrom(v => v.Upazilla.Select(vf => new SubDto {id = vf.Id, Name = vf.Name} )));

@@ -44,6 +44,24 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        // [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("getmembersemail")]
+        public async Task<ActionResult> getmembersemail()
+        {
+            var users = await _userManager.Users
+                .Where(r => r.UserRoles.Any(i => i.Role.Name == "Member"))
+                .OrderByDescending(i => i.Id)
+                .Select(u => new
+                {
+                    Email = u.Email,
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+
+
         [HttpGet("getsellers/{page}")]
         public async Task<IEnumerable<SellerDto>> getsellers(int page)
         {
@@ -64,6 +82,31 @@ namespace API.Controllers
             return sellers;     
 
         }
+
+
+        [HttpGet("getuserbyid/{id}")]
+        public async Task<SellerDto> getuserbyid(int id)
+        {
+            var users =  await _userManager.Users
+                .Include(u =>u.Address)
+                .FirstAsync(i => i.Id == id);
+
+
+             return  _mapper.Map<AppUser,SellerDto>(users);
+      
+
+        }
+
+
+
+
+
+        
+
+
+
+
+
         
         [HttpGet("getmemberscount")]
         public int getmemberscount(int page)

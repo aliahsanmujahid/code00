@@ -1,3 +1,4 @@
+import { RoleService } from 'src/app/_services/role.service';
 import { AccountService } from './../_services/account.service';
 import { ProductService } from './../_services/product.service';
 import { environment } from './../../environments/environment';
@@ -24,6 +25,16 @@ export class ShopComponent implements OnInit {
   stopscroll  = false;
   baseUrl = environment.apiUrl;
   products=[];
+  user= {
+    id:-1,
+    displayName: "ali baba",
+    district: '',
+    districtId: -1,
+    email: '',
+    phone: '',
+    upazila: '',
+    upazilaId: -1,
+  };
   currentRoute: string;
   UserId: Number;
   params: any = {};
@@ -32,7 +43,7 @@ export class ShopComponent implements OnInit {
 
   constructor(private productService: ProductService,private toastr: ToastrService,
               private route: ActivatedRoute,public accountService: AccountService,
-              private router: Router, private basketService: BasketService) { 
+              private router: Router, private basketService: BasketService, private roleService: RoleService) { 
               this.products = null;
   }
   
@@ -51,8 +62,9 @@ export class ShopComponent implements OnInit {
 
        }else{
          this.params = params;
-        
+
          this.products = [];
+         this.user = null;
          this.paramsproducts(this.params);
        }
        
@@ -77,6 +89,7 @@ export class ShopComponent implements OnInit {
       }
     }
   }
+
   getProducts(){
     this.page = 1;
     this.products = [];
@@ -192,6 +205,7 @@ export class ShopComponent implements OnInit {
     this.page = 1;
     this.noproduct = false;
     this.stopscroll = false;
+    this.showseller = false;
   if(params.cate){
     this.productService.getcateProducts(params.cate,this.page).subscribe( res =>{
       this.products = res;
@@ -258,7 +272,17 @@ export class ShopComponent implements OnInit {
     };
   }
   if(params.sellername){
+    this.user = null;
     this.showseller = true;
+
+    if(params.sellername == 'null'){
+      this.roleService.getuserbyid(params.id).subscribe(res =>{
+        
+        this.user = res;
+
+        console.log("ffffffff",this.user);
+      });
+    }
 
     this.productService.getuserProducts(params.id,this.page).subscribe( res =>{
       this.products = res;

@@ -128,18 +128,24 @@
                         Add To Cart
                      </h3></button>
                      <br>
+                    
+                     <button class="sellerbutton" (click)=viewseller(product.appUserId)>View All Products Of This Seller</button>
                   
             </div>
             
          </div>
 
+         
+         
 
+               
 
                      <table *ngIf="descriptions[0]" id="customers2" style="table-layout: fixed; width: 100%">
+                        
                         <tr>
-                          <td>{{descriptions[0]}}</td>
-                          <td>{{descriptions[1]}}</td>
-                        </tr>
+                           <td>{{descriptions[0]}}</td>
+                           <td>{{descriptions[1]}}</td>
+                         </tr>
                      </table> 
 
                      <table *ngIf="descriptions[2]" id="customers2" style="table-layout: fixed; width: 100%">

@@ -6,7 +6,23 @@
 >
 
 <div *ngIf="showseller" class="seller">
-  <h2>All Products of {{params.sellername}}</h2>
+  <!-- <h2>All Products of {{params.sellername}}</h2> -->
+  <table id="customers" style="table-layout: fixed; width: 100%">
+    <tr *ngIf="this.params.sellername && this.params.sellername !== 'null' ">
+      <td>All Products of {{params.sellername}}</td>
+    </tr>
+    <tr *ngIf="this.params.phone && this.params.phone !== 'null' ">
+      <td >Seller Phone Number {{params.phone}}</td>
+    </tr>
+
+      <tr *ngIf="user">
+        <td >All Products of {{user.displayName}}</td>
+      </tr>
+      <tr *ngIf="user && user.phone !== 'null' ">
+        <td >Seller Phone Number {{user.phone}}</td>
+      </tr>
+
+  </table>
 </div>
 
 <div class="wrapper">
@@ -37,7 +53,7 @@
 
       <div class="cartbutton">
         <button (click)="addItemToBasket(item)" *ngIf="item.colors.length == 0 && item.sizes.length == 0 && !isinBasket(item.id) && item.quantity !== 0">Add To Cart</button>
-        <button routerLink="/single/{{item.id}}" *ngIf="(item.colors.length >= 1 || item.sizes.length >= 1) && !isinBasket(item.id) && item.quantity !== 0">Select</button>
+        <button routerLink="/single/{{item.id}}" *ngIf="(item.colors.length >= 1 || item.sizes.length >= 1) && !isinBasket(item.id) && item.quantity !== 0">Select Options</button>
         <button class="added" *ngIf="isinBasket(item.id)">Added</button>
         <button *ngIf="item.quantity == 0">No Quantity</button>
       </div>

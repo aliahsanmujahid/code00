@@ -10,6 +10,7 @@ import { RoleService } from 'src/app/_services/role.service';
 export class RolesComponent implements OnInit {
 
   users: Partial<User[]>;
+  membersemails: Partial<User[]>;
   roles = {
     email: '',
     roles:[]
@@ -36,6 +37,11 @@ export class RolesComponent implements OnInit {
   getmemberscount(){
     this.roleService.getmemberscount().subscribe(count => {
       this.totaluser = count;
+    })
+  }
+  getmembersemail(){
+    this.roleService.getmembersemail().subscribe(res => {
+      this.membersemails = res;
     })
   }
 

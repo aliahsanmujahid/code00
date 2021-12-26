@@ -8,10 +8,15 @@
 
 
 
-<h2>All Sellers</h2>
+<table id="customers" style="table-layout: fixed; width: 100%">
+  <tr>
+    <td>All Sellers</td>
+  </tr>
+</table>
+
 <div class="row">
     <div *ngFor="let item of sellers" class="column">
-      <div (click)="getsellerProduct(item.id,item.displayName)" class="card">
+      <div (click)="getsellerProduct(item.id,item.displayName,item.phone)" class="card">
         <h3>{{item.displayName}}</h3>
       </div>
       <button (click)="seeorders(item.id)"  *appHasRole='["Admin", "Moderator"]'>See Orders</button>

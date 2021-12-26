@@ -91,18 +91,23 @@ export class CheckoutComponent implements OnInit {
             this.orderCreate.district = this.address.district;
             this.orderCreate.upazila = this.address.upazila;
             localStorage.setItem('address'+this.UserId , JSON.stringify(res));
+
+            this.categoryService.getdisrictsandupazilla().subscribe(res =>{
+              localStorage.setItem('disupa', JSON.stringify(res));
+              this.districts = res;
+              const selected = this.districts.find(m => m.name === this.address.district);
+              this.upazilla = selected ? selected.subDto : [];
+            });
             }else{
+              this.categoryService.getdisrictsandupazilla().subscribe(res =>{
+                localStorage.setItem('disupa', JSON.stringify(res));
+                this.districts = res;
+                const selected = this.districts.find(m => m.name === this.address.district);
+                this.upazilla = selected ? selected.subDto : [];
+              });
               this.address = null;
             }
        }); 
-
-       this.categoryService.getdisrictsandupazilla().subscribe(res =>{
-        localStorage.setItem('disupa', JSON.stringify(res));
-        this.districts = res;
-        const selected = this.districts.find(m => m.name === this.orderCreate.district);
-        this.upazilla = selected ? selected.subDto : [];
-      });
-      
       }
      }
     

@@ -35,6 +35,30 @@ export class RoleService {
     }))
   }
 
+  getuserbyid(id : number) {
+    
+    var response = this.sellerCache.get(Object.values(['getuserbyid' +id]).join('-'));
+    if (response) {
+      return of(response);
+    }
+    return this.http.get<Partial<User[]>>(this.baseUrl + 'admin/getuserbyid/'+ id).pipe(map(response => {
+      this.sellerCache.set(Object.values(['getuserbyid' +id]).join('-'), response);
+      return response;
+    }))
+  }
+
+  getmembersemail() {
+    
+    var response = this.sellerCache.get(Object.values(['members']).join('-'));
+    if (response) {
+      return of(response);
+    }
+    return this.http.get<Partial<User[]>>(this.baseUrl + 'admin/getmembersemail/').pipe(map(response => {
+      this.sellerCache.set(Object.values(['members']).join('-'), response);
+      return response;
+    }))
+  }
+
   updateUserRoles(email: string, roles: string[]) {
     return this.http.post(this.baseUrl + 'admin/edit-roles/' + email + '?roles=' + roles, {});
   }
