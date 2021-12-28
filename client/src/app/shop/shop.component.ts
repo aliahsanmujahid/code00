@@ -108,8 +108,8 @@ export class ShopComponent implements OnInit {
   }
   onScroll(): void {
     if(this.stopscroll == false){
-    if(this.params.cate){
-      this.productService.getcateProducts(this.params.cate,++this.page).subscribe( res =>{
+    if(this.params.v){
+      this.productService.getcateProducts(this.params.v,++this.page).subscribe( res =>{
             this.products.push(...res);
             if(res.length == 0 || res == null || res.length < 10){
              this.noproduct = true;
@@ -121,8 +121,8 @@ export class ShopComponent implements OnInit {
       }),
       error => {
       };
-    }else if(this.params.subcate){
-      this.productService.getsubcateProducts(this.params.subcate,++this.page).subscribe( res =>{
+    }else if(this.params.vv){
+      this.productService.getsubcateProducts(this.params.vv,++this.page).subscribe( res =>{
 
             this.products.push(...res);
             if(res.length == 0 || res == null || res.length < 10){
@@ -136,8 +136,8 @@ export class ShopComponent implements OnInit {
       error => {
       };
     }
-    else if(this.params.subsubcate){
-      this.productService.getsubsubcateProducts(this.params.subsubcate,++this.page).subscribe( res =>{
+    else if(this.params.vvv){
+      this.productService.getsubsubcateProducts(this.params.vvv,++this.page).subscribe( res =>{
             this.products.push(...res);
             if(res.length == 0 || res == null || res.length < 10){
              this.noproduct = true;
@@ -206,8 +206,8 @@ export class ShopComponent implements OnInit {
     this.noproduct = false;
     this.stopscroll = false;
     this.showseller = false;
-  if(params.cate){
-    this.productService.getcateProducts(params.cate,this.page).subscribe( res =>{
+  if(params.v){
+    this.productService.getcateProducts(params.v,this.page).subscribe( res =>{
       this.products = res;
   
      if(this.products.length === 0 || res.length < 10){
@@ -222,8 +222,8 @@ export class ShopComponent implements OnInit {
     
     };
   }
-  if(params.subcate){
-    this.productService.getsubcateProducts(params.subcate,this.page).subscribe( res =>{
+  if(params.vv){
+    this.productService.getsubcateProducts(params.vv,this.page).subscribe( res =>{
       this.products = res;
   
      if(this.products.length === 0 || res.length < 10){
@@ -238,8 +238,8 @@ export class ShopComponent implements OnInit {
     
     };
   }
-  if(params.subsubcate){
-    this.productService.getsubsubcateProducts(params.subsubcate,this.page).subscribe( res =>{
+  if(params.vvv){
+    this.productService.getsubsubcateProducts(params.vvv,this.page).subscribe( res =>{
       this.products = res;
     
      if(this.products.length === 0 || res.length < 10){
@@ -280,7 +280,6 @@ export class ShopComponent implements OnInit {
         
         this.user = res;
 
-        console.log("ffffffff",this.user);
       });
     }
 

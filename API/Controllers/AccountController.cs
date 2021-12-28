@@ -45,10 +45,18 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-               user.DisplayName = loginDto.username;
-               user.Image = loginDto.image;
+               var roles = await _userManager.GetRolesAsync(user);
 
-               _context.SaveChanges();
+               foreach(var role in roles){
+                    if(role != "Admin" && role != "Moderator" && role != "Seller"){
+                       user.DisplayName = loginDto.username;
+                       user.Image = loginDto.image;
+                       _context.SaveChanges();
+                    }else{
+                       user.Image = loginDto.image;
+                       _context.SaveChanges();
+                    }
+              }
 
                 return await CreateUserObject(user);
             }
@@ -60,18 +68,23 @@ namespace API.Controllers
         }
         [Authorize]
         [HttpPost("setname/{name}")]
-        public ActionResult setname(string name)
+        public async Task<ActionResult> setname(string name)
         {
             var user = _context.Users.Find(User.GetUserId());
-            
-            if(name.ToLower() != "eidhat"){
-               user.DisplayName = name;
-            }
-            if(user.UserName.ToLower() == "admin"){
+
+            if(name.ToLower() == "eidhat"){
+               var roles = await _userManager.GetRolesAsync(user);
+
+               foreach(var role in roles){
+                    if(role != "Seller"){
+                        user.DisplayName = name;
+                        _context.SaveChanges();
+                    }
+               }
+            }else{
                 user.DisplayName = name;
-            }
-            _context.SaveChanges();
-            
+                _context.SaveChanges();
+            }  
             return Ok(user);
             
         }

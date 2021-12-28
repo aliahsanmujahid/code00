@@ -155,7 +155,7 @@ export class CheckoutComponent implements OnInit {
     this.alert = !this.alert;
   }
   vieworder(){
-    this.router.navigate(['order', {  'customerid': this.user.id,'neworder':true}]);
+    this.router.navigate(['order', {  'codec': this.user.id,'neworder':true}]);
   }
 
   
@@ -280,6 +280,7 @@ export class CheckoutComponent implements OnInit {
       this.orderService.orderCreate(this.orderCreate).subscribe(res =>{
       this.basketService.deleteBasket();
       this.ordersucces = true;
+      window.scrollTo(0, 0);
     })
     if(this.address == null  && !this.user.roles.some(x => x === "Seller")){
       this.createaddress = {
@@ -297,7 +298,6 @@ export class CheckoutComponent implements OnInit {
     }
 
 
-    window.scrollTo(0, 0);
   }
 
 }

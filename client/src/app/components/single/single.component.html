@@ -1,6 +1,6 @@
 <div class="row">
    <span (click)="backClick()">
-      <button class="goback">
+      <button class="goback button">
          <img src="../../../assets/back.png" alt="">
          Go Back
       </button>
@@ -66,7 +66,12 @@
         <h2 style="color: rgb(255, 0, 179);">&#8722;{{product.disCount}}%</h2>
       </div>
       <div class="price">
-         <h4> Save ৳{{product.discPrice-product.price}} Taka</h4>
+         <table id="customers2" style="table-layout: fixed; width: 100%;">
+            <tr>
+               <td style="text-align: center!important;font-family:'Courier New', Courier, monospace;padding: 2px;font-size: 16px;
+               ">Save ৳{{product.discPrice-product.price}} Taka</td>
+             </tr>
+        </table>  
        </div>
       <div id="header">
          <ul class="ul">
@@ -129,7 +134,7 @@
                      </h3></button>
                      <br>
                     
-                     <button class="sellerbutton" (click)=viewseller(product.appUserId)>View All Products Of This Seller</button>
+                     <button class="sellerbutton " (click)=viewseller(product.appUserId)>View All Products Of This Seller</button>
                   
             </div>
             
@@ -183,8 +188,7 @@
 
   <div *ngIf="product.youtubeLink" class="youtube">
      <h1>YouTube Video</h1>
-     <iframe width="560" height="315" [src]='youtubeURL()'
-     title="YouTube video player" frameborder="0" allow="accelerometer;
-      autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen safe></iframe>
-  </div>
+
+  <iframe width="100%" height="500" [src]="safeUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+   </div>

@@ -78,8 +78,8 @@
     color: white;
   }
   .padding{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
   .margin2{
@@ -109,7 +109,9 @@
 
 
 
-
+  a{
+    cursor: pointer;
+  }
 
 
 
@@ -124,8 +126,14 @@
         margin: 2px;
         font-size:large;
       }
+      .pointer{
+        cursor: pointer;
+      }
       .column{
         width: 100%;
         height:100%;
+      }
+      .displanone{
+        display: none;
       }
     }

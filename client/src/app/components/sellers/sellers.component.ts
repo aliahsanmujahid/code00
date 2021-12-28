@@ -26,7 +26,7 @@ export class SellersComponent implements OnInit {
   }
 
   seeorders(id: number){
-    this.router.navigate(['order', {  'sellerid': id}]);
+    this.router.navigate(['order', {  'codes': id}]);
   }
   seeproducts(id: number){
     this.router.navigate(['sellerproduct', {  'id': id}]);
@@ -37,7 +37,7 @@ export class SellersComponent implements OnInit {
     this.noseller = false;
     this.roleService.getSellers(this.page).subscribe(res =>{
          this.sellers = res;
-         console.log(res);
+
         //  if(res.length == 0 || res.length < 10){
         //   this.noseller = true;
         // }else{
@@ -45,9 +45,9 @@ export class SellersComponent implements OnInit {
         // }
     });
   }
-
+  ////,'phone':phone
   getsellerProduct(id,sellername,phone){
-    this.router.navigate(['shop', { 'id':id , 'sellername':sellername,'phone':phone}]);
+    this.router.navigate(['shop', { 'id':id , 'sellername':sellername}]);
   }
 
 

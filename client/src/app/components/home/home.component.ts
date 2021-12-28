@@ -58,13 +58,13 @@ export class HomeComponent implements OnInit {
   }
 
   getCatProduct(cate: number){
-    this.router.navigate(['shop', {  'cate':cate }]);
+    this.router.navigate(['shop', {  'v':cate }]);
   }
   getsubCatProduct(subcate: number){
-    this.router.navigate(['shop', { 'subcate':subcate }]);
+    this.router.navigate(['shop', { 'vv':subcate }]);
   }
   getsubsubCatProduct(subsubcate: number){
-    this.router.navigate(['shop', { 'subsubcate':subsubcate }]);
+    this.router.navigate(['shop', { 'vvv':subsubcate }]);
   }
 
   // getCategoryes(){

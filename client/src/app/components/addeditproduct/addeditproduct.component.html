@@ -10,17 +10,17 @@
           <form  #ProductForm="ngForm"  (ngSubmit)="createProduct(ProductForm)" novalidate>
 
             <select [(ngModel)]="product.cateId" class="form-control" (change)="onCateChange()" name="cate">
-              <option value="-1">Select</option>
+              <option value="10000000">Select</option>
               <option *ngFor="let c of categoryes" value="{{ c.id }}" >{{ c.name }}</option>
             </select>
 
             <select [(ngModel)]="product.subcateId" class="form-control" (change)="onsubCateChange()" name="SubCate" >
-              <option value="-1">Select</option>
+              <option value="10000000">Select</option>
               <option *ngFor="let s of subcategoryes" value="{{ s.id }}" >{{ s.name }}</option>
             </select>
 
             <select [(ngModel)]="product.subsubcateId" class="form-control" name="SubSubCate" >
-              <option value="-1">Select</option>
+              <option value="10000000">Select</option>
               <option *ngFor="let ss of subsubcategoryes" value="{{ ss.id }}">{{ ss.name }}</option>
             </select>
 
@@ -151,7 +151,7 @@
           <input [(ngModel)]="product.image4" type="text" name="image4" required minlength="5" placeholder="Imgae 4..">  
         </span>
         <span >
-          <label for="lname">Youtube Link</label>
+          <label for="lname">Youtube Video Id</label>
           <input [(ngModel)]="product.youtubeLink" type="text" name="youtubeLink" required minlength="5" placeholder="Youtube Link..">  
         </span>
         <hr>

@@ -19,6 +19,7 @@ export class SingleComponent implements OnInit {
   fav = false;
   alert = false;
   error = false;
+  safeUrl;
   descriptions = [];
   product: Product;
   UserId: Number;
@@ -56,7 +57,8 @@ export class SingleComponent implements OnInit {
 
     this.route.data.subscribe(data => {
       this.product = data.product;
-      console.log(this.product);
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+ this.product.youtubeLink);
+      window.scrollTo(0, 0);
     })
 
 
@@ -117,9 +119,7 @@ export class SingleComponent implements OnInit {
     }
  
   }
-  youtubeURL(){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.product.youtubeLink);
-  }
+
   setColor(color, $event){
     if ($event.target.checked){
       this.cartProduct.colors = [];

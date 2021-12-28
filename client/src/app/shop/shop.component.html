@@ -11,16 +11,16 @@
     <tr *ngIf="this.params.sellername && this.params.sellername !== 'null' ">
       <td>All Products of {{params.sellername}}</td>
     </tr>
-    <tr *ngIf="this.params.phone && this.params.phone !== 'null' ">
+    <!-- <tr *ngIf="this.params.phone && this.params.phone !== 'null' ">
       <td >Seller Phone Number {{params.phone}}</td>
-    </tr>
+    </tr> -->
 
       <tr *ngIf="user">
         <td >All Products of {{user.displayName}}</td>
       </tr>
-      <tr *ngIf="user && user.phone !== 'null' ">
+      <!-- <tr *ngIf="user && user.phone !== 'null' ">
         <td >Seller Phone Number {{user.phone}}</td>
-      </tr>
+      </tr> -->
 
   </table>
 </div>
@@ -28,7 +28,7 @@
 <div class="wrapper">
   <div class="cards_wrap">
     <div *ngFor="let item of products" class="card_item">
-      <div  routerLink="/single/{{item.id}}">
+      <div  routerLink="/product/{{item.id}}">
       <div class="card_inner">
         <div class="card_top">
           <img src="{{item.image1}}"  alt="">
@@ -53,7 +53,7 @@
 
       <div class="cartbutton">
         <button (click)="addItemToBasket(item)" *ngIf="item.colors.length == 0 && item.sizes.length == 0 && !isinBasket(item.id) && item.quantity !== 0">Add To Cart</button>
-        <button routerLink="/single/{{item.id}}" *ngIf="(item.colors.length >= 1 || item.sizes.length >= 1) && !isinBasket(item.id) && item.quantity !== 0">Select Options</button>
+        <button routerLink="/product/{{item.id}}" *ngIf="(item.colors.length >= 1 || item.sizes.length >= 1) && !isinBasket(item.id) && item.quantity !== 0">Select Options</button>
         <button class="added" *ngIf="isinBasket(item.id)">Added</button>
         <button *ngIf="item.quantity == 0">No Quantity</button>
       </div>

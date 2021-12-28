@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'sellerproduct',  component: ProductComponent, canActivate: [AdminGuard]},
   {path: 'error',  component: ErrorComponent},
   {path: 'edit/:id',  component: AddeditproductComponent,canActivate: [AdminGuard]},
-  {path: 'single/:id', component: SingleComponent, resolve: {product: ProductDetailedResolver}},
+  {path: 'product/:id', component: SingleComponent, resolve: {product: ProductDetailedResolver}},
   {path: 'admin',  component: AdminComponent, canActivate: [AdminGuard]},
 ];
 

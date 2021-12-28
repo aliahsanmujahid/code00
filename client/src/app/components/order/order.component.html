@@ -33,7 +33,7 @@
       <a >Order Id: {{item.randnum}}</a>
       <a >Status:{{item.status}}</a>
       <div class="topnav-right">
-        <a (click)="viewOrder(item.id)" >View</a>
+        <a style="cursor: pointer;" (click)="viewOrder(item.id)" >View</a>
         <!-- <a *appHasRole='["Admin"]' (click)="deleteOrder(item.id)">Delete</a> -->
       </div>
     </div> 
@@ -76,6 +76,10 @@
       <tr *ngIf="sellerid">
         <td>Primary Id</td>
         <td>{{item.id}}</td>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>{{item.orderDate | date: 'short'}}</td>
       </tr>
     </table>
 
@@ -138,10 +142,6 @@
             <td>Status</td>
             <td>{{item.status}}</td>
           </tr>
-          <tr *ngIf="sellerid">
-            <td>Date</td>
-            <td>{{item.orderDate}}</td>
-          </tr>
           <tr>
             <td>SubTotal</td>
             <td>{{item.subtotal}}</td>
@@ -166,10 +166,10 @@
       <h4 *ngIf="item.status === 'Confirmed'">Contact If You Need Any Help</h4>
     <div class="topnav margin2">
           <span *ngIf="item.status === 'Delivered'">
-            <a  (click)="changecutomerstatus(item.id,'Confirmed')">Confirm Order</a>
+            <a style="cursor: pointer;"  (click)="changecutomerstatus(item.id,'Confirmed')">Confirm Order</a>
           </span>
           <span *ngIf="item.status === 'Confirmed'">
-            <a  (click)="changecutomerstatus(item.id,'Delivered')">Not Confirmed Yet</a>
+            <a style="cursor: pointer;" (click)="changecutomerstatus(item.id,'Delivered')">Not Confirmed Yet</a>
           </span>
     </div> 
   </span>    
@@ -177,7 +177,7 @@
     <div class="topnav margin2">
       <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Pending')">Pending</a>
       <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Approved')">Approve</a>
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delivered')">Delevar</a>
+      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delivered')">Deliver</a>
       
       <!-- <span *ngIf="item.status === 'Delivered' ">
         <a *appHasRole='["Admin","Member"]' (click)="changeStatus(item.id,'Confirmed')">Confirm</a>
@@ -186,7 +186,7 @@
     </div>  
   </span>
 
-  <div class="padding">
+  <div class="padding displanone">
 
   </div>
 
@@ -220,8 +220,10 @@
           <td>{{p.totalPrice}}</td>
         </tr>
       </table>
+      <div class="padding"></div>
       <div class="margin2"></div>
     </span>
+
   </div>
   </span>
 </span>

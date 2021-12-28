@@ -91,10 +91,10 @@ export class AppComponent {
     this.alert = !this.alert;
   }
   customerorders(){
-    this.router.navigate(['order', {  'customerid': this.UserId}]);
+    this.router.navigate(['order', {  'codec': this.UserId}]);
   }
   customerordersmobile(){
-    this.router.navigate(['order', {  'customerid': this.UserId}]);
+    this.router.navigate(['order', {  'codec': this.UserId}]);
     this.alert = !this.alert;
   }
   alerttoggle(){
@@ -205,11 +205,11 @@ export class AppComponent {
 
 
   getCatProduct(cate: number){
-    this.router.navigate(['shop', {  'cate':cate }]);
+    this.router.navigate(['shop', {  'v':cate }]);
   
   }
   getsubCatProduct(subcate: number){
-    this.router.navigate(['shop', { 'subcate':subcate }]);
+    this.router.navigate(['shop', { 'vv':subcate }]);
   }
   searchProduct(){
     this.router.navigate(['shop', { 'search':this.search }]);

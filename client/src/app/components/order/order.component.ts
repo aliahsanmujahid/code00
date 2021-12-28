@@ -46,13 +46,13 @@ export class OrderComponent implements OnInit {
         
       });
       this.route.params.subscribe(params => {
-        if(params.sellerid){
-         this.sellerid = params.sellerid;
+        if(params.codes){
+         this.sellerid = params.codes;
          this.customerid = null;
          this.getorders();
         }
-        if(params.customerid){
-         this.customerid = params.customerid;
+        if(params.codec){
+         this.customerid = params.codec;
          this.sellerid = null;
          this.getorders();
         }
@@ -69,6 +69,7 @@ export class OrderComponent implements OnInit {
     this.singleorder = this.orders.filter(i => i.id == id);
 
     this.orderview = true;
+    window.scrollTo(0, 0);
   }
   // deleteOrder(id:number){
 

@@ -113,7 +113,7 @@ div5Function(){
   this.div4=false;
   this.div6=false;
   this.div7=false;
-  this.router.navigate(['order', {  'sellerid': this.UserId}]);
+  this.router.navigate(['order', {  'codes': this.UserId}]);
 }
 div6Function(){
   this.div6=true

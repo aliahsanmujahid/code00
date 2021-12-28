@@ -58,10 +58,10 @@
                     </span>
                     <a routerLink='/sellers' >Sellers</a>
                     <span *ngIf="accountService.currentUser$ | async">
-                      <a (click)="customerorders()">Orders</a>
-                      <a routerLink='/admin' *appHasRole='["Admin","Seller"]' >Admin</a>
+                      <a style="cursor: pointer;" (click)="customerorders()">Orders</a>
+                      <a style="cursor: pointer;" routerLink='/admin' *appHasRole='["Admin","Seller"]' >Admin</a>
                     </span>
-                    <a *ngIf="accountService.currentUser$ | async" (click)="logout()">Logout</a>
+                    <a style="cursor: pointer;" *ngIf="accountService.currentUser$ | async" (click)="logout()">Logout</a>
                 </div>
             </li>
         </ul>

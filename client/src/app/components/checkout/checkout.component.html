@@ -19,7 +19,7 @@
     <span *ngIf="(accountService.currentUser$ | async) === null">
       <h4  class="spanmargin">Please LogIn</h4>
       Checkout Form is Hidden From UnAuthorized User
-      <h4>Our Only Login option is by Gmail</h4>
+      <h4>Our Only Login Option is by Gmail</h4>
     </span>
 
     <span  *ngIf="(accountService.currentUser$ | async) && ordersucces === false">
@@ -58,9 +58,9 @@
         <li (click)="bkash()" [style.background-color]="bkashpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Bkash</h3>                                                                                                        
         </li>
-        <li (click)="rocket()" [style.background-color]="rocketpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
+        <!-- <li (click)="rocket()" [style.background-color]="rocketpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Rocket</h3>
-        </li>
+        </li> -->
         <li (click)="nagad()" [style.background-color]="nagadpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Nagad</h3>
         </li>
@@ -79,7 +79,7 @@
       <input  [(ngModel)]="orderCreate.bkashTransactionID" type="text" id="Bkasht" required minlength="5" name="Bkasht" placeholder="Transition Id..">
       </div>
 
-      <div *ngIf="rocketpay" class="bkash">
+      <!-- <div *ngIf="rocketpay" class="bkash">
         <h4>Rocket Personal: <strong> {{getutality.rocket}}</strong></h4>  
         <span>[Send Money<span class="highlight" >(Not Payment)</span>]</span>
         <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
@@ -90,10 +90,10 @@
         <input  [(ngModel)]="orderCreate.rocket" type="text" id="Rocket" required minlength="11"  maxlength="12"  name="Rocket" placeholder="Rocket Number..">
         <label for="Rockettd">Rocket Transaction ID</label>
         <input  [(ngModel)]="orderCreate.rocketTransactionID" type="text" id="Rockettd" required minlength="5" name="Rockettd" placeholder="Transtion Id..">
-        </div>
+        </div> -->
 
         <div *ngIf="nagadpay" class="bkash">
-          <h4>Nagad Personal: <strong>{{getutality.namgad}}</strong></h4>  
+          <h4>Nagad Personal:  <strong>{{getutality.namgad}}</strong></h4>  
           <span>[Send Money<span class="highlight">(Not Payment)</span>]</span>
           <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
           <h4>Then Fill This Form With Number and Transaction ID</h4>

@@ -16,9 +16,9 @@ export class AddeditproductComponent implements OnInit {
 
   product: IProduct = {
     id: 0,
-    cateId: 0,
-    subcateId: 0,
-    subsubcateId: 0,
+    cateId: 10000000,
+    subcateId: 10000000,
+    subsubcateId: 10000000,
     name: '',
     description: '',
     highLights: '',
@@ -104,8 +104,8 @@ export class AddeditproductComponent implements OnInit {
     if(this.product.cateId !== 0 && this.product.cateId !== -1){
       this.categoryService.getsubmenuid(this.product.cateId).subscribe( res => {
         this.subcategoryes = res;
-        this.product.subcateId = null;
-        this.product.subsubcateId = null;
+        this.product.subcateId = 10000000;
+        this.product.subsubcateId = 10000000;
       }),
       error => {
       };
@@ -115,7 +115,7 @@ export class AddeditproductComponent implements OnInit {
     if(this.product.subcateId !== 0 && this.product.subcateId !== -1){
       this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
         this.subsubcategoryes = res;
-        this.product.subsubcateId = null;
+        this.product.subsubcateId = 10000000;
       }),
       error => {
       };
@@ -129,7 +129,7 @@ export class AddeditproductComponent implements OnInit {
       if(this.product.image1 !== ''){
         if(ProductForm.valid){
           this.productService.createProduct(this.product).subscribe( res =>{
-
+            location.reload()
          }),
          error => {
  

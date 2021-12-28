@@ -106,7 +106,7 @@ export class ProductService {
 
 
  getcateProducts(id: number,page){
-  var response = this.productCache.get(Object.values(['cate'+id+page]).join('-'));
+  var response = this.productCache.get(Object.values(['v'+id+page]).join('-'));
   if(page == 1 && response){
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
@@ -121,14 +121,14 @@ export class ProductService {
     return of(response);
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/getCateProduct/' + id +"/"+ page).pipe(map(response => {
-      this.productCache.set(Object.values(['cate'+id+page]).join('-'), response);
+      this.productCache.set(Object.values(['v'+id+page]).join('-'), response);
       return response;
     }))
   }
 }
 
 getsubcateProducts(id: number,page){
-  var response = this.productCache.get(Object.values(['subcate'+id+page]).join('-'));
+  var response = this.productCache.get(Object.values(['vv'+id+page]).join('-'));
   if(page == 1 && response){
     this.newproduct = [];
     for (var i = 0; i < this.skip; i++) {
@@ -143,7 +143,7 @@ getsubcateProducts(id: number,page){
     return of(response);
   }else{
     return this.http.get<Product[]>(this.baseUrl + 'product/getsubCateProduct/' + id + "/"+ page).pipe(map(response => {
-      this.productCache.set(Object.values(['subcate'+id+page]).join('-'), response);
+      this.productCache.set(Object.values(['vv'+id+page]).join('-'), response);
       return response;
     }))
   }

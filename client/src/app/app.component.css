@@ -262,8 +262,13 @@ padding-top: 66px;
 @media (max-width:450px){
 
   .rightbar{
-    width: 97vw!important;
+    width: 100vw!important;
   }
+  .row {
+    border-bottom: 2px solid rgb(194, 192, 192);
+    width: 96%;
+    margin: 0 auto;
+}
  
  
  }
@@ -471,12 +476,12 @@ padding-top: 66px;
       }
       
       #check2:checked ~ .rightbar .rightmenu{
-        right: 348px;
+        right: 350px;
       }  
       .toggle2{
-        width: 16px;
+          width: 16px;
           height: 103px;
-          border-radius: 10px 0px 0px 10px;
+          border-radius: 7px 0px 0px 7px;
       }   
       .rightmenu{
         position: fixed;

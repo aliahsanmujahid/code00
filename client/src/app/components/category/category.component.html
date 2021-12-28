@@ -36,7 +36,6 @@
       <form #f="ngForm" (ngSubmit)="createSubCategory()" >
       <div class="form-group">
         <select [(ngModel)]="subcategory.MenuId" class="form-control" name="MenuId" >
-  
           <option *ngFor="let m of categoryes" value="{{ m.id }}">{{ m.name }}</option>
         </select>
           </div>
@@ -69,7 +68,6 @@
       <form #f="ngForm" (ngSubmit)="createSubSubCategory()" >
         <div class="form-group">
           <select [(ngModel)]="subsubcategory.MenuId" class="form-control" name="MenuId" >
-  
             <option *ngFor="let m of subcategoryes" value="{{ m.id }}">{{ m.name }}</option>
           </select>
             </div>

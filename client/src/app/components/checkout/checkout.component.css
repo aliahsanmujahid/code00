@@ -126,6 +126,9 @@ input[type=text],input[type=number], select,textarea {
     width: 100%;
     margin: 4px auto 8px auto;
   }
+  strong{
+    display: block;
+  }
   }
 
 
