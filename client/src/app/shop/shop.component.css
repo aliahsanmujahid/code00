@@ -94,8 +94,8 @@ img {
   .highlight h4{
     width: 50%;
     float: left;
-    /* margin: 5px 0px 2px 4px; */
     font-size: 12px;
+    word-break: break-word;
   }
   button {
     width: 95%;
@@ -128,7 +128,7 @@ img {
   span{
     margin-right: 10px;
     font-weight: 900;
-    color: rgba(34, 30, 15, 0.418);
+    color: rgba(34, 30, 15, 0.637);
     font-style: oblique;
   }
 
@@ -151,10 +151,10 @@ img {
   .delprice:after{
     position: absolute;
     content: '';
-    width: 100%;
-    top: 50%;
+    width: 110%;
+    top: 57%;
     left: 0%;
-    border-bottom: 2px solid rgba(255, 2, 2, 0.322);
+    border-bottom: 2px solid rgba(255, 2, 2, 0.568);
   }
 
     
@@ -187,7 +187,9 @@ img {
    
 
 
-
+  .priceh6{
+    display: none;
+  }
 
 
   @media (max-width: 1200px) {
@@ -215,6 +217,13 @@ img {
     .cards_wrap .card_item {
       width: 50%;
       padding: 0;
+    }
+    .priceh4{
+      display: none;
+    }
+    .priceh6{
+      display: block;
+      margin-bottom: 2px;
     }
   }
 

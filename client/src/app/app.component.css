@@ -63,7 +63,7 @@ a{
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  text-align: left;
+  text-align: center;
 }
 
 .dropdown-content a:hover {
@@ -275,6 +275,14 @@ padding-top: 66px;
 
 
 
+.loginbutton li{
+  display: block;
+  padding: 7px!important;
+  margin: -1px!important;
+}
+.loginwidth {
+  width: 90px!important;
+}
 
 
 

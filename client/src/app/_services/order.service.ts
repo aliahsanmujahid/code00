@@ -26,8 +26,8 @@ export class OrderService {
     return this.http.post(this.baseUrl + 'orders/ordercheck', items);
   }
 
-  getOrderById(id: string) {
-  return this.http.get<IOrder[]>(this.baseUrl + 'orders/getOrderById/' + id);
+  getOrderById(id: string,sellerid: number) {
+  return this.http.get<IOrder[]>(this.baseUrl + 'orders/getOrderById/' + id +'/' + sellerid);
   }
   deleteOrder(id: number) {
     return this.http.delete(this.baseUrl + 'orders/deleteOrder/' + id);

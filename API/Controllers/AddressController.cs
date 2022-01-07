@@ -30,27 +30,26 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("getaddress")]
-        public async Task<ActionResult<AddressDto>> GetUserAddress()
+        public ActionResult<AddressDto> GetUserAddress()
         {
-            var useremail = User.FindFirstValue(ClaimTypes.Email);
 
-            var user = await _context.Users
+            var user =  _context.Users
             .Include(a => a.Address)
-            .FirstOrDefaultAsync(e => e.Email == useremail);
+            .FirstOrDefault(i => i.Id == User.GetUserId());
+
 
             return _mapper.Map<Address, AddressDto>(user.Address);
         }
 
 
         [Authorize]
-        [HttpPost("create")]
+        [HttpPost("createaddress")]
         public async Task<ActionResult<AddressDto>> CreateUserAddress(AddressDto address)
         {
-            var useremail = User.FindFirstValue(ClaimTypes.Email);
-
-            var user = await _context.Users
+            
+            var user = _context.Users
             .Include(a => a.Address)
-            .FirstOrDefaultAsync(e => e.Email == useremail);
+            .FirstOrDefault(i => i.Id == User.GetUserId());
 
             user.Address = _mapper.Map<AddressDto, Address>(address);
 

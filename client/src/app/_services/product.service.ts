@@ -45,8 +45,9 @@ export class ProductService {
       
       this.newproduct = [];
       for (var i = 0; i < this.skip; i++) {
-
-        this.newproduct.push(response[i]);
+        if(response[i]){
+          this.newproduct.push(response[i]);
+        }
       }
      
       return of(this.newproduct);
@@ -68,7 +69,7 @@ export class ProductService {
  }
 
 
-  getuserProducts(id,page){
+  getsellerProducts(id,page){
      var response = this.productCache.get(Object.values(['userProducts'+ id+page]).join('-'));
      if(page == 1 && response){
       this.newproduct = [];
@@ -83,7 +84,7 @@ export class ProductService {
     if (response && page !== 1) {
       return of(response);
     }else{
-      return this.http.get<Product[]>(this.baseUrl + 'product/getUserProducts/' + id +"/"+ page).pipe(map(response => {
+      return this.http.get<Product[]>(this.baseUrl + 'product/getSellerProducts/' + id +"/"+ page).pipe(map(response => {
         this.productCache.set(Object.values(['userProducts'+ id+page]).join('-'), response);
         return response;
       }))

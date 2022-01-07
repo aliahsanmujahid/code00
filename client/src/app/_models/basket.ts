@@ -3,6 +3,7 @@ import { Colors, Sizes } from './product';
 
 export interface IBasket {
     shopId:Number;
+    sellername:string;
     items: IBasketItem[];
 }
 
@@ -19,6 +20,7 @@ export interface IBasketItem {
 
 export class Basket implements IBasket {
     shopId:Number;
+    sellername:string;
     items: IBasketItem[] = [];
 }
 

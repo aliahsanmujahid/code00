@@ -1,7 +1,7 @@
 import { ProductService } from 'src/app/_services/product.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from 'src/app/_services/account.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -22,15 +22,23 @@ export class ProductComponent implements OnInit {
   
   constructor(private productService: ProductService, 
     private accountService: AccountService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.accountService.currentUser$.subscribe( x => {
+      if(!x){
+         this.router.navigateByUrl('profile');
+      }
+    });
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
     // Object.keys(this.search).length === 0 && this.search.constructor === Object
       if (Object.keys(params).length === 0) {
         this.accountService.currentUser$.subscribe( x => {
-          this.UserId = x.id;
+          if(x){
+            this.UserId = x.id;
+          }
           
         });
       }else{
@@ -45,7 +53,7 @@ export class ProductComponent implements OnInit {
      this.stopscroll = false;
      this.noproduct = false;
     
-      this.productService.getuserProducts(this.UserId,this.page).subscribe( res =>{
+      this.productService.getsellerProducts(this.UserId,this.page).subscribe( res =>{
         this.products = res;
         if(res.length == 0 || res == null || res.length < 10){
           this.noproduct = true;
@@ -70,7 +78,7 @@ export class ProductComponent implements OnInit {
 
   onScroll(): void {
     if(this.stopscroll == false){
-      this.productService.getuserProducts(this.UserId,++this.page).subscribe( res =>{
+      this.productService.getsellerProducts(this.UserId,++this.page).subscribe( res =>{
         this.products.push(...res);
           if(res.length == 0 || res == null || res.length < 10){
            this.noproduct = true;

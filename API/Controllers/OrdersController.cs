@@ -13,6 +13,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Core.Entities.OrderAggregate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace API.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet("getSellerOrders/{id}/{page}/{status}")]
         public async Task<ActionResult<IEnumerable<Order>>> getSellerOrders(int id,int page,string status){
 
@@ -71,7 +72,7 @@ namespace API.Controllers
           return mappedorders;            
           
         }
-
+        [Authorize]
         [HttpGet("getCustomerOrders/{id}/{page}/{status}")]
         public async Task<ActionResult<IEnumerable<Order>>> getCustomerOrders(int id,int page,string status){
 
@@ -111,8 +112,9 @@ namespace API.Controllers
           return mappedorders;            
           
         }
-        [HttpGet("getOrderById/{id}")]
-        public async  Task<Order> getOrderById(int id){
+        [Authorize(Policy = "SellerRole")]
+        [HttpGet("getOrderById/{id}/{sellerid}")]
+        public async  Task<Order> getOrderById(int id,int sellerid){
 
           try{
            var orderd = _context.Orders
@@ -127,6 +129,10 @@ namespace API.Controllers
               foreach(var role in roles){
                     if(role != "Admin" && role != "Moderator"){
                      return null;
+                    }else{
+                      if(orderd.Seller_id != sellerid){
+                          return null;
+                      } 
                     }
               }
            }
@@ -146,6 +152,7 @@ namespace API.Controllers
           
         }
 
+        [Authorize(Policy = "SellerRole")]
         [HttpPut("changeStatus/{id}/{userid}/{status}")]
         public async Task<ActionResult<Order>> update(int id,int userid,string status){
            
@@ -179,6 +186,7 @@ namespace API.Controllers
           return Ok(order);
 
         }
+        [Authorize]
         [HttpPut("changecutomerstatus/{id}/{userid}/{status}")]
         public  ActionResult<Order> changecutomerstatus(int id,int userid,string status){
            
@@ -212,19 +220,19 @@ namespace API.Controllers
 
 
 
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpDelete("deleteOrder/{id}")]
+        public  ActionResult deleteOrder(int id){
 
-        // [HttpDelete("deleteOrder/{id}")]
-        // public  ActionResult deleteOrder(int id){
-
-        //    var order = _context.Orders.Find(id);
+           var order = _context.Orders.Find(id);
            
-        //   _context.Orders.Remove(order); 
+          _context.Orders.Remove(order); 
 
-        //   _context.SaveChanges();
+          _context.SaveChanges();
 
-        //   return Ok();            
+          return Ok();            
           
-        // }
+        }
 
  
 
@@ -247,7 +255,7 @@ namespace API.Controllers
 
 
 
-
+        [Authorize] 
         [HttpPost("order")]
         public ActionResult order(OrderDto orderDto){
 

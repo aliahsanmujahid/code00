@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/user';
@@ -9,10 +10,14 @@ import { User } from 'src/app/_models/user';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor() { }
+  constructor(public accountService:AccountService,public router:Router) { }
 
   ngOnInit(): void {
-    
+    this.accountService.currentUser$.subscribe( x => {
+       if(x){
+        this.router.navigateByUrl('');
+       }
+    });
   }
 
 }

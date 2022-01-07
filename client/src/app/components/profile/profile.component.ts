@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from './../../_services/category.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -13,19 +14,25 @@ export class ProfileComponent implements OnInit {
 
   noaddress = false;
   changenam = false;
-  createaddress: any = { };
-  name: any = { };
+  createaddress: any = { 
+    district:'None',
+    upazila:'None'
+  };
+  name: any = { 
+    name:''
+  };
   useraddress:any = [];
   districts: any = [];
   upazilla: any = [];
   userId:number;
 
-  constructor(public accountService: AccountService,public categoryService: CategoryService,public router: Router) { }
+  constructor(public toastr: ToastrService,public accountService: AccountService,public categoryService: CategoryService,public router: Router) { }
 
   ngOnInit(): void {
     const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
     if(user){
       this.userId = user.id;
+      this.name.name = user.displayName;
       this.getaddress();
     }else{
           this.router.navigateByUrl('');
@@ -33,14 +40,18 @@ export class ProfileComponent implements OnInit {
     const disupa = JSON.parse(localStorage.getItem('disupa'));
     if(disupa){
       this.districts = disupa;
-      const selected = this.districts.find(m => m.name === this.useraddress.district);
-      this.upazilla = selected ? selected.subDto : [];
+      if(this.useraddress !== null){
+        const selected = this.districts.find(m => m.name === this.useraddress.district);
+        this.upazilla = selected ? selected.subDto : [];
+      }
     }else{
       this.categoryService.getdisrictsandupazilla().subscribe(res =>{
         localStorage.setItem('disupa', JSON.stringify(res));
         this.districts = res;
+        if(this.useraddress !== null){
         const selected = this.districts.find(m => m.name === this.useraddress.district);
         this.upazilla = selected ? selected.subDto : [];
+        }
       });
     }
   }
@@ -69,31 +80,43 @@ export class ProfileComponent implements OnInit {
   }
 
   setAddress(){
-    this.accountService.create(this.createaddress).subscribe(res=>{
+    this.accountService.createaddress(this.createaddress).subscribe(res=>{
         localStorage.setItem('address'+this.userId , JSON.stringify(res));
         this.useraddress = res;
         this.noaddress = !this.noaddress;
     });
   }
   setName(){
-    this.accountService.changeName(this.name).subscribe(res =>{
-     const user: User = JSON.parse(localStorage.getItem('eidhatuser')); 
-     user.displayName = this.name.name;
-     localStorage.setItem('eidhatuser', JSON.stringify(user));
-     this.accountService.setUser(user);
-     this.changenam = !this.changenam;
-    });
+
+    var tempname:string;
+    tempname = this.name.name;
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser')); 
+
+    if(tempname.toLowerCase() === 'eidhat' && user.roles.includes('Seller') || 
+       tempname.toLowerCase() === 'eidhat' && user.roles.includes('Member') ){
+      this.toastr.error("EidHat Name Not Allowed");
+    }else{
+      this.accountService.changeName(this.name).subscribe(res =>{
+        if(res){
+          user.displayName = this.name.name;
+          localStorage.setItem('eidhatuser', JSON.stringify(user));
+          this.accountService.setUser(user);
+          this.changenam = !this.changenam;
+        }
+      });
+    }
 
   }
 
   getaddress(){
+     this.useraddress = null;
      const address = JSON.parse(localStorage.getItem('address'+this.userId));
      if(address){
       this.useraddress = address;
      }else{
       this.accountService.getaddress().subscribe(res =>{
-          this.useraddress = res;
-          localStorage.setItem('address'+this.userId , JSON.stringify(res));
+            this.useraddress = res;
+            localStorage.setItem('address'+this.userId , JSON.stringify(res));
      });
      }
   }

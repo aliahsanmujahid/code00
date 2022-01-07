@@ -10,7 +10,6 @@ namespace API.Entities
         public string Image { get; set; }
         public Address Address { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
-        public ICollection<Favorite> Favorites { get; set; }
         public ICollection<Product> Products { get; set; }
        
     }

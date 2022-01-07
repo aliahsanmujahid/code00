@@ -14,7 +14,8 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-
+        
+        public DbSet<Menu> AppUser { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<SubMenu> SubMenu { get; set; }
         public DbSet<SubSubMenu> SubSubMenu { get; set; }
@@ -25,7 +26,6 @@ namespace API.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Favorite> Favorites { get; set; }
         public DbSet<ChangeId> ChangeIds { get; set; }
         public DbSet<District> District { get; set; }
         public DbSet<Upazilla> Upazilla { get; set; }
@@ -83,20 +83,7 @@ namespace API.Data
                .HasForeignKey(b => b.OrderId)
                .OnDelete(DeleteBehavior.Cascade);      
 
-            //one to many relation
-            builder.Entity<Favorite>()
-                .HasKey(k => new {k.AppUserId, k.ProductId});
-            builder.Entity<Favorite>()
-                .HasOne(s => s.AppUser)
-                .WithMany(l => l.Favorites)
-                .HasForeignKey(s => s.AppUserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Favorite>()
-                .HasOne(s => s.Product)
-                .WithMany(l => l.Favorites)
-                .HasForeignKey(s => s.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);    
+              
 
         }    
 

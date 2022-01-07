@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -33,14 +34,18 @@ namespace API.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
-        {
-            var user = await _userManager.FindByEmailAsync(loginDto.email);
-
-            if (user == null){
+        {   
+             
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == loginDto.email);
+    
+            if(user == null){ 
+                if(loginDto.username == string.Empty || loginDto.image == string.Empty){
+                    return BadRequest();  
+                }
                 return await gRegister(loginDto);
             }
 
-            // if(user != null ){
+            if(user != null ){
             var result = await _signInManager.CheckPasswordSignInAsync(user, "poipoi", false);
 
             if (result.Succeeded)
@@ -48,24 +53,26 @@ namespace API.Controllers
                var roles = await _userManager.GetRolesAsync(user);
 
                foreach(var role in roles){
-                    if(role != "Admin" && role != "Moderator" && role != "Seller"){
+                    if(loginDto.username != string.Empty && loginDto.image != string.Empty
+                    && role != "Admin" && role != "Moderator" && role != "Seller"){
                        user.DisplayName = loginDto.username;
                        user.Image = loginDto.image;
                        _context.SaveChanges();
                     }else{
-                       user.Image = loginDto.image;
-                       _context.SaveChanges();
+                       if(loginDto.image != string.Empty){
+                           user.Image = loginDto.image;
+                           _context.SaveChanges();
+                       }
                     }
               }
 
                 return await CreateUserObject(user);
             }
-            // }
+            }
 
             return BadRequest("Problem Login user");
-
-           
         }
+
         [Authorize]
         [HttpPost("setname/{name}")]
         public async Task<ActionResult> setname(string name)
@@ -108,22 +115,22 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, "poipoi");
 
-            // if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded) return BadRequest(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            // if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            // if (result.Succeeded)
-            // {
+            if (result.Succeeded)
+            {
                 
                 return  await CreateUserObject(user);
-            // }
+            }
 
-            // return BadRequest("Problem registering user");
+            return BadRequest("Problem registering user");
         }
 
-
+        
 
         private async Task<UserDto> CreateUserObject(AppUser user)
         {
@@ -133,9 +140,87 @@ namespace API.Controllers
                 DisplayName = user.DisplayName,
                 Username = user.UserName,
                 Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
                 Image = user.Image,
                 Token = await _tokenService.CreateToken(user),
             };
+        }
+
+
+
+
+
+
+        [AllowAnonymous]
+        [HttpPost("phonelogin")]
+        public async Task<ActionResult> phonelogin(SignupDto signupDto)
+        {
+
+           var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == signupDto.phonenumber);
+
+           if(user != null){
+               var result = await _signInManager.CheckPasswordSignInAsync(user, signupDto.password, false);
+               if (result.Succeeded){
+               return Ok(CreateUserObject(user).Result);
+            }
+           }
+
+
+           return Ok("problem");
+       
+        }
+
+
+
+        [AllowAnonymous]
+        [HttpPost("signup")]
+        public async Task<ActionResult> signup(SignupDto signupDto)
+        {
+            var user = _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == signupDto.phonenumber);
+    
+
+            if(user.Result == null){ 
+
+            var rand = new Random();
+            int code = rand.Next(1, 10000);
+
+
+            var usercreate = new AppUser
+            {
+                DisplayName = signupDto.username,
+                UserName = signupDto.username.Replace(" ", "")+string.Format(code.ToString()),
+                Image = signupDto.image,
+                PhoneNumber = signupDto.phonenumber,
+                PhoneNumberConfirmed = false
+                
+            };
+
+            var result = await _userManager.CreateAsync(usercreate, signupDto.password);
+            var roleResult = await _userManager.AddToRoleAsync(usercreate, "Member");
+                  
+             return Ok(CreateUserObject(usercreate).Result);
+
+            }
+            return Ok("problem");
+           
+        }
+
+        [AllowAnonymous]
+        [HttpPost("forgetpass")]
+        public async Task<ActionResult> forgetpass(SignupDto signupDto)
+        {
+
+            var user = await _context.Users.Where(u => u.PhoneNumber == signupDto.phonenumber).SingleOrDefaultAsync();
+            
+            if(user != null){
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, signupDto.password);
+                return Ok(CreateUserObject(user).Result);
+            }
+            
+
+            return Ok("problem");
+
         }
 
 

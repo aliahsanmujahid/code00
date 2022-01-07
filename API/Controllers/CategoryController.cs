@@ -22,7 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpPost("createmenu")]
         public ActionResult<Menu> createmenu(MenuDto menuDto)
         {
@@ -34,11 +34,25 @@ namespace API.Controllers
             _context.Menu.Add(menu);
             _context.SaveChanges();
 
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
+
             return menu;
          
            
         }
-        
+        [Authorize(Policy = "ModerateRole")]
         [HttpPost("createdisrict")]
         public List<District> createdisrict(MenuDto menuDto)
         {
@@ -57,11 +71,26 @@ namespace API.Controllers
             _context.SaveChanges();
             }
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+          
+
             return _context.District.ToList();
 
             
         }
-
+        [Authorize(Policy = "ModerateRole")]
         [HttpPost("createupazilla")]
         public  IEnumerable<SubMenuDto> createupazilla(SubMenuDto subMenuDto)
         {
@@ -86,6 +115,21 @@ namespace API.Controllers
              
             var upazi = _context.Upazilla.ToList(); 
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
+
             return _mapper.Map<List<Upazilla>,List<SubMenuDto>>(upazi);
 
         }
@@ -103,7 +147,7 @@ namespace API.Controllers
 
 
 
-        // [Authorize(Policy = "ModeratePhotoRole")]
+
         [HttpGet("getmainmenu")]
         public async Task<IEnumerable<Menu>> getmainmenu()
         {
@@ -111,7 +155,7 @@ namespace API.Controllers
             return await _context.Menu.ToListAsync();
 
         }
-        // [Authorize(Policy = "ModeratePhotoRole")]
+
         [HttpGet("getsubmenu")]
         public async Task<IEnumerable<SubMenu>> getsubmenu()
         {
@@ -119,7 +163,7 @@ namespace API.Controllers
             return await _context.SubMenu.ToListAsync();
 
         }
-        // [Authorize(Policy = "ModeratePhotoRole")]
+
         [HttpGet("getsubsubmenu")]
         public async Task<IEnumerable<SubSubMenu>> getsubsubmenu()
         {
@@ -128,7 +172,7 @@ namespace API.Controllers
 
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpPost("createsubmenu")]
         public ActionResult<SubMenu> createsubmenu(SubMenuDto subMenuDto)
         {
@@ -146,13 +190,28 @@ namespace API.Controllers
             _context.SubMenu.Add(subMenu);
             _context.SaveChanges();
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
+
             return new SubMenu {
                 Id = subMenu.Id,
                 Name = subMenu.Name,
             };
            
         }
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpPost("createsubsubmenu")]
         public ActionResult<SubSubMenu> createsubsubmenu(SubMenuDto subMenuDto)
         {
@@ -169,6 +228,21 @@ namespace API.Controllers
 
             _context.SubSubMenu.Add(subsubMenu);
             _context.SaveChanges();
+
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
 
             return new SubSubMenu {
                 Id = subsubMenu.Id,
@@ -194,7 +268,7 @@ namespace API.Controllers
         }
 
         
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpDelete("deletemenu/{id}")]
         public ActionResult deletemenu(int id)
         {
@@ -204,9 +278,24 @@ namespace API.Controllers
             _context.Menu.Remove(menu);
             _context.SaveChanges();
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
+
             return Ok();
         }
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpDelete("deletesubmenu/{id}")]
         public ActionResult deletesubmenu(int id)
         {
@@ -216,9 +305,23 @@ namespace API.Controllers
             _context.SubMenu.Remove(menu);
             _context.SaveChanges();
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
             return Ok();
         }
-        [Authorize(Policy = "ModeratePhotoRole")]
+        [Authorize(Policy = "ModerateRole")]
         [HttpDelete("deletesubsubmenu/{id}")]
         public ActionResult deletesubsubmenu(int id)
         {
@@ -228,10 +331,24 @@ namespace API.Controllers
             _context.SubSubMenu.Remove(menu);
             _context.SaveChanges();
 
+
+            //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
             return Ok();
         }
 
-        // [Authorize(Policy = "ModeratePhotoRole")]
+    
         [HttpGet("getsubcate/{id}")]
         public async Task<ActionResult> getsubcate(int id)
         {
@@ -246,7 +363,7 @@ namespace API.Controllers
             return Ok(submenu);
        
         }
-        // [Authorize(Policy = "ModeratePhotoRole")]
+ 
         [HttpGet("getsubsubcate/{id}")]
         public async Task<ActionResult> getsubsubcate(int id)
         {
@@ -287,7 +404,7 @@ namespace API.Controllers
               return 0;
           }else{
             Random rnd = new Random();
-            int num = rnd.Next(1,9);
+            int num = rnd.Next(1,100);
             changeid.Cid = num;
           }
           
@@ -311,7 +428,7 @@ namespace API.Controllers
         }
          
         }
-
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("createUtails")]
         public Utlites createUtails(UtilityDto utilityDto)
         {
@@ -333,6 +450,20 @@ namespace API.Controllers
           _context.Utlites.Add(utails);
 
           _context.SaveChanges();
+
+          //auto change
+          var changeid = _context.ChangeIds.Find(1);
+
+          if(changeid == null){
+              var cids = _context.ChangeIds.Add(new ChangeId{ Cid = 1});
+              _context.SaveChanges();
+          }else{
+            Random rnd = new Random();
+            int num = rnd.Next(1,100);
+            changeid.Cid = num;
+          }
+          _context.SaveChanges();
+
           return utails;
          
         }

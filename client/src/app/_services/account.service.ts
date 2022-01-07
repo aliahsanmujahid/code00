@@ -20,7 +20,6 @@ export class AccountService {
 
   
   login(model: any) {
-    window.scrollTo(0, 0);
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
@@ -28,6 +27,7 @@ export class AccountService {
       })
     )
   }
+
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
@@ -49,7 +49,9 @@ export class AccountService {
   }
 
   setUser(user: User) {
-    this.currentUserSource.next(user);
+    
+    this.setCurrentUser(user);
+
     // if (user) {
     //   if(user.roles.some(x => x === "Seller")){
     //     // this.router.navigateByUrl('/user/seller/'+user.id);
@@ -76,8 +78,8 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
 
-  create(model) {
-    return this.http.post(this.baseUrl + 'address/create', model);
+  createaddress(model) {
+    return this.http.post(this.baseUrl + 'address/createaddress', model);
   }
   changeName(name) {
     return this.http.post(this.baseUrl + 'Account/setname/' + name.name , {});
@@ -85,6 +87,39 @@ export class AccountService {
   getaddress() {
     return this.http.get(this.baseUrl + 'address/getaddress/');
   }
+
+
+
+
+
+
+  signup(model: any) {
+    return this.http.post(this.baseUrl + 'account/signup', model).pipe(
+      map((response: User) => {
+        this.setCurrentUser(response);
+       location.reload();
+      })
+    )
+  }
+  forgetpass(model: any) {
+    return this.http.post(this.baseUrl + 'account/forgetpass', model).pipe(
+      map((response: User) => {
+        this.setCurrentUser(response);
+        location.reload();
+      })
+    )
+  }
+  phonelogin(model: any) {
+    return this.http.post(this.baseUrl + 'account/phonelogin', model).pipe(
+      map((response: User) => {
+        this.setCurrentUser(response);
+        location.reload();
+      })
+    )
+  }
+
+
+
 
 
 

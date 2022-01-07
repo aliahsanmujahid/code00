@@ -82,7 +82,7 @@ input[type=text],input[type=number], select,textarea {
     margin: 10px 10px 10px 10px;
   }
   .spanmargin{
-    margin-top: 150px;
+    margin-top: 70px;
   }
   .summery{
     display: block;
@@ -129,6 +129,11 @@ input[type=text],input[type=number], select,textarea {
   strong{
     display: block;
   }
+  }
+
+
+  button:hover,h4{
+    cursor: pointer;
   }
 
 

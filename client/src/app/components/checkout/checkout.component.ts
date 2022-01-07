@@ -19,6 +19,7 @@ export class CheckoutComponent implements OnInit {
 
   user: User;
   UserId: Number;
+  sellerName:string;
   ordersucces = false;
   alert = false;
   bkashpay = false;
@@ -37,8 +38,8 @@ export class CheckoutComponent implements OnInit {
     name: '',
     phone: '',
     address: '',
-    district: '',
-    upazila: '',
+    district: 'select',
+    upazila: 'select',
     cashOnDelevary:'',
     bkash: '',
     bkashTransactionID: '',
@@ -60,9 +61,11 @@ export class CheckoutComponent implements OnInit {
     window.scrollTo(0, 0);
     this.QuantityCheck();
     this.accountService.currentUser$.subscribe( x => {
-      this.orderCreate.name = x.displayName;
-      this.user = x;
-      this.UserId = x.id;
+      if(x){
+        this.orderCreate.name = x.displayName;
+        this.user = x;
+        this.UserId = x.id;
+      }
     });
 
      if(this.user){
@@ -95,15 +98,20 @@ export class CheckoutComponent implements OnInit {
             this.categoryService.getdisrictsandupazilla().subscribe(res =>{
               localStorage.setItem('disupa', JSON.stringify(res));
               this.districts = res;
-              const selected = this.districts.find(m => m.name === this.address.district);
-              this.upazilla = selected ? selected.subDto : [];
+              if(this.address !== null){
+                const selected = this.districts.find(m => m.name === this.address.district);
+                this.upazilla = selected ? selected.subDto : [];
+              }
+
             });
             }else{
               this.categoryService.getdisrictsandupazilla().subscribe(res =>{
                 localStorage.setItem('disupa', JSON.stringify(res));
                 this.districts = res;
-                const selected = this.districts.find(m => m.name === this.address.district);
-                this.upazilla = selected ? selected.subDto : [];
+                if(this.address !== null){
+                  const selected = this.districts.find(m => m.name === this.address.district);
+                  this.upazilla = selected ? selected.subDto : [];
+                }
               });
               this.address = null;
             }
@@ -125,22 +133,34 @@ export class CheckoutComponent implements OnInit {
     
   }
   QuantityCheck(){
+
     const items = JSON.parse(localStorage.getItem('basket'));
     if(items){
-    //Same Shop Checking
-    if(items.shopId == this.UserId){
-      this.basketService.deleteBasket();
-      this.router.navigateByUrl('');
-      this.toastr.warning('You Can,t Buy Your Product');
-    }else{  
-    this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
-      if(res == true){
-        this.basketService.deleteBasket();
-        this.router.navigateByUrl('');
+      if(this.user){
+        if (this.user.roles.includes('Admin') 
+        || this.user.roles.includes('Seller') 
+        || this.user.roles.includes('Moderator')){
+          this.basketService.deleteBasket();
+          this.router.navigateByUrl('');
+          this.toastr.warning('You Can,t Buy Product');
+        }else{
+          this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
+            if(res == true){
+              this.basketService.deleteBasket();
+              this.toastr.info('Product Not Available');
+              location.reload();
+            }
+          })
+        }
+      }else{
+        this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
+          if(res == true){
+            this.basketService.deleteBasket();
+            this.toastr.info('Product Not Available');
+            location.reload();
+          }
+        })
       }
-
-    })
-    }
     }
   }
 
@@ -156,6 +176,13 @@ export class CheckoutComponent implements OnInit {
   }
   vieworder(){
     this.router.navigate(['order', {  'codec': this.user.id,'neworder':true}]);
+  }
+  loginpage(){
+    this.router.navigate(['auth', {  'login':true }]);
+  
+  }
+  signuppage(){
+    this.router.navigate(['auth', {  'signup':true }]);
   }
 
   
@@ -197,8 +224,8 @@ export class CheckoutComponent implements OnInit {
      
     });
     this.orderCreate.seller_id = items.shopId;
+    this.sellerName = items.sellername;
  
-    
     
   }
 
@@ -208,8 +235,10 @@ export class CheckoutComponent implements OnInit {
       this.getutality = utails;
     }else{
       this.categoryService.getUtails().subscribe( res => {
-      this.getutality = res;
-      localStorage.setItem('utails', JSON.stringify(res));
+      if(res){
+        this.getutality = res;
+        localStorage.setItem('utails', JSON.stringify(res));
+      }
     })
   }
   }
@@ -270,6 +299,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   order(){
+    if(this.orderCreate.district.toLowerCase() == 'select' || this.orderCreate.upazila.toLowerCase() == 'select'){
+     this.toastr.error("Select Delivery Address");
+    }else{
     if(
       this.orderCreate.cashOnDelevary == '' && 
       this.orderCreate.rocket == ''&& this.orderCreate.rocketTransactionID == '' &&
@@ -282,18 +314,19 @@ export class CheckoutComponent implements OnInit {
       this.ordersucces = true;
       window.scrollTo(0, 0);
     })
-    if(this.address == null  && !this.user.roles.some(x => x === "Seller")){
+   if(this.address == null  && !this.user.roles.some(x => x === "Seller")){
       this.createaddress = {
         phone: this.orderCreate.phone,
         userAddress: this.orderCreate.address,
         district: this.orderCreate.district,
         upazila: this.orderCreate.upazila,
       }
-      this.accountService.create(this.createaddress).subscribe(res=>{
+      this.accountService.createaddress(this.createaddress).subscribe(res=>{
             localStorage.setItem('address'+this.user.id , JSON.stringify(res));
   
         });
     }
+  }
     
     }
 

@@ -31,9 +31,17 @@
 <h1 *ngIf="totaluser">{{totaluser}}</h1>
 
 <button (click)="getmembersemail()">Get Members Emails</button>
+<button (click)="getmembersephone()">Get Members Phone</button>
 
 <br>
 <br>
 <br>
 
-    <span *ngFor="let user of membersemails">{{user.email}},</span>
+    <span *ngFor="let user of membersemailsphone">
+        <span *ngIf="user.email != null">
+            {{user.email}},
+        </span>
+        <span *ngIf="user.phoneNumber != null">
+            {{user.phoneNumber}},
+        </span>
+    </span>

@@ -2,6 +2,7 @@ import { OrderService } from './../../_services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/user';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order',
@@ -26,7 +27,7 @@ export class OrderComponent implements OnInit {
   customerid: number;
   status="All";
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,private toastr: ToastrService,
     private orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
@@ -71,13 +72,13 @@ export class OrderComponent implements OnInit {
     this.orderview = true;
     window.scrollTo(0, 0);
   }
-  // deleteOrder(id:number){
+  deleteOrder(id:number){
+    this.orderService.deleteOrder(id).subscribe( res=>{
+      this.orders.splice(this.orders.findIndex(m => m.id === id), 1);
+      this.toastr.info("Order Deleted");
+    });
 
-  //   this.orderService.deleteOrder(id).subscribe( res=>{
-  //     this.orders.splice(this.orders.findIndex(m => m.id === id), 1);
-  //   });
-
-  // }
+  }
 
 
   getOrdersByStatus(status:string){
@@ -93,6 +94,8 @@ export class OrderComponent implements OnInit {
    this.orderService.changeStatus(id,this.user.id,status).subscribe(res => {
       var newo =  this.orders.find(i => i.id == id);
       newo.status = status;
+      this.toastr.info("Order Status: "+status);
+
    });
 
   }
@@ -100,6 +103,7 @@ export class OrderComponent implements OnInit {
     this.orderService.changecutomerstatus(id,this.user.id,status).subscribe(res => {
        var newo =  this.orders.find(i => i.id == id);
        newo.status = status;
+       this.toastr.info("Order Status: "+status);
     });
  
    }
@@ -108,14 +112,14 @@ export class OrderComponent implements OnInit {
     this.noorder = false;
     this.orderview = false;
     this.stopscroll = false;
-    this.orderService.getOrderById(this.search).subscribe(res =>{
+    this.orderService.getOrderById(this.search,this.sellerid).subscribe(res =>{
       this.orders.push(res);
       if(res == null){
         this.orders = null;
         this.noorder = true;
         this.stopscroll = true;
       }else{
-        this.noorder = false;
+        this.noorder = true;
         this.stopscroll = true;
       }
     });

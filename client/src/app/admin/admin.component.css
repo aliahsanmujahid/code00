@@ -64,7 +64,14 @@ img{
 .padding{
   padding-top: 30px;
 }
+button{
+  padding: 5px 10px 5px 10px;
+  margin: 5px;
+}
 
+a:hover{
+  cursor: pointer;
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";

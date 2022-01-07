@@ -1,20 +1,20 @@
 <div class="container">
-  {{product | json}}
-  <!-- {{ProductForm.value | json}} -->
-  {{ProductForm.status | json}}
-
     <div class="layout">
       <div class="leftlayout">
     <p>Create Product</p>
       <div>
           <form  #ProductForm="ngForm"  (ngSubmit)="createProduct(ProductForm)" novalidate>
 
-            <select [(ngModel)]="product.cateId" class="form-control" (change)="onCateChange()" name="cate">
+            <!-- (change)="onCateChange()"  -->
+
+            <select [(ngModel)]="product.cateId" class="form-control" name="cate">
               <option value="10000000">Select</option>
               <option *ngFor="let c of categoryes" value="{{ c.id }}" >{{ c.name }}</option>
             </select>
 
-            <select [(ngModel)]="product.subcateId" class="form-control" (change)="onsubCateChange()" name="SubCate" >
+            <!-- (change)="onsubCateChange()" -->
+
+            <select [(ngModel)]="product.subcateId" class="form-control"  name="SubCate" >
               <option value="10000000">Select</option>
               <option *ngFor="let s of subcategoryes" value="{{ s.id }}" >{{ s.name }}</option>
             </select>
@@ -27,13 +27,13 @@
             <label for="name">Product Name</label>
             <input [(ngModel)]="product.name" name="name" required minlength="5" placeholder="Name..">
         
-            <label for="name">Product Details</label>
+            <label for="name">Product Details(Split by #)</label>
             <textarea [(ngModel)]="product.description" required minlength="15" name="description" rows="4" cols="60">
              </textarea>
            
              
             
-            <label for="lname">Product HighLights</label>
+            <label for="lname">Product HighLights(Split by #)</label>
             <textarea [(ngModel)]="product.highLights"  id="w3review" required minlength="15" name="w3review" rows="4" cols="60">
             </textarea>
             
@@ -49,7 +49,7 @@
             <hr>
             <span *ngIf="quantityShow()">
               <label for="lname">Quantity</label>
-              <input [(ngModel)]="product.quantity" type="number" name="quantity" required min="1" placeholder="Price..">  
+              <input [(ngModel)]="product.quantity" type="number" name="quantity" required placeholder="Quantity..">  
             </span>
   
             <input [disabled]="ProductForm.invalid" type="submit" value="Submit">
@@ -73,10 +73,10 @@
         <div *ngIf="isColor">
           
 
-          <div>
+          <div class="padding">
             <ul *ngFor="let item of product.colors">
               <li>
-                <div style="width:10px;height:10px;background-color:{{item.colorCode}}"></div>
+                <div class="color" style="width:10px;height:10px;background-color:{{item.colorCode}}"></div>
                 Color Name: {{item.name}}
                 Quantity: {{item.quantity}}
               <h1 (click)="removeColor(item.name)">Remove</h1>
@@ -106,10 +106,10 @@
 
       
       <div  *ngIf="!isSize && !isColor">
-        Only Color or Size
+        <h2 style="color: red;">Only Color or Size</h2>
       </div>
        <div  *ngIf="isSize">
-        <div>
+        <div class="padding">
           <ul *ngFor="let item of product.sizes">
             <li>
               <p>{{item.name}}</p>
@@ -126,9 +126,7 @@
                 <input   [(ngModel)]="sizes.quantity" required min="1" type="number" name="sizeQuantity" placeholder="Quantity..">
       
                 <input [disabled]="SetSize.invalid" type="submit" value="Add">
-                </form> 
-                 {{SetSize.value | json}}
-                 {{SetSize.status | json}}             
+                </form>        
       </div>
        </div>
 

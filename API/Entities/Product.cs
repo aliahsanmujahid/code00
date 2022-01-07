@@ -15,6 +15,7 @@ namespace API.Entities
         public string Description { get; set; }
         public int Price { get; set; }
         public int DiscPrice { get; set; }
+        public int DeliveryCharge { get; set; }
         public int DisCount { get; set; }
         public Boolean Bundel { get; set; }
         public int Quantity { get; set; }
@@ -25,7 +26,6 @@ namespace API.Entities
         public string image3 { get; set; }
         public string image4 { get; set; }
          public string youtubeLink { get; set; }
-        public ICollection<Favorite> Favorites { get; set; }
         public ICollection<Colors> Colors { get; set; } = new List<Colors>();
         public ICollection<Sizes> Sizes { get; set; } = new List<Sizes>();
 

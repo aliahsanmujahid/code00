@@ -38,7 +38,6 @@ namespace API
             services.AddAutoMapper(typeof(AutoMaping));
             services.AddScoped<TokenService>();
             services.AddScoped<IProductRepository, ProductRepository>(); 
-            services.AddScoped<IFavRepository, FavRepository>(); 
             
 
             services.AddControllers(opt =>
@@ -49,7 +48,8 @@ namespace API
             services.AddAuthorization(opt => 
             {
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+                opt.AddPolicy("ModerateRole", policy => policy.RequireRole("Admin", "Moderator"));
+                opt.AddPolicy("SellerRole", policy => policy.RequireRole("Admin","Seller","Moderator"));
             });
 
             services.AddDbContext<DataContext>(options =>

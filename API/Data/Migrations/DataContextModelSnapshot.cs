@@ -258,6 +258,9 @@ namespace API.Data.Migrations
                     b.Property<bool>("Bundel")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DeliveryCharge")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 

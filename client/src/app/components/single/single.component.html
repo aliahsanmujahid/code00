@@ -58,7 +58,7 @@
     
     <div class="column">
       <div class="name">
-         <h2>{{product.name}}</h2>
+         <h3>{{product.name}}</h3>
       </div>
       <div class="price">
         <h2 class="delprice">৳{{product.discPrice}}</h2>
@@ -68,7 +68,7 @@
       <div class="price">
          <table id="customers2" style="table-layout: fixed; width: 100%;">
             <tr>
-               <td style="text-align: center!important;font-family:'Courier New', Courier, monospace;padding: 2px;font-size: 16px;
+               <td style="text-align: center!important;font-family:'Courier New', Courier, monospace;padding: 2px;font-size: 11px;
                ">Save ৳{{product.discPrice-product.price}} Taka</td>
              </tr>
         </table>  
@@ -132,9 +132,12 @@
                      <button (click)="addItemToBasket()" *ngIf="product.quantity !== 0" class="glow-on-hover" type="button"><h3>
                         Add To Cart
                      </h3></button>
+                     <button (click)="noQuantity()" *ngIf="product.quantity === 0" class="glow-on-hover" type="button"><h3>
+                        No Quantity
+                     </h3></button>
                      <br>
                     
-                     <button class="sellerbutton " (click)=viewseller(product.appUserId)>View All Products Of This Seller</button>
+                     <button class="sellerbutton " (click)=viewseller(product.appUserId)>View Seller</button>
                   
             </div>
             
@@ -149,6 +152,11 @@
                         
                         <tr>
                            <td>{{descriptions[0]}}</td>
+                         </tr>
+                     </table> 
+                     <table *ngIf="descriptions[1]" id="customers2" style="table-layout: fixed; width: 100%">
+                        
+                        <tr>
                            <td>{{descriptions[1]}}</td>
                          </tr>
                      </table> 
@@ -156,30 +164,46 @@
                      <table *ngIf="descriptions[2]" id="customers2" style="table-layout: fixed; width: 100%">
                         <tr>
                            <td>{{descriptions[2]}}</td>
-                           <td>{{descriptions[3]}}</td>
                          </tr>
-                    </table>   
+                    </table>  
+                    <table *ngIf="descriptions[3]" id="customers2" style="table-layout: fixed; width: 100%">
+                     <tr>
+                        <td>{{descriptions[3]}}</td>
+                      </tr>
+                 </table>  
                     
                       <table *ngIf="descriptions[4]" id="customers2" style="table-layout: fixed; width: 100%">
                          <tr>
                            <td>{{descriptions[4]}}</td>
-                           <td>{{descriptions[5]}}</td>
                          </tr>
+                        </table>
+                        <table *ngIf="descriptions[5]" id="customers2" style="table-layout: fixed; width: 100%">
+                           <tr>
+                             <td>{{descriptions[5]}}</td>
+                           </tr>
                         </table>
 
                          <table *ngIf="descriptions[6]" id="customers2" style="table-layout: fixed; width: 100%"> 
                          <tr>
                            <td>{{descriptions[6]}}</td>
-                           <td>{{descriptions[7]}}</td>
                          </tr>
                         </table>
+                        <table *ngIf="descriptions[7]" id="customers2" style="table-layout: fixed; width: 100%"> 
+                           <tr>
+                             <td>{{descriptions[7]}}</td>
+                           </tr>
+                          </table>
 
                         <table *ngIf="descriptions[8]" id="customers2" style="table-layout: fixed; width: 100%">
                          <tr>
                            <td>{{descriptions[8]}}</td>
-                           <td>{{descriptions[9]}}</td>
                          </tr>
                       </table>
+                      <table *ngIf="descriptions[9]" id="customers2" style="table-layout: fixed; width: 100%">
+                        <tr>
+                          <td>{{descriptions[9]}}</td>
+                        </tr>
+                     </table>
 
     
     </div>

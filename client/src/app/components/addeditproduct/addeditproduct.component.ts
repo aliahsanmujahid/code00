@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { IColors, IProduct, ISizes } from 'src/app/_models/product';
+import { AccountService } from 'src/app/_services/account.service';
 import { CategoryService } from 'src/app/_services/category.service';
 import { ProductService } from 'src/app/_services/product.service';
 
@@ -55,15 +57,25 @@ export class AddeditproductComponent implements OnInit {
   
   constructor(public productService: ProductService,
     private route: ActivatedRoute,
+    public accountService: AccountService,
     private router: Router,
-    public categoryService: CategoryService) { 
+    public categoryService: CategoryService,
+    private toastr: ToastrService ) { 
       
     }
 
   ngOnInit(): void {
+
+    this.accountService.currentUser$.subscribe( x => {
+      if(!x){
+         this.router.navigateByUrl('');
+      }
+    });
+
     this.getmainmenu();
     this.getsubmenu();
     this.getsubsubmenu();
+  
 
     this.route.params.subscribe(p => {
       if(p.id != 0 && p.id != null){
@@ -75,7 +87,6 @@ export class AddeditproductComponent implements OnInit {
 
     });
     
-    this.product.highLights = 'Good Product#High Febric#Collor Guaranty'
   }
 
   getmainmenu(){
@@ -100,27 +111,27 @@ export class AddeditproductComponent implements OnInit {
     };
   }
  
-  onCateChange(){
-    if(this.product.cateId !== 0 && this.product.cateId !== -1){
-      this.categoryService.getsubmenuid(this.product.cateId).subscribe( res => {
-        this.subcategoryes = res;
-        this.product.subcateId = 10000000;
-        this.product.subsubcateId = 10000000;
-      }),
-      error => {
-      };
-    }
-  }
-  onsubCateChange(){
-    if(this.product.subcateId !== 0 && this.product.subcateId !== -1){
-      this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
-        this.subsubcategoryes = res;
-        this.product.subsubcateId = 10000000;
-      }),
-      error => {
-      };
-    }
-  }
+  // onCateChange(){
+  //   if(this.product.cateId !== 0 && this.product.cateId !== -1){
+  //     this.categoryService.getsubmenuid(this.product.cateId).subscribe( res => {
+  //       this.subcategoryes = res;
+  //       this.product.subcateId = 10000000;
+  //       this.product.subsubcateId = 10000000;
+  //     }),
+  //     error => {
+  //     };
+  //   }
+  // }
+  // onsubCateChange(){
+  //   if(this.product.subcateId !== 0 && this.product.subcateId !== -1){
+  //     this.categoryService.getsubsubmenuid(this.product.subcateId).subscribe( res => {
+  //       this.subsubcategoryes = res;
+  //       this.product.subsubcateId = 10000000;
+  //     }),
+  //     error => {
+  //     };
+  //   }
+  // }
  
 
   createProduct(ProductForm: NgForm){
@@ -129,7 +140,7 @@ export class AddeditproductComponent implements OnInit {
       if(this.product.image1 !== ''){
         if(ProductForm.valid){
           this.productService.createProduct(this.product).subscribe( res =>{
-            location.reload()
+            this.toastr.info("Product Added");
          }),
          error => {
  
@@ -140,7 +151,7 @@ export class AddeditproductComponent implements OnInit {
     }else{
       if(ProductForm.valid){
         this.productService.updateproduct(this.updateproductId,this.product).subscribe( res =>{
-
+          this.toastr.info("Product Updated");
        }),
        error => {
 

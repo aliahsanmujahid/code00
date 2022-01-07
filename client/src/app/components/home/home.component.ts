@@ -28,8 +28,10 @@ export class HomeComponent implements OnInit {
       this.getutality = utails;
     }else{
       this.categoryService.getUtails().subscribe( res => {
-      this.getutality = res;
-      localStorage.setItem('utails', JSON.stringify(res));
+      if(res){
+        this.getutality = res;
+        localStorage.setItem('utails', JSON.stringify(res));
+      }
     })
   }
   }
@@ -67,16 +69,16 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['shop', { 'vvv':subsubcate }]);
   }
 
-  // getCategoryes(){
+  getCategoryes(){
     
-  //   const cate = JSON.parse(localStorage.getItem('eidhatcategory'));
-  //   if(cate){
-  //     this.category = cate;
-  //   }else{
-  //     this.categoryService.getCategories().subscribe( res => {
-  //       this.category = res;
-  //       localStorage.setItem('eidhatcategory', JSON.stringify(res));
-  //     })
-  //   }
-  // }
+    const cate = JSON.parse(localStorage.getItem('eidhatcategory'));
+    if(cate){
+      this.category = cate;
+    }else{
+      this.categoryService.getCategories().subscribe( res => {
+        this.category = res;
+        localStorage.setItem('eidhatcategory', JSON.stringify(res));
+      })
+    }
+  }
 }

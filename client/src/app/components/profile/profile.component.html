@@ -12,9 +12,13 @@
                 <td>Role</td>
                 <td>{{user.roles[0]}}</td>
               </tr>
-              <tr>
+              <tr *ngIf="user.email !== null">
                 <td>Email</td>
                 <td>{{user.email}}</td>
+              </tr>
+              <tr *ngIf="user.phoneNumber !== null">
+                <td>Phone Number</td>
+                <td>{{user.phoneNumber}}</td>
               </tr>
             </table>
             <span >

@@ -9,7 +9,6 @@ C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\API.dll
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\ref\API.dll
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\API.pdb
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\appsettings.Development.json
-C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\appsettings.json
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\API.StaticWebAssets.xml
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\API.exe
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\API.deps.json
@@ -79,3 +78,4 @@ C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\scopedcss\bundle\API
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\API.csproj.CopyComplete
 C:\Users\ahsan\OneDrive\Desktop\eidhat\api\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\Users\ahsan\OneDrive\Desktop\eidhat\api\bin\Debug\net5.0\appsettings.json

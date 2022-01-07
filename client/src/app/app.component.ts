@@ -20,22 +20,17 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent {
   UserId: Number;
   fbmessage = false;
+  Activeuser: User;
 
-  @ViewChild('loginRef', {static: false }) loginElement: ElementRef;
   basket$: Observable<IBasket>;
   basketTotal$: Observable<IBasketTotals>;
   alert = false;
-  auth2: any;
   search:string;
   baseUrl = environment.apiUrl;
   category: any = [];
   subcategory: any = [];
   subsubcategory: any = [];
-  model: Model ={
-    username:'',
-    email:'',
-    image:''
-  };
+
 
   constructor(public accountService: AccountService,public categoryService: CategoryService,private toastr: ToastrService,
     private router: Router,public basketService: BasketService,public orderService: OrderService) { }
@@ -45,10 +40,12 @@ export class AppComponent {
     this.setCurrentUser();
 
     this.categoryService.getchangeid().subscribe( res =>{
-     
       const cid = JSON.parse(localStorage.getItem('changeid'));
+      console.log('Catch Key',res);
+      console.log('Local Catch Key',cid);
       if(!cid){
-      localStorage.setItem('changeid', JSON.stringify(res));
+        console.log('Catch Key!!!!!',res);
+        localStorage.setItem('changeid', JSON.stringify(res));
       }
       else{
         if(res !== cid){
@@ -103,14 +100,28 @@ export class AppComponent {
   QuantityCheck(){
     const items = JSON.parse(localStorage.getItem('basket'));
     if(items){
-      if(items.shopId == this.UserId){
-        this.basketService.deleteBasket();
-        this.router.navigateByUrl('');
-        this.toastr.warning('You Can,t Buy Your Product');
+      if(this.Activeuser){
+        if (this.Activeuser.roles.includes('Admin') 
+        || this.Activeuser.roles.includes('Seller') 
+        || this.Activeuser.roles.includes('Moderator')){
+          this.basketService.deleteBasket();
+          this.router.navigateByUrl('');
+          this.toastr.warning('You Can,t Buy Product');
+        }else{
+          this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
+            if(res == true){
+              this.basketService.deleteBasket();
+              this.toastr.info('Product Not Available');
+              location.reload();
+            }
+          })
+        }
       }else{
         this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
           if(res == true){
             this.basketService.deleteBasket();
+            this.toastr.info('Product Not Available');
+            location.reload();
           }
         })
       }
@@ -133,56 +144,17 @@ export class AppComponent {
     const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
     if(user){
       this.accountService.currentUser$.subscribe( x => {
-        this.UserId = x.id;
+        if(x){
+          this.UserId = x.id;
+          this.Activeuser = x;
+        }
       });
+ 
       this.accountService.setUser(user);
-    }else{
-      this.googleInitialize();
     }
   }
 
-  googleInitialize() {
-    window['googleSDKLoaded'] = () => {
-      window['gapi'].load('auth2', () => {
-        this.auth2 = window['gapi'].auth2.init({
-          client_id: '669351671073-ae83o151l8seg7pr0s8rdsvicgbjk3fn.apps.googleusercontent.com',
-          cookie_policy: 'single_host_origin',
-          scope: 'profile email'
-        });
-        this.prepareLogin();
-      });
-    }
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'google-jssdk'));
-  }
 
-  prepareLogin() {
-    this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
-      (googleUser) => {
-        let profile = googleUser.getBasicProfile();
-
-        this.model.username =  profile.getName();
-        this.model.email =  profile.getEmail();
-        this.model.image =  profile.getImageUrl();
-
-        this.login();
-
-
-      }, (error) => {
-        alert(JSON.stringify("Login Fail By Google"));
-      });
-  }
-
-  login() {
-    this.accountService.login(this.model).subscribe(response => {
-    }, error => {
-    })
-  }
   logout() {
     this.accountService.logout();
   }
@@ -213,6 +185,16 @@ export class AppComponent {
   }
   searchProduct(){
     this.router.navigate(['shop', { 'search':this.search }]);
+  }
+
+  loginpage(){
+    this.router.navigate(['auth', {  'login':true }]);
+    this.alert = false;
+  
+  }
+  signuppage(){
+    this.router.navigate(['auth', {  'signup':true }]);
+    this.alert = false;
   }
 
 

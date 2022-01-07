@@ -45,9 +45,13 @@ export class SellersComponent implements OnInit {
         // }
     });
   }
-  ////,'phone':phone
-  getsellerProduct(id,sellername,phone){
-    this.router.navigate(['shop', { 'id':id , 'sellername':sellername}]);
+  
+  // getsellerProduct(id,sellername,phone){
+  //   this.router.navigate(['shop', { 'id':id , 'sellername':sellername,'phone':phone}]);
+  // }
+
+  getsellerProduct(id){
+    this.router.navigate(['shop', { 'id':id }]);
   }
 
 

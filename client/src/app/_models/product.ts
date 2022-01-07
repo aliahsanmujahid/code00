@@ -34,6 +34,7 @@ export interface Product {
     id: number;
     name: string;
     appUserId:number;
+    sellerName:string;
     description: string;
     highLights: string;
     image1: string;

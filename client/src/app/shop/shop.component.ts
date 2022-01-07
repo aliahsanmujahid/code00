@@ -8,6 +8,8 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@
 import { BasketService } from '../_services/basket.service';
 import { Product } from '../_models/product';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-shop',
@@ -20,14 +22,14 @@ export class ShopComponent implements OnInit {
   distance = 1;
   page:number = 1;
   showseller = false;
-
+  Activeuser: User;
   noproduct:boolean = false;
   stopscroll  = false;
   baseUrl = environment.apiUrl;
   products=[];
   user= {
     id:-1,
-    displayName: "ali baba",
+    displayName: '',
     district: '',
     districtId: -1,
     email: '',
@@ -59,10 +61,8 @@ export class ShopComponent implements OnInit {
        if (Object.keys(params).length === 0) {
          this.products = [];
          this.getProducts();
-
        }else{
          this.params = params;
-
          this.products = [];
          this.user = null;
          this.paramsproducts(this.params);
@@ -70,15 +70,29 @@ export class ShopComponent implements OnInit {
        
      });
     this.accountService.currentUser$.subscribe( x => {
-      this.UserId = x.id;
+      if(x){
+        this.UserId = x.id;
+        this.Activeuser = x;
+      }
     });
+   
   }
   addItemToBasket(item: Product) {
-    if(item.appUserId === this.UserId){
-      this.toastr.warning('You Can,t Buy Your Product');
-    }else{
-      this.basketService.addItemToBasket(item);
-    }
+          if(this.Activeuser){
+            if (this.Activeuser.roles.includes('Admin') 
+          || this.Activeuser.roles.includes('Seller') 
+          || this.Activeuser.roles.includes('Moderator')){
+            this.toastr.warning('You Can,t Add Product');
+          }else{
+            this.basketService.addItemToBasket(item);
+          }
+          }else{
+            this.basketService.addItemToBasket(item);
+          }
+       
+    // }
+    // else{
+    //}
   }
   isinBasket(id: number){
     if(this.basketService.getCurrentBasketValue()){
@@ -97,11 +111,14 @@ export class ShopComponent implements OnInit {
     this.productService.getProducts(this.page).subscribe( res =>{
       this.products = [];
       this.products = res;
-     if(this.products.length === 0){
-      this.noproduct = true;
-    }else{
-      this.noproduct = false;
-    }
+   
+      if(this.products.length === 0 || res.length < 10){
+        this.noproduct = true;
+        this.stopscroll = true;
+      }else{
+        this.noproduct = false;
+        this.stopscroll = false;
+      }
     }),
     error => {
     };
@@ -168,7 +185,7 @@ export class ShopComponent implements OnInit {
     };
     }else if(this.params.sellername){
           
-    this.productService.getuserProducts(this.params.id,++this.page).subscribe( res =>{
+    this.productService.getsellerProducts(this.params.id,++this.page).subscribe( res =>{
      
       this.products.push(...res);
       if(res.length == 0 || res == null || res.length < 10){
@@ -195,7 +212,7 @@ export class ShopComponent implements OnInit {
         this.noproduct = false;
         this.stopscroll = false;
       }
-       //this.products = res;
+  
       });
     }
   }
@@ -271,19 +288,17 @@ export class ShopComponent implements OnInit {
       
     };
   }
-  if(params.sellername){
+  if(params.id){
     this.user = null;
     this.showseller = true;
-
-    if(params.sellername == 'null'){
+    
+  
       this.roleService.getuserbyid(params.id).subscribe(res =>{
-        
         this.user = res;
-
       });
-    }
 
-    this.productService.getuserProducts(params.id,this.page).subscribe( res =>{
+
+    this.productService.getsellerProducts(params.id,this.page).subscribe( res =>{
       this.products = res;
      if(this.products.length === 0 || res.length < 10){
       this.noproduct = true;

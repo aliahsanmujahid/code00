@@ -16,7 +16,7 @@
 
 <div class="row">
     <div *ngFor="let item of sellers" class="column">
-      <div (click)="getsellerProduct(item.id,item.displayName,item.phone)" class="card">
+      <div (click)="getsellerProduct(item.id)" class="card">
         <h3>{{item.displayName}}</h3>
       </div>
       <button (click)="seeorders(item.id)"  *appHasRole='["Admin", "Moderator"]'>See Orders</button>

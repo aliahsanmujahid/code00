@@ -26,21 +26,19 @@ namespace API.Controllers
 
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IFavRepository _favRepo;
 
-        public ProductController(DataContext context, IMapper mapper, IFavRepository favRepo)
+        public ProductController(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _favRepo = favRepo;
         }
-
+        [Authorize(Policy = "SellerRole")]
         [HttpPost("create")]
         public ProductToReturnDto createproduct(ProductDto productDto){
 
            var userProduct = _context.Users
            .Include(p => p.Products)
-           .FirstOrDefault(x => x.Email == User.RetrieveEmailFromPrincipal());
+           .FirstOrDefault(i => i.Id == User.GetUserId());
            
           var mpro = _mapper.Map<ProductDto, Product>(productDto);
 
@@ -63,7 +61,7 @@ namespace API.Controllers
           return _mapper.Map<Product, ProductToReturnDto>(product);
           
         }
-
+  
         [HttpGet("getProducts/{page}")]
         public async Task<IEnumerable<ProductToReturnDto>> getProductsAsync(int page){
 
@@ -84,8 +82,9 @@ namespace API.Controllers
           return rproduct;            
           
         }
-        [HttpGet("getUserProducts/{id}/{page}")]
-        public async Task<IEnumerable<ProductToReturnDto>> getUserProductsAsync(int id,int page)
+        
+        [HttpGet("getSellerProducts/{id}/{page}")]
+        public async Task<IEnumerable<ProductToReturnDto>> getSellerProductsAsync(int id,int page)
         {
            var products = _context.Products
            .Include(v => v.Colors)
@@ -126,84 +125,6 @@ namespace API.Controllers
 
             return Ok();
         }
-
-
-    [AllowAnonymous]
-    [HttpPost("addFav/{id}")]
-    public IActionResult addFav(int id){
-         
-      var favproduct = new Favorite
-            {
-                AppUserId = User.GetUserId(),
-                ProductId = id
-            };   
-
-        _context.Favorites.Add(favproduct);
-
-        _context.SaveChanges();
-
-        return Ok();
-         
-    }
-    [AllowAnonymous]
-    [HttpPost("removeFav/{id}")]
-    public IActionResult removeFav(int id){
-         
-         
-        Favorite fav = _context.Favorites.FirstOrDefault(
-                u => u.AppUserId ==  User.GetUserId() && u.ProductId == id);
-
-        _context.Favorites.Remove(fav);
-        _context.SaveChanges();  
-
-
-        return Ok();
-         
-    }
-    [AllowAnonymous]
-    [HttpGet("getFavProducts")]
-    public IEnumerable<ProductToReturnDto> getFavProducts(){
-         
-        var favproduct = _context.Favorites.AsQueryable();
-
-            
-        favproduct = favproduct.Where(id =>  id.AppUserId == User.GetUserId());
-        var ids = favproduct.Select(f => f.ProductId).ToList();
-        
-        var products = _context.Products.Where(i => ids.Contains(i.Id))
-        .Include(c => c.Colors)
-        .Include(s => s.Sizes);
-
-        return _mapper.Map<IEnumerable<Product>,IEnumerable<ProductToReturnDto>>(products);
-          
-    } 
-    [HttpGet("isFavorited/{id}")]
-    public bool isFavorited(int id)
-    {
-        
-       var isfav =  _context.Favorites.FirstOrDefault(
-                u => u.AppUserId ==  User.GetUserId() && u.ProductId == id);
-        
-        if(isfav != null){
-            return true;
-        }
-        return false; 
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

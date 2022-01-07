@@ -16,9 +16,11 @@ namespace API.Dtos
         public int Price { get; set; }
         public int DiscPrice { get; set; }
         public int DisCount { get; set; }
+        public int DeliveryCharge { get; set; }
         public Boolean Bundel { get; set; }
         public int Quantity { get; set; }
         public int AppUserId { get; set; }
+        public string sellerName { get; set; }
         public string image1 { get; set; }
         public string image2 { get; set; }
         public string image3 { get; set; }

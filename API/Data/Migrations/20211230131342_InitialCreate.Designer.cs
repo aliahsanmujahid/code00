@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211219000341_InitialerferferCreate")]
-    partial class InitialerferferCreate
+    [Migration("20211230131342_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,9 +32,6 @@ namespace API.Data.Migrations
 
                     b.Property<int>("DistrictId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
                         .HasColumnType("TEXT");
@@ -261,6 +258,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("Bundel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DeliveryCharge")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")

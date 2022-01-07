@@ -8,25 +8,25 @@
 <div *ngIf="showseller" class="seller">
   <!-- <h2>All Products of {{params.sellername}}</h2> -->
   <table id="customers" style="table-layout: fixed; width: 100%">
-    <tr *ngIf="this.params.sellername && this.params.sellername !== 'null' ">
+    <!-- <tr *ngIf="this.params.sellername && this.params.sellername !== 'null' ">
       <td>All Products of {{params.sellername}}</td>
     </tr>
-    <!-- <tr *ngIf="this.params.phone && this.params.phone !== 'null' ">
+    <tr *ngIf="this.params.phone && this.params.phone !== 'null' ">
       <td >Seller Phone Number {{params.phone}}</td>
     </tr> -->
 
       <tr *ngIf="user">
         <td >All Products of {{user.displayName}}</td>
       </tr>
-      <!-- <tr *ngIf="user && user.phone !== 'null' ">
+      <tr *ngIf="user && user.phone !== null ">
         <td >Seller Phone Number {{user.phone}}</td>
-      </tr> -->
+      </tr>
 
   </table>
 </div>
 
 <div class="wrapper">
-  <div class="cards_wrap">
+  <div class="cards_wrap" *ngIf="this.products !== null">
     <div *ngFor="let item of products" class="card_item">
       <div  routerLink="/product/{{item.id}}">
       <div class="card_inner">
@@ -36,9 +36,12 @@
       </div>
     
 
-      <h4>
+      <h4 class="priceh4">
         {{item.name}}
       </h4>
+      <h6 class="priceh6" >
+        {{item.name}}
+      </h6>
 
       <div class="price">
         
@@ -47,7 +50,7 @@
         </div>
         <span class="delprice">৳{{item.discPrice}}</span>
         <span class="mainprice">৳{{item.price}}</span>
-        <span style="color: rgb(255, 0, 179);">&#8722;{{item.disCount}}%</span>
+        <!-- <span style="color: rgb(255, 0, 179);">&#8722;{{item.disCount}}%</span> -->
       </div>
     </div>
 

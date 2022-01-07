@@ -1,3 +1,4 @@
+import { AuthComponent } from './components/auth/auth.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ProductComponent } from './components/product/product.component';
 import { ErrorComponent } from './components/error/error.component';
@@ -18,7 +19,9 @@ import { SingleComponent } from './components/single/single.component';
 
 const routes: Routes = [
   {path: '',  component: HomeComponent},
+  // {path: 'home',  component: HomeComponent},
   {path: 'shop',  component: ShopComponent},
+  {path: 'auth',  component: AuthComponent},
   {path: 'checkout',  component: CheckoutComponent},
   {path: 'profile',  component: ProfileComponent}, 
   {path: 'order',  component: OrderComponent},
@@ -28,6 +31,7 @@ const routes: Routes = [
   {path: 'edit/:id',  component: AddeditproductComponent,canActivate: [AdminGuard]},
   {path: 'product/:id', component: SingleComponent, resolve: {product: ProductDetailedResolver}},
   {path: 'admin',  component: AdminComponent, canActivate: [AdminGuard]},
+  {path: '**', component: HomeComponent, pathMatch: 'full'},
 ];
 
 @NgModule({

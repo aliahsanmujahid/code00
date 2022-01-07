@@ -31,11 +31,16 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.accountService.logout2();
               this.basketService.deleteBasket();
               break;
+            case 403:
+                this.router.navigateByUrl("error");
+                this.accountService.logout2();
+                this.basketService.deleteBasket();
+              break;   
             case 404:
               this.router.navigateByUrl("error");
               this.accountService.logout2();
               this.basketService.deleteBasket();
-              break;
+              break; 
             case 500:
               this.router.navigateByUrl("error");
               this.accountService.logout2();
@@ -43,7 +48,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             default:
               // this.router.navigateByUrl("error");
-              // this.accountService.logout2();
+              this.accountService.logout2();
               this.basketService.deleteBasket();
               break;
           }

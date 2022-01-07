@@ -25,6 +25,7 @@ export class CategoryComponent implements OnInit {
 
   changeMade(){
     this.categoryService.setchangeid().subscribe(res =>{
+      console.log("Setting Change Id",res);
     });
   }
 

@@ -19,6 +19,8 @@ namespace API.Helpers
 
 
         CreateMap<Upazilla,SubMenuDto>();
+        CreateMap<AppUser,SellerDto>();
+        
         CreateMap<AppUser,SellerDto>()
         .ForMember(vr => vr.Phone, opt => opt.MapFrom( vf => vf.Address.Phone) )
         .ForMember(vr => vr.DistrictId, opt => opt.MapFrom( vf => vf.Address.DistrictId) )
@@ -44,6 +46,7 @@ namespace API.Helpers
          .ForMember(vr => vr.SubDto, opt => opt.MapFrom(v => v.SubMenu.Select(vf => new SubDto {id = vf.Id, Name = vf.Name, SubSubDto = vf.SubSubMenu.Select( s => new SubSubDto{id = s.Id, Name = s.Name})})));
          
         CreateMap<Product, ProductToReturnDto>()
+         .ForMember(vr => vr.sellerName, opt => opt.MapFrom(v => v.AppUser.DisplayName.ToLower()))
          .ForMember(vr => vr.Colors, opt => opt.MapFrom(v => v.Colors.Select(vf => new Colors { Id = vf.Id, Name = vf.Name, ColorCode = vf.ColorCode, Quantity = vf.Quantity })))
          .ForMember(vr => vr.Sizes, opt => opt.MapFrom(v => v.Sizes.Select(vf => new Sizes { Id = vf.Id, Name = vf.Name, Quantity = vf.Quantity})));
         

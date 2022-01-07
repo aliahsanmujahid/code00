@@ -30,6 +30,8 @@ import { DistrictComponent } from './components/district/district.component';
 import { CategoryComponent } from './components/category/category.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthComponent } from './components/auth/auth.component';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { ToastrModule } from 'ngx-toastr';
     DistrictComponent,
     CategoryComponent,
     RolesComponent,
+    AuthComponent,
   ],
   imports: [
     CommonModule,
@@ -62,11 +65,26 @@ import { ToastrModule } from 'ngx-toastr';
     ColorPickerModule,
     InfiniteScrollModule,
     ToastrModule.forRoot(),
+    SocialLoginModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '669351671073-ae83o151l8seg7pr0s8rdsvicgbjk3fn.apps.googleusercontent.com'
+            )
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }  
   ],
   bootstrap: [AppComponent]
 })

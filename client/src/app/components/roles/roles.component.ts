@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/_models/user';
 import { RoleService } from 'src/app/_services/role.service';
 
@@ -10,13 +11,14 @@ import { RoleService } from 'src/app/_services/role.service';
 export class RolesComponent implements OnInit {
 
   users: Partial<User[]>;
-  membersemails: Partial<User[]>;
+  membersemailsphone: Partial<User[]>;
+  
   roles = {
     email: '',
     roles:[]
   }; 
   totaluser = 0
-  constructor(public roleService: RoleService) { }
+  constructor(public roleService: RoleService,private toastr: ToastrService ) { }
 
   ngOnInit(): void {
     this.getUsersWithRoles();
@@ -25,7 +27,7 @@ export class RolesComponent implements OnInit {
 
   updateUserRoles(){
     this.roleService.updateUserRoles(this.roles.email,this.roles.roles).subscribe(res => {
-
+        this.toastr.info("User Role Updated");
     })
   }
 
@@ -40,8 +42,15 @@ export class RolesComponent implements OnInit {
     })
   }
   getmembersemail(){
+    this.membersemailsphone = [];
     this.roleService.getmembersemail().subscribe(res => {
-      this.membersemails = res;
+      this.membersemailsphone = res;
+    })
+  }
+  getmembersephone(){
+    this.membersemailsphone = [];
+    this.roleService.getmembersphone().subscribe(res => {
+      this.membersemailsphone = res;
     })
   }
 

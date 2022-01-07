@@ -17,9 +17,9 @@
 <div class="column">
 
     <span *ngIf="(accountService.currentUser$ | async) === null">
-      <h4  class="spanmargin">Please LogIn</h4>
-      Checkout Form is Hidden From UnAuthorized User
-      <h4>Our Only Login Option is by Gmail</h4>
+      <h4 style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;" (click)="loginpage()" class="spanmargin">Log In</h4>
+      Or
+      <h4 style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;" (click)="signuppage()" >Sign Up</h4>
     </span>
 
     <span  *ngIf="(accountService.currentUser$ | async) && ordersucces === false">
@@ -37,12 +37,12 @@
 
       <label for="country">Order Receive(District)</label>
       <select  [(ngModel)]="orderCreate.district" (change)="onChange()" id="country" name="country" required>
-        <option>Select</option>
+        <option value="select">Select</option>
         <option *ngFor="let s of districts" value="{{ s.name }}" >{{ s.name }}</option>
       </select>
       <label for="upazila">Order Receive(Upazila)</label>
       <select  [(ngModel)]="orderCreate.upazila" id="upazila" name="upazila" required>
-        <option>Select</option>
+        <option value="select">Select</option>
         <option *ngFor="let s of upazilla" value="{{ s.name }}" >{{ s.name }}</option>
       </select>
       
@@ -52,16 +52,16 @@
         <strong >Select A Payment</strong>
       </div>
       <ul>
-        <!-- <li>
-          <h3 (click)="cashondelevary()" [style.background-color]="cashondelevarypay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">Cash On Delevary</h3>
-        </li> -->
-        <li (click)="bkash()" [style.background-color]="bkashpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
+        <li>
+          <h3 *ngIf="sellerName !== 'eidhat' " (click)="cashondelevary()" [style.background-color]="cashondelevarypay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">Cash On Delevary</h3>
+        </li>
+        <li *ngIf="sellerName === 'eidhat'" (click)="bkash()" [style.background-color]="bkashpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Bkash</h3>                                                                                                        
         </li>
         <!-- <li (click)="rocket()" [style.background-color]="rocketpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Rocket</h3>
         </li> -->
-        <li (click)="nagad()" [style.background-color]="nagadpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
+        <li *ngIf="sellerName === 'eidhat'" (click)="nagad()" [style.background-color]="nagadpay == true ? 'rgb(70, 253, 24)' : 'rgba(6, 201, 38, 0.24)'">
           <h3>Nagad</h3>
         </li>
       </ul>
@@ -75,11 +75,11 @@
      
       <label for="Bkash">Bkash Number</label>
       <input  [(ngModel)]="orderCreate.bkash" type="text" id="Bkash" name="Bkash" required minlength="11"  maxlength="11"  placeholder="Bkash Number..">
-      <label for="Bkasht">Bkash Transaction ID</label>
-      <input  [(ngModel)]="orderCreate.bkashTransactionID" type="text" id="Bkasht" required minlength="5" name="Bkasht" placeholder="Transition Id..">
+      <label for="Bkasht">Bkash Transaction Id</label>
+      <input  [(ngModel)]="orderCreate.bkashTransactionID" type="text" id="Bkasht" required minlength="5" name="Bkasht" placeholder="Transaction Id..">
       </div>
 
-      <!-- <div *ngIf="rocketpay" class="bkash">
+      <div *ngIf="rocketpay" class="bkash">
         <h4>Rocket Personal: <strong> {{getutality.rocket}}</strong></h4>  
         <span>[Send Money<span class="highlight" >(Not Payment)</span>]</span>
         <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
@@ -88,20 +88,20 @@
       
         <label for="Rocket">Rocket Number</label>
         <input  [(ngModel)]="orderCreate.rocket" type="text" id="Rocket" required minlength="11"  maxlength="12"  name="Rocket" placeholder="Rocket Number..">
-        <label for="Rockettd">Rocket Transaction ID</label>
-        <input  [(ngModel)]="orderCreate.rocketTransactionID" type="text" id="Rockettd" required minlength="5" name="Rockettd" placeholder="Transtion Id..">
-        </div> -->
+        <label for="Rockettd">Rocket Transaction Id</label>
+        <input  [(ngModel)]="orderCreate.rocketTransactionID" type="text" id="Rockettd" required minlength="5" name="Rockettd" placeholder="Transaction Id..">
+        </div>
 
         <div *ngIf="nagadpay" class="bkash">
-          <h4>Nagad Personal:  <strong>{{getutality.namgad}}</strong></h4>  
+          <h4>Nagad Personal:  <strong >{{getutality.namgad}}</strong></h4>  
           <span>[Send Money<span class="highlight">(Not Payment)</span>]</span>
           <h4 for="fname">You Have to Send <strong>৳{{(basketTotal$ | async).total }}</strong></h4>
           <h4>Then Fill This Form With Number and Transaction ID</h4>
          
           <label for="Nagad">Nagad Number</label>
           <input  [(ngModel)]="orderCreate.nagad" type="text" id="Nagad" required minlength="11"  maxlength="11"  name="Nagad" placeholder="Nagad Number..">
-          <label for="Nagadtd">Nagad Transaction ID</label>
-          <input  [(ngModel)]="orderCreate.nagadTransactionID" type="text" required minlength="5" id="Nagadtd" name="Nagadtd" placeholder="Transtion Id..">
+          <label for="Nagadtd">Nagad Transaction Id</label>
+          <input  [(ngModel)]="orderCreate.nagadTransactionID" type="text" required minlength="5" id="Nagadtd" name="Nagadtd" placeholder="Transaction Id..">
           </div>
 
       </div>
@@ -226,3 +226,4 @@
 
     </span> 
   </div>
+

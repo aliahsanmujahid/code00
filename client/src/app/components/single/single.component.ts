@@ -8,6 +8,8 @@ import { Location } from '@angular/common';
 import { AccountService } from 'src/app/_services/account.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-single',
@@ -16,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SingleComponent implements OnInit {
 
+  Activeuser: User;
   fav = false;
   alert = false;
   error = false;
@@ -26,6 +29,7 @@ export class SingleComponent implements OnInit {
   cartProduct: Product = {
     id: 0,
     appUserId:0,
+    sellerName:'',
     name: '',
     description: '',
     highLights: '',
@@ -52,9 +56,12 @@ export class SingleComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe( x => {
-      this.UserId = x.id;
+      if(x){
+        this.UserId = x.id;
+        this.Activeuser = x;
+      }
     });
-
+   
     this.route.data.subscribe(data => {
       this.product = data.product;
       this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+ this.product.youtubeLink);
@@ -66,6 +73,7 @@ export class SingleComponent implements OnInit {
     this.cartProduct = {
     id: this.product.id,
     appUserId: this.product.appUserId,
+    sellerName: this.product.sellerName,
     name: this.product.name,
     description: this.product.description,
     highLights: this.product.highLights,
@@ -99,7 +107,7 @@ export class SingleComponent implements OnInit {
   }
 
   viewseller(id:number){
-    this.router.navigate(['shop', { 'id':id , 'sellername':'null',}]);
+    this.router.navigate(['shop', { 'id':id }]);
   }
   
   backClick() {
@@ -119,6 +127,9 @@ export class SingleComponent implements OnInit {
     }
  
   }
+  noQuantity(){
+    this.toastr.info("No Quantity");
+  }
 
   setColor(color, $event){
     if ($event.target.checked){
@@ -136,9 +147,13 @@ export class SingleComponent implements OnInit {
 
   }
   addItemToBasket(){
-    if(this.product.appUserId === this.UserId){
-      this.toastr.warning('You Can,t Buy Your Product');
-    }else{
+    
+        if(this.Activeuser){
+          if (this.Activeuser.roles.includes('Admin') 
+        || this.Activeuser.roles.includes('Seller') 
+        || this.Activeuser.roles.includes('Moderator')){
+          this.toastr.warning('You Can,t Add Product');
+        }else{
     if(this.product.colors.length !== 0 || this.product.sizes.length !== 0){
      if(this.product.colors.length !== 0 && this.cartProduct.colors.length === 0){
        this.alert = !this.alert;
@@ -150,8 +165,23 @@ export class SingleComponent implements OnInit {
      }
     }else{
       this.basketService.addItemToBasket(this.cartProduct);
-    }
+    }        
   }
+  }else{
+    if(this.product.colors.length !== 0 || this.product.sizes.length !== 0){
+      if(this.product.colors.length !== 0 && this.cartProduct.colors.length === 0){
+        this.alert = !this.alert;
+      }
+      else if(this.product.sizes.length !== 0 && this.cartProduct.sizes.length === 0){
+       this.alert = !this.alert;
+     }else{
+       this.basketService.addItemToBasket(this.cartProduct);
+      }
+     }else{
+       this.basketService.addItemToBasket(this.cartProduct);
+     }  
+        }
+
   }
  
 

@@ -34,7 +34,7 @@
       <a >Status:{{item.status}}</a>
       <div class="topnav-right">
         <a style="cursor: pointer;" (click)="viewOrder(item.id)" >View</a>
-        <!-- <a *appHasRole='["Admin"]' (click)="deleteOrder(item.id)">Delete</a> -->
+        <a *appHasRole='["Admin","Seller"]' (click)="deleteOrder(item.id)">Delete</a>
       </div>
     </div> 
     <div *ngIf="noorder" class="nomore">
@@ -158,12 +158,20 @@
 
     <span *ngIf="customerid">
       <div class="margin2"></div>
+      <h4 *ngIf="item.status === 'Pending'">Your Order is Pending</h4>
+
+      <h4 *ngIf="item.status === 'Approved'">All Ok, We Approved Your Order</h4>
+
       <h4 *ngIf="item.status === 'Delivered'">We are Delivering this Order</h4>
       <h4 *ngIf="item.status === 'Delivered'">Confirm this Order Only After The Product Received</h4>
       
       <h4 *ngIf="item.status === 'Confirmed'">This Order Is Confirmed</h4>
       <h4 *ngIf="item.status === 'Confirmed'">Thank You For Being With Us</h4>
       <h4 *ngIf="item.status === 'Confirmed'">Contact If You Need Any Help</h4>
+
+      <h4 *ngIf="item.status === 'Rejected'">Order Rejected</h4>
+      <h4 *ngIf="item.status === 'Rejected'">Contact If You Need Any Help</h4>
+
     <div class="topnav margin2">
           <span *ngIf="item.status === 'Delivered'">
             <a style="cursor: pointer;"  (click)="changecutomerstatus(item.id,'Confirmed')">Confirm Order</a>
@@ -173,18 +181,23 @@
           </span>
     </div> 
   </span>    
-    <span *ngIf="sellerid">
+    <span *ngIf="sellerid && item.status !== 'Confirmed'">
     <div class="topnav margin2">
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Pending')">Pending</a>
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Approved')">Approve</a>
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Delivered')">Deliver</a>
+      <a *appHasRole='["Admin","Seller"]' (click)="changeStatus(item.id,'Pending')">Pending</a>
+      <a *appHasRole='["Admin","Seller"]' (click)="changeStatus(item.id,'Approved')">Approve</a>
+      <a *appHasRole='["Admin","Seller"]' (click)="changeStatus(item.id,'Delivered')">Deliver</a>
       
       <!-- <span *ngIf="item.status === 'Delivered' ">
         <a *appHasRole='["Admin","Member"]' (click)="changeStatus(item.id,'Confirmed')">Confirm</a>
       </span> -->
-      <a *appHasRole='["Admin", "Moderator","Seller"]' (click)="changeStatus(item.id,'Rejected')">Reject</a>
+      <a *appHasRole='["Admin","Seller"]' (click)="changeStatus(item.id,'Rejected')">Reject</a>
     </div>  
-  </span>
+   </span>
+   <span *ngIf="sellerid && item.status === 'Confirmed'">
+    <div class="topnav margin2">
+      <a *appHasRole='["Admin","Seller","Moderator"]'>Order Confirmed</a>
+    </div>
+   </span>
 
   <div class="padding displanone">
 

@@ -55,7 +55,9 @@ export class AdminComponent implements OnInit {
 
     this.getUtails();
     this.accountService.currentUser$.subscribe( x => {
-      this.UserId = x.id;
+      if(x){
+        this.UserId = x.id;
+      }
     });
   }
 
@@ -149,8 +151,10 @@ getUtails(){
     this.getutality = utails;
   }else{
     this.categoryService.getUtails().subscribe( res => {
-    this.getutality = res;
-    localStorage.setItem('utails', JSON.stringify(res));
+    if(res){
+      this.getutality = res;
+      localStorage.setItem('utails', JSON.stringify(res));
+    }
   })
  }
 }

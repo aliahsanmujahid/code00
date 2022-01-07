@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        // [Authorize(Policy = "RequireAdminRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
@@ -44,7 +45,7 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        // [Authorize(Policy = "RequireAdminRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("getmembersemail")]
         public async Task<ActionResult> getmembersemail()
         {
@@ -59,6 +60,22 @@ namespace API.Controllers
 
             return Ok(users);
         }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("getmembersphone")]
+        public async Task<ActionResult> getmembersphone()
+        {
+            var users = await _userManager.Users
+                .Where(r => r.UserRoles.Any(i => i.Role.Name == "Member"))
+                .OrderByDescending(i => i.Id)
+                .Select(u => new
+                {
+                    phoneNumber = u.PhoneNumber
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
 
 
 
@@ -71,19 +88,28 @@ namespace API.Controllers
                 .OrderBy(u => u.UserName)
                 .AsQueryable();
                 
-
+            try{
             var sellers =  await PagedList<SellerDto>.CreateAsync(users.ProjectTo<SellerDto>(_mapper
                 .ConfigurationProvider).AsNoTracking(), 
                     page, 10);
-
             Response.AddPaginationHeader(sellers.CurrentPage, sellers.PageSize, 
-                sellers.TotalCount, sellers.TotalPages);  
+                sellers.TotalCount, sellers.TotalPages);    
 
-            return sellers;     
+            return sellers; 
+            }
+            catch(Exception ex){
+                Console.WriteLine(ex);
+                if(users.Count() > 0){
+                  return _mapper.Map<IEnumerable<AppUser>,IEnumerable<SellerDto>>(users);
+                }
+                else{
+                    return null;
+                }
+            }     
 
         }
 
-
+        
         [HttpGet("getuserbyid/{id}")]
         public async Task<SellerDto> getuserbyid(int id)
         {
@@ -107,7 +133,7 @@ namespace API.Controllers
 
 
 
-        
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("getmemberscount")]
         public int getmemberscount(int page)
         {
@@ -116,7 +142,7 @@ namespace API.Controllers
  
         }
 
-        // [Authorize(Policy = "RequireAdminRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{email}")]
         public async Task<ActionResult> EditRoles(string email, [FromQuery] string roles)
         {

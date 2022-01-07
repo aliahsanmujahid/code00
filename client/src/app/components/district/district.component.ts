@@ -23,7 +23,6 @@ export class DistrictComponent implements OnInit {
       this.categoryService.getdisrictsandupazilla().subscribe(res =>{
         localStorage.setItem('disupa', JSON.stringify(res));
         this.districts = res;
-
       });
     }
   }
