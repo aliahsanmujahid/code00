@@ -69,12 +69,12 @@ export class ShopComponent implements OnInit {
        }
        
      });
-    this.accountService.currentUser$.subscribe( x => {
-      if(x){
-        this.UserId = x.id;
-        this.Activeuser = x;
-      }
-    });
+
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+      this.UserId = user.id;
+      this.Activeuser = user;
+    }
    
   }
   addItemToBasket(item: Product) {

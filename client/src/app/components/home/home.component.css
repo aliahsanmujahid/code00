@@ -69,6 +69,17 @@
         font-weight: bold;
         /* margin-left: -13px; */
       }
+      .tobbar img{
+        padding-top: 2px;
+     }
     }
 
+
+    @media screen and (max-width: 770px) {
+      .tobbar img{
+        padding-top: 2px;
+     }
+    }
+
+    
     

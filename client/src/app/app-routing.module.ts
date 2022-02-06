@@ -1,3 +1,4 @@
+import { AdminloginComponent } from './components/adminlogin/adminlogin.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ProductComponent } from './components/product/product.component';
@@ -20,6 +21,7 @@ import { SingleComponent } from './components/single/single.component';
 const routes: Routes = [
   {path: '',  component: HomeComponent},
   // {path: 'home',  component: HomeComponent},
+  {path: 'adminlogin',  component: AdminloginComponent},
   {path: 'shop',  component: ShopComponent},
   {path: 'auth',  component: AuthComponent},
   {path: 'checkout',  component: CheckoutComponent},
@@ -30,7 +32,7 @@ const routes: Routes = [
   {path: 'error',  component: ErrorComponent},
   {path: 'edit/:id',  component: AddeditproductComponent,canActivate: [AdminGuard]},
   {path: 'product/:id', component: SingleComponent, resolve: {product: ProductDetailedResolver}},
-  {path: 'admin',  component: AdminComponent, canActivate: [AdminGuard]},
+  {path: 'admin',  component: AdminComponent},
   {path: '**', component: HomeComponent, pathMatch: 'full'},
 ];
 

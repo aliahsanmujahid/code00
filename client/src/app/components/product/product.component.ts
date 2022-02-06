@@ -2,6 +2,7 @@ import { ProductService } from 'src/app/_services/product.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AccountService } from 'src/app/_services/account.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-product',
@@ -26,21 +27,19 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.accountService.currentUser$.subscribe( x => {
-      if(!x){
-         this.router.navigateByUrl('profile');
-      }
-    });
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(!user){
+      this.router.navigateByUrl('');
+    }
+
     this.route.params.subscribe(params => {
       window.scrollTo(0, 0);
     // Object.keys(this.search).length === 0 && this.search.constructor === Object
       if (Object.keys(params).length === 0) {
-        this.accountService.currentUser$.subscribe( x => {
-          if(x){
-            this.UserId = x.id;
-          }
-          
-        });
+        const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+        if(user){
+          this.UserId = user.id;
+        }
       }else{
         this.UserId = params.id;
       }

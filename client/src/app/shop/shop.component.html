@@ -16,7 +16,7 @@
     </tr> -->
 
       <tr *ngIf="user">
-        <td >All Products of {{user.displayName}}</td>
+        <td >Seller {{user.displayName}}</td>
       </tr>
       <tr *ngIf="user && user.phone !== null ">
         <td >Seller Phone Number {{user.phone}}</td>
@@ -48,7 +48,7 @@
         <div class="highlight">
           <h4 *ngFor="let h of item.highLights.split('#',2)" class="label warning">{{h}}</h4>
         </div>
-        <span class="delprice">৳{{item.discPrice}}</span>
+        <span *ngIf="item.discPrice >= 1" class="delprice">৳{{item.discPrice}}</span>
         <span class="mainprice">৳{{item.price}}</span>
         <!-- <span style="color: rgb(255, 0, 179);">&#8722;{{item.disCount}}%</span> -->
       </div>

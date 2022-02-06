@@ -14,32 +14,61 @@
 </form>
 </span>
 
-<div class="topnav bar">
+
+
+<div class="topnav bar" *appHasRole='["Admin", "Moderator","Seller"]'>
     <a (click)="getOrdersByStatus('All')">All</a>
     <a (click)="getOrdersByStatus('Pending')">Pending</a>
     <a (click)="getOrdersByStatus('Approved')">Approved</a>
     <a (click)="getOrdersByStatus('Delivered')">Delivering</a>
     <a (click)="getOrdersByStatus('Confirmed')">Confirmed</a>
     <a (click)="getOrdersByStatus('Rejected')">Rejected</a>
-  
-</div>  
+</div> 
+
+<div class="topnav" *appHasRole='["Member"]'>
+  <a (click)="getOrdersByStatus('All')">All Orders</a>
+</div>
+
+<!-- <div class="custom-select select">
+  <select [(ngModel)]="status" (change)="selectChange()">
+    <option value="All">All</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Delivering">Delivering</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Rejected">Rejected</option>
+  </select>
+</div> -->
+
+
+
 
 <div class="container">
   <span *ngIf="!orderview">
-    <div *ngFor="let item of orders" class="topnav" >
+    <!-- <div *ngFor="let item of orders" class="topnav bg" >
       <span *ngIf="sellerid">
         <a *appHasRole='["Admin", "Moderator"]'>Id: {{item.id}}</a>
       </span>
-      <a >Order Id: {{item.randnum}}</a>
+      <a >Order Id: <span style="color:darkred;font-size: 17px;">{{item.randnum}}</span></a>
       <a >Status:{{item.status}}</a>
       <div class="topnav-right">
-        <a style="cursor: pointer;" (click)="viewOrder(item.id)" >View</a>
-        <a *appHasRole='["Admin","Seller"]' (click)="deleteOrder(item.id)">Delete</a>
+        <a style="cursor: pointer;background:tomato;" (click)="viewOrder(item.id)" >View</a>
+        <a *appHasRole='["Admin"]' (click)="deleteOrder(item.id)">Delete</a>
+      
       </div>
-    </div> 
-    <div *ngIf="noorder" class="nomore">
-      <h1 >No Orders</h1>
-     </div>
+    </div>  -->
+
+      <table id="customers2" *ngFor="let item of orders" style="table-layout: fixed; width: 100%">                
+        <tr   (click)="viewOrder(item.id)" >
+           <td>ID: {{item.randnum}}</td>
+           <td>Status:{{item.status}}</td>
+         </tr>
+      </table> 
+
+      <div *ngIf="noorder" class="nomore">
+        <h1 >No Orders</h1>
+       </div>
+    
   </span>
   
   <span  *ngIf="orderview">
@@ -87,7 +116,13 @@
     <h2>Paymeny</h2>
 
     <span *ngIf="item.cashOnDelevary !== '' ">
-      <h1>Cash On Delevary</h1>
+      <h3 style="background: tomato;
+      color: white;
+      padding: 3px;
+      width: 185px;
+      margin: 0 auto;
+      border-radius: 3px;
+      ">Cash On Delevary</h3>
     </span>
 
     <span *ngIf="item.bkash !== '' ">

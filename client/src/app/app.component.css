@@ -138,9 +138,9 @@ padding-top: 66px;
 .alert-box {
   position: fixed;
   top: 20vw;
-  left: 5%;
-  width: 90%;
-  padding: 30px;
+  left: 10%;
+  width: 80%;
+  padding: 18px 8px 18px 8px;
   background: #fff;
   z-index: 3000;
   box-shadow: 0px 3px 8px rgb(49, 47, 47);
@@ -158,7 +158,7 @@ padding-top: 66px;
   color: white;
 }
 .menualert ul li{
-  padding: 10px;
+  padding: 12px;
   background-color: rgba(255, 0, 0, 0.397);
   margin: 5px;
   border-radius: 4px;
@@ -209,7 +209,7 @@ padding-top: 66px;
     width: 95%;
   }
   .content{
-    padding-top: 95px;
+    padding-top: 90px;
   }
   .rightbar{
     width: 320px!important;
@@ -221,14 +221,22 @@ padding-top: 66px;
     padding: 0px;
   }
   .sidebar {
-    top: 91px!important;
+    top: 84px!important;
   }
   .rightbar{
-    top: 91px!important;
+    top: 84px!important;
   }
   .logo{
     width: 105px;
   }
+
+  .header form #search{
+    height: 40px;
+  }
+  .searchbutton {
+    padding: 10px;
+    top: -11px;
+   }
   
   
 }

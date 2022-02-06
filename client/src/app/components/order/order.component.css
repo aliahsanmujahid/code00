@@ -1,16 +1,11 @@
 
 .container{
-    padding-top: 50px;
+    padding-top: 10px;
     width: 90%;
 }
 .topnav {
     overflow: hidden;
-    background-color: chartreuse;
     margin-bottom: 30px;
-  }
-
-  .bar{
-    background-color: rgba(240, 140, 140, 0.527);
   }
 
 
@@ -24,6 +19,9 @@
   button{
     padding: 10px;
   }
+  .bg{
+    background: #04AA6D;
+  }
   
   .topnav a {
     float: left;
@@ -31,8 +29,10 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 15px;
     background-color: #04AA6D;
+    margin: 2px;
+    border-radius: 3px;
   }
   
   .topnav a:hover {
@@ -108,6 +108,44 @@
 
 
 
+  
+#customers2 {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  margin: 0 auto;
+  word-wrap: break-word;
+  margin: 5px 0px 5px 0px;
+  background: #00ccc2;
+  color: white;
+  border-radius: 3px;
+  box-shadow: 0px 10px 25px #57aba7, 0px -10px 25px #a6fffa, inset 0px -5px 10px #57aba7, inset 0px 5px 10px #a6fffa;
+  cursor: pointer;
+}
+
+#customers2 td, #customers2 th {
+   border-bottom: 2px solid rgb(224, 245, 248);
+   border-top: 2px solid rgb(225, 249, 253);;
+   border-left: 2px solid rgb(230, 255, 255);;
+   padding: 10px;
+   font-size: 15px;
+   text-align: center;
+}
+
+
+#customers2 td:nth-child(even){
+  border-left: none;
+  border-right: 2px solid rgb(227, 249, 255);;
+}
+  
+
+#customers2 tr:hover {
+  background: #11cac1;
+  box-shadow: 0px 3px 8px rgb(49, 47, 47);
+}
+
+
+
+
 
   a{
     cursor: pointer;
@@ -122,9 +160,8 @@
         width: 100%;
       }
       .topnav a {
-        padding: 5px;
+        padding: 5px 15px 6px 15px;
         margin: 2px;
-        font-size:large;
       }
       .pointer{
         cursor: pointer;
@@ -136,4 +173,35 @@
       .displanone{
         display: none;
       }
+    }
+
+    .select{
+      display: none;
+    }
+    select{
+      width: 80%;
+      border-radius: 5px;
+      background: rgb(160, 248, 244);
+      color: white;
+      border: 2px solid rgb(0, 204, 255);
+    }
+    select:checked{
+      border: 2px solid rgb(0, 204, 255);
+    }
+    option{
+      background: #ffc400;
+      color: white;
+    }
+    
+    
+    @media screen and (max-width: 650px) {
+     /* .bar{
+       display: none;
+     } */
+     .select{
+       display: block;
+     }
+     .container{
+      width: 100%;
+     }
     }

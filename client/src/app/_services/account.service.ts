@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class AccountService {
 
   baseUrl = environment.apiUrl;
-  private currentUserSource = new ReplaySubject<User>(1);
+  public currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient,private router: Router) { }
@@ -23,7 +23,7 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
-        location.reload();
+        return response;
       })
     )
   }
@@ -34,6 +34,7 @@ export class AccountService {
         if (user) {
           this.setCurrentUser(user);
           this.router.navigateByUrl('shop');
+          return user;
         }
       })
     )
@@ -97,7 +98,8 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/signup', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
-       location.reload();
+        return response;
+      //  location.reload();
       })
     )
   }
@@ -105,7 +107,8 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/forgetpass', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
-        location.reload();
+        return response;
+        // location.reload();
       })
     )
   }
@@ -113,7 +116,8 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/phonelogin', model).pipe(
       map((response: User) => {
         this.setCurrentUser(response);
-        location.reload();
+        return response;
+        // location.reload();
       })
     )
   }

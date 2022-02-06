@@ -90,21 +90,73 @@ button:hover{
   padding: 12px;
   border: none;
   border-radius: 4px;
-  margin: 5px 0;
   opacity: 0.85;
   display: inline-block;
   font-size: 17px;
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
 }
-.padding{
-  padding: 10px;
+/* label{
+  position: relative;
+} */
+/* .b{
+  position: absolute;
+    background: #0063a7;
+    padding: 1px 4px 0px 4px;
+    color: white;
+    margin-left: 2px;
+    font-size: 12px;
+
+} */
+
+textarea.ng-dirty.ng-invalid {
+  border-left: 10px solid red;
 }
 
-  @media (max-width:450px){
+input.ng-dirty.ng-invalid {
+  border-left: 10px solid red;
+}
+
+
+.padding{
+  padding: 5px;
+}
+ul{
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media (max-width:800px){
+
+  ul{
+    width: 60%;
+  }
+
+}
+
+@media (max-width:650px){
+
+    ul{
+      width: 70%;
+    }
+ 
+ }
+ @media (max-width:570px){
+
+  ul{
+    width: 80%;
+  }
+
+}
+
+
+  @media (max-width:480px){
 
     input,.btn{
         width: 98%;
+      }
+      ul{
+        width: 100%;
       }
    
    }

@@ -32,6 +32,7 @@ import { RolesComponent } from './components/roles/roles.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthComponent } from './components/auth/auth.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { AdminloginComponent } from './components/adminlogin/adminlogin.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
     CategoryComponent,
     RolesComponent,
     AuthComponent,
+    AdminloginComponent,
   ],
   imports: [
     CommonModule,
@@ -68,9 +70,9 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
     SocialLoginModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},  
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -82,9 +84,10 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
               '669351671073-ae83o151l8seg7pr0s8rdsvicgbjk3fn.apps.googleusercontent.com'
             )
           }
-        ]
+        ],
+        multi: true
       } as SocialAuthServiceConfig,
-    }  
+    }
   ],
   bootstrap: [AppComponent]
 })

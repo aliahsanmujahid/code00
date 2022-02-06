@@ -52,13 +52,22 @@ export class AdminComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+        if(user){
+        if(user.roles.includes('Admin') 
+        || user.roles.includes('Seller')){
+          this.UserId = user.id;
+        }else{
+          this.router.navigateByUrl('');
+        }
+      }
+    }else{
+          this.router.navigateByUrl('');
+    }
 
     this.getUtails();
-    this.accountService.currentUser$.subscribe( x => {
-      if(x){
-        this.UserId = x.id;
-      }
-    });
   }
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/_models/user';
 import { RoleService } from 'src/app/_services/role.service';
@@ -18,9 +19,13 @@ export class RolesComponent implements OnInit {
     roles:[]
   }; 
   totaluser = 0
-  constructor(public roleService: RoleService,private toastr: ToastrService ) { }
+  constructor(private router: Router,public roleService: RoleService,private toastr: ToastrService ) { }
 
   ngOnInit(): void {
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(!user){
+      this.router.navigateByUrl('');
+    }
     this.getUsersWithRoles();
     this.getmemberscount();
   }

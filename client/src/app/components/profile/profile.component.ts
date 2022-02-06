@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
+import { Model } from 'src/app/_models/model';
 
 @Component({
   selector: 'app-profile',
@@ -24,19 +25,50 @@ export class ProfileComponent implements OnInit {
   useraddress:any = [];
   districts: any = [];
   upazilla: any = [];
-  userId:number;
+  userId:number = null;
+  model: Model ={
+    username: '',
+    email: '',
+    image:''
+  };
 
   constructor(public toastr: ToastrService,public accountService: AccountService,public categoryService: CategoryService,public router: Router) { }
 
   ngOnInit(): void {
-    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
-    if(user){
-      this.userId = user.id;
-      this.name.name = user.displayName;
-      this.getaddress();
-    }else{
+
+      const gauth = JSON.parse(localStorage.getItem('g_auth'));
+      if(gauth){
+        this.model.username = gauth.name;
+        this.model.email = gauth.email;
+        this.model.image = gauth.photoUrl;
+                
+       this.accountService.login(this.model).subscribe(response => {
+        if(response){
+             localStorage.removeItem('g_auth');
+        }
+       }, error => {
+       })
+      }
+
+      this.accountService.currentUser$.subscribe( user => {
+        if(user){
+          this.userId = user.id;
+          this.name.name = user.displayName;
+          this.getaddress();
+        }
+      });
+
+      const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+        if(gauth || user){
+          if(user){
+            this.userId = user.id;
+            this.name.name = user.displayName;
+            this.getaddress();
+          }
+        }else{
           this.router.navigateByUrl('');
-    }
+        }
+
     const disupa = JSON.parse(localStorage.getItem('disupa'));
     if(disupa){
       this.districts = disupa;
@@ -45,14 +77,16 @@ export class ProfileComponent implements OnInit {
         this.upazilla = selected ? selected.subDto : [];
       }
     }else{
-      this.categoryService.getdisrictsandupazilla().subscribe(res =>{
-        localStorage.setItem('disupa', JSON.stringify(res));
-        this.districts = res;
-        if(this.useraddress !== null){
-        const selected = this.districts.find(m => m.name === this.useraddress.district);
-        this.upazilla = selected ? selected.subDto : [];
-        }
-      });
+      if(this.userId != null){
+        this.categoryService.getdisrictsandupazilla().subscribe(res =>{
+          localStorage.setItem('disupa', JSON.stringify(res));
+          this.districts = res;
+          if(this.useraddress !== null){
+          const selected = this.districts.find(m => m.name === this.useraddress.district);
+          this.upazilla = selected ? selected.subDto : [];
+          }
+        });
+      }
     }
   }
   ondisChange(){
@@ -109,15 +143,17 @@ export class ProfileComponent implements OnInit {
   }
 
   getaddress(){
-     this.useraddress = null;
+     this.useraddress = [];
      const address = JSON.parse(localStorage.getItem('address'+this.userId));
      if(address){
       this.useraddress = address;
      }else{
-      this.accountService.getaddress().subscribe(res =>{
-            this.useraddress = res;
-            localStorage.setItem('address'+this.userId , JSON.stringify(res));
-     });
+      if(this.userId != null){
+        this.accountService.getaddress().subscribe(res =>{
+          this.useraddress = res;
+          localStorage.setItem('address'+this.userId , JSON.stringify(res));
+       });
+      } 
      }
   }
 

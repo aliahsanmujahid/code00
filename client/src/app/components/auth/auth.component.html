@@ -6,7 +6,7 @@
           <table (click)="signupview()" id="customers2" style="table-layout: fixed; width: 100%;">
             <tr>
                <td 
-               [ngStyle]="signuppage==true?{'background-color':'rgb(226, 87, 87)','color': 'white'} : {'background-color': 'white'}"
+               [ngStyle]="signuppage==true?{'background-color':'salmon','color': 'white'} : {'background-color': 'white'}"
                 style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;
                ">
                Sign Up
@@ -29,10 +29,10 @@
       <input [(ngModel)]="modelsign.username" type="text" placeholder="Name" name="Name" required  minlength="3">
 
       <label for="psw"><b>Phone Number</b></label>
-      <input [(ngModel)]="phonenumber" type="number" placeholder="Phone Number" name="Number" required >
+      <input [(ngModel)]="phonenumber" type="number" placeholder="Phone Number" name="Number" required onKeyPress="if(this.value.length==11) return false;">
       
-      <label for="psw"><b>Password</b></label>
-      <input [(ngModel)]="modelsign.password" type="text" placeholder="Password" name="password" required minlength="3">
+      <label for="psw">Password</label>
+      <input [(ngModel)]="modelsign.password" type="text" placeholder="Password" name="password" required minlength="4">
 
       <div class="clearfix">
         <button [disabled]="SignUpForm.invalid" type="submit" class="signupbtn">Sign Up</button>
@@ -57,7 +57,7 @@
         <li>
           <table (click)="loginview()" id="customers2" style="table-layout: fixed; width: 100%;">
             <tr>
-               <td [ngStyle]="loginpage==true?{'background-color':'rgb(226, 87, 87)','color': 'white'} : {'background-color': 'white'}"
+               <td [ngStyle]="loginpage==true?{'background-color':'salmon','color': 'white'} : {'background-color': 'white'}"
                style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;
                ">
                Log In
@@ -68,22 +68,13 @@
       </ul> 
     <!-- required minlength="11" maxlength="11" -->
       <label for="email"><b>Phone Number</b></label>
-      <input [(ngModel)]="phonenumber" type="number" placeholder="Phone Number" name="Number" required >
+      <input [(ngModel)]="phonenumber" type="number" placeholder="Phone Number" name="Number" required onKeyPress="if(this.value.length==11) return false;">
       
-      <label for="psw"><b>Password</b></label>
-      <input [(ngModel)]="modellogin.password" type="text" placeholder="Password" name="Password" required minlength="3">
+      <label for="psw">Password</label>
+      <input [(ngModel)]="modellogin.password" type="text" placeholder="Password" name="Password" required minlength="4">
       
      
-      <table id="forger" style="
-      table-layout: fixed;
-      width: 130px;
-      margin: 0 auto;
-      margin-bottom: 10px;">
-        <tr>
-           <td (click)="forgetview()" style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 2px;font-size: 15px;
-           ">Forgot Password</td>
-         </tr>
-      </table> 
+      
       <div class="clearfix">
         <button [disabled]="LoginForm.invalid" type="submit" class="signupbtn">Login</button>
       </div>
@@ -95,17 +86,19 @@
 <span *ngIf="forgetpage">
   <form #ForgetForm="ngForm" class="modal-content" (ngSubmit)="forgetpass()">
     <div class="container">
-      <table id="customers2" style="table-layout: fixed; width: 100%;">
-        <tr>
-           <td style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;
-           ">Forgot Password</td>
-         </tr>
-    </table> 
+      <ul>
+          <table id="customers2" style="table-layout: fixed; width: 100%;">
+            <tr>
+               <td style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 8px;font-size: 23px;
+               background: green; color: white;">Forgot Password</td>
+             </tr>
+        </table>
+      </ul>
       <label for="email"><b>Phone Number</b></label>
-      <input [(ngModel)]="phonenumber" type="number"  placeholder="Phone Number" name="Number"  required >
+      <input [(ngModel)]="phonenumber" type="number"  placeholder="Phone Number" name="Number"  required onKeyPress="if(this.value.length==11) return false;">
       
-      <label for="psw"><b>New Password</b></label>
-      <input [(ngModel)]="modellogin.password" type="text"  placeholder="Enter New Password" name="newPassword" required minlength="3">
+      <label for="psw">New Password</label>
+      <input [(ngModel)]="modellogin.password" type="text"  placeholder="Enter New Password" name="newPassword" required minlength="4">
       
       <div class="clearfix">
         <button [disabled]="ForgetForm.invalid" type="submit" class="signupbtn">Submit</button>
@@ -114,7 +107,19 @@
   </form>
 </span>
 
-<div class="padding">
+<table *ngIf="!forgetpage" id="forger" style="
+table-layout: fixed;
+width: 130px;
+margin: 0 auto;
+margin-bottom: 1px;
+margin-top: 10px;">
+  <tr>
+     <td (click)="forgetview()" style="text-align: center!important;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;padding: 2px;font-size: 15px;
+     ">Forgot Password</td>
+   </tr>
+</table> 
+
+<!-- <div class="padding">
   Or
 </div>
 
@@ -122,4 +127,4 @@
 <a (click)="loginWithGoogle()"  class="google btn">
   <span class="imgspan"><img src="../../../assets/gmail.png" alt=""></span>
   Login with Gmail
-</a>
+</a> -->

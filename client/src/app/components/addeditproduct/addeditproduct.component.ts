@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { IColors, IProduct, ISizes } from 'src/app/_models/product';
+import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { CategoryService } from 'src/app/_services/category.service';
 import { ProductService } from 'src/app/_services/product.service';
@@ -66,11 +67,10 @@ export class AddeditproductComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.accountService.currentUser$.subscribe( x => {
-      if(!x){
-         this.router.navigateByUrl('');
-      }
-    });
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(!user){
+      this.router.navigateByUrl('');
+    }
 
     this.getmainmenu();
     this.getsubmenu();

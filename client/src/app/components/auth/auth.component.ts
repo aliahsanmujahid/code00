@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
 import { Model, ModelL, ModelS } from 'src/app/_models/model';
+import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -40,6 +41,11 @@ export class AuthComponent implements OnInit {
     private route: ActivatedRoute,private router: Router,private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+      this.router.navigateByUrl('profile');
+    }
+    
     this.route.params.subscribe(params => {
       
       window.scrollTo(0, 0);
@@ -85,52 +91,37 @@ export class AuthComponent implements OnInit {
       
     });
 
-    this.accountService.currentUser$.subscribe( x => {
-      if(x){
-         this.router.navigateByUrl('profile');
-      }
-    });
-
 
   }
 
 
-  loginWithGoogle(){
-    
-      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(d =>{
-        this.model.username = d.name;
-        this.model.email = d.email;
-        this.model.image = d.photoUrl;
-        this.login();
-      })
-      .catch(error => {
-        if(error.error){
-          this.toastr.error("PopUp Closed Try Again");
-        }else{
-          this.toastr.error("Try Again");
-        }
-      });
-  
-    // this.socialAuthService.authState.subscribe((user) => {
-      
-    //   // this.model.username = user.name;
-    //   // this.model.email = user.email;
-    //   // this.model.image = user.photoUrl;
-    //   // this.login();
-    //   // console.log(user);
-      
-    // })
-
-  }
+  // loginWithGoogle(): void{
+  //     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+  //     .then(data =>{
+  //       localStorage.setItem("g_auth",JSON.stringify(data));
+  //       this.router.navigateByUrl('profile');
+  //     })
+  //     .catch(error => {
+  //       if(error.error){
+  //         this.toastr.error("PopUp Closed Try Again");
+  //         return;
+  //       }else{
+  //         this.toastr.info("Loading Try Again");
+  //         return;
+  //       }
+  //   });
+  // }
 
 
   
-  login() {
-    this.accountService.login(this.model).subscribe(response => {
-    }, error => {
-    })
-  }
+  // login() {
+  //   this.accountService.login(this.model).subscribe(response => {
+  //      if(response){
+  //           this.router.navigateByUrl('profile');
+  //      }
+  //   }, error => {
+  //   })
+  // }
 
   loginview(){
     this.router.navigate(['auth', {  'login':true }]);
@@ -148,25 +139,89 @@ export class AuthComponent implements OnInit {
 
   signup(){
     this.modelsign.phonenumber = '0'+this.phonenumber.toString();
-    this.accountService.signup(this.modelsign).subscribe(response => {
-    }, error => {
-      this.toastr.error("Wrong Number or Password");
-    })
+
+    if(this.modelsign.phonenumber.length == 11){
+      const text = this.modelsign.phonenumber;
+      for (let i = 0; i < 2; i++) {
+        if(text.charAt(0) !== '0' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }
+        if(text.charAt(1) !== '1' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }else{
+          this.accountService.signup(this.modelsign).subscribe(response => {
+             if(response){
+              this.router.navigateByUrl('profile');
+             }
+          }, error => {
+                this.toastr.error("User Already Exist");
+          })
+          return;
+        }
+      }
+    }else{
+      this.toastr.error("Phone Number Invalid");
+    }
+    
   }
 
   forgetpass(){
     this.modellogin.phonenumber = '0'+this.phonenumber.toString();
-    this.accountService.forgetpass(this.modellogin).subscribe(response => {
-    }, error => {
-      this.toastr.error("Wrong Number or Password");
-    })
+
+    if(this.modellogin.phonenumber.length == 11){
+      const text = this.modellogin.phonenumber;
+      for (let i = 0; i < 2; i++) {
+        if(text.charAt(0) !== '0' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }
+        if(text.charAt(1) !== '1' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }else{
+          this.accountService.forgetpass(this.modellogin).subscribe(response => {
+            if(response){
+              this.router.navigateByUrl('profile');
+             }
+          }, error => {
+            this.toastr.error("Wrong Number or Password");
+          })
+          return;
+        }
+      }
+    }else{
+      this.toastr.error("Phone Number Invalid");
+    }
   }
   phonelogin(){
     this.modellogin.phonenumber = '0'+this.phonenumber.toString();
-    this.accountService.phonelogin(this.modellogin).subscribe(response => {
-    }, error => {
-      this.toastr.error("Wrong Number or Password");
-    })
+
+    if(this.modellogin.phonenumber.length == 11){
+      const text = this.modellogin.phonenumber;
+      for (let i = 0; i < 2; i++) {
+        if(text.charAt(0) !== '0' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }
+        if(text.charAt(1) !== '1' ){
+          this.toastr.error("Phone Number Invalid");
+          return;
+        }else{
+          this.accountService.phonelogin(this.modellogin).subscribe(response => {
+            if(response){
+              this.router.navigateByUrl('profile');
+             }
+          }, error => {
+            this.toastr.error("Wrong Number or Password");
+          })
+          return;
+        }
+      }
+    }else{
+      this.toastr.error("Phone Number Invalid");
+    }
   }
   
 }

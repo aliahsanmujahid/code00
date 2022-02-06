@@ -59,14 +59,14 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+      this.orderCreate.name = user.displayName;
+      this.user = user;
+      this.UserId = user.id;
+    }
     this.QuantityCheck();
-    this.accountService.currentUser$.subscribe( x => {
-      if(x){
-        this.orderCreate.name = x.displayName;
-        this.user = x;
-        this.UserId = x.id;
-      }
-    });
+    
 
      if(this.user){
       var address = JSON.parse(localStorage.getItem('address'+this.user.id));
@@ -133,34 +133,24 @@ export class CheckoutComponent implements OnInit {
     
   }
   QuantityCheck(){
-
     const items = JSON.parse(localStorage.getItem('basket'));
     if(items){
-      if(this.user){
-        if (this.user.roles.includes('Admin') 
-        || this.user.roles.includes('Seller') 
-        || this.user.roles.includes('Moderator')){
+      this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
+        if(res == true){
           this.basketService.deleteBasket();
           this.router.navigateByUrl('');
-          this.toastr.warning('You Can,t Buy Product');
-        }else{
-          this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
-            if(res == true){
-              this.basketService.deleteBasket();
-              this.toastr.info('Product Not Available');
-              location.reload();
-            }
-          })
+          this.toastr.info('Product Not Available');
         }
-      }else{
-        this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
-          if(res == true){
+        if(this.user){
+          if (this.user.roles.includes('Admin') 
+          || this.user.roles.includes('Seller') 
+          || this.user.roles.includes('Moderator')){
             this.basketService.deleteBasket();
-            this.toastr.info('Product Not Available');
-            location.reload();
+            this.router.navigateByUrl('');
+            this.toastr.warning('You Can,t Buy Product');
           }
-        })
-      }
+        }
+      })
     }
   }
 

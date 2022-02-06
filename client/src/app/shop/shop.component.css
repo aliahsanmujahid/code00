@@ -96,6 +96,7 @@ img {
     float: left;
     font-size: 12px;
     word-break: break-word;
+    display: none;
   }
   button {
     width: 95%;
@@ -191,6 +192,11 @@ img {
     display: none;
   }
 
+  .priceh4,.priceh6{
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
+
 
   @media (max-width: 1200px) {
     .cards_wrap .card_item {
@@ -223,8 +229,10 @@ img {
     }
     .priceh6{
       display: block;
-      margin-bottom: 2px;
     }
+    /* .highlight h4{
+      display: none!important;
+    } */
   }
 
 

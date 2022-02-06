@@ -55,12 +55,11 @@ export class SingleComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.accountService.currentUser$.subscribe( x => {
-      if(x){
-        this.UserId = x.id;
-        this.Activeuser = x;
-      }
-    });
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+        this.UserId = user.id;
+        this.Activeuser = user;
+    }
    
     this.route.data.subscribe(data => {
       this.product = data.product;

@@ -61,11 +61,11 @@
          <h3>{{product.name}}</h3>
       </div>
       <div class="price">
-        <h2 class="delprice">৳{{product.discPrice}}</h2>
+        <h2 *ngIf="product.discPrice >= 1" class="delprice">৳{{product.discPrice}}</h2>
         <h2 class="mainprice">৳{{product.price}}</h2>
-        <h2 style="color: rgb(255, 0, 179);">&#8722;{{product.disCount}}%</h2>
+        <h2 *ngIf="product.disCount >= 1" style="color: rgb(255, 0, 179);">&#8722;{{product.disCount}}%</h2>
       </div>
-      <div class="price">
+      <div *ngIf="(product.discPrice-product.price) >= 1" class="price">
          <table id="customers2" style="table-layout: fixed; width: 100%;">
             <tr>
                <td style="text-align: center!important;font-family:'Courier New', Courier, monospace;padding: 2px;font-size: 11px;

@@ -13,11 +13,13 @@ export class ErrorComponent implements OnInit {
   constructor(public accountService:AccountService,public router:Router) { }
 
   ngOnInit(): void {
-    this.accountService.currentUser$.subscribe( x => {
-       if(x){
-        this.router.navigateByUrl('');
-       }
-    });
+    const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
+    if(user){
+      this.router.navigateByUrl('');
+    }
+  }
+  logout(){
+    this.accountService.logout()
   }
 
 }

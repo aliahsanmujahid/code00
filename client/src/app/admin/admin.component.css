@@ -24,9 +24,11 @@ img{
   border-radius: 50%;
 }
 .topnav a{
-  padding: 10px;
-  background-color: blue;
+  padding: 10px 15px;
+  background-color: lightcoral;
   margin: 5px;
+  border-radius: 5px;
+  color: white;
 }
 
 /* Responsive: */

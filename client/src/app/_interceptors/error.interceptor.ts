@@ -48,7 +48,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             default:
               // this.router.navigateByUrl("error");
-              this.accountService.logout2();
+              // this.accountService.logout2();
               this.basketService.deleteBasket();
               break;
           }

@@ -81,6 +81,9 @@ export class OrderComponent implements OnInit {
   }
 
 
+  selectChange(){
+    this.getOrdersByStatus(this.status);
+  }
   getOrdersByStatus(status:string){
     this.orders = [];
     this.status = status;

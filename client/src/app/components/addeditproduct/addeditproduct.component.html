@@ -39,7 +39,7 @@
             
             <span >
               <label for="lname">Original Price</label>
-              <input [(ngModel)]="product.discPrice" type="number" name="price" required min="2" placeholder="Price..">  
+              <input [(ngModel)]="product.discPrice" type="number" name="price" required  placeholder="Price..">  
             </span>
             <hr>
             <span >
@@ -87,11 +87,11 @@
           
           <div>
             <form #SetColor="ngForm" (ngSubmit)="setColor()" autocomplete="off">
-            <label for="fname">Select Color</label>
+            <h3 >Select Color</h3>
             <input class="color" [(colorPicker)]="colors.colorCode" required cpWidth='230px' cpHeight="100px"
               [style.background]="colors.colorCode" />
             <br>
-            <label for="lname">Quantity</label>
+            <label for="lname">Color Name</label>
             <input   [(ngModel)]="colors.name" required minlength="3" type="text" name="colorName" placeholder="Color Name..">
             
             <label for="lname">Quantity</label>
@@ -121,6 +121,7 @@
 
         <div>
                 <form #SetSize="ngForm" (ngSubmit)="setSize()" novalidate>
+                <label for="lname">Size</label>
                 <input [(ngModel)]="sizes.name" type="text" name="size" required minlength="1" placeholder="Size..">  
                 <label for="lname">Quantity</label>
                 <input   [(ngModel)]="sizes.quantity" required min="1" type="number" name="sizeQuantity" placeholder="Quantity..">

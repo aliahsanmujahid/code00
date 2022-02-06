@@ -38,6 +38,13 @@ export class AppComponent {
   ngOnInit(): void {
     
     this.setCurrentUser();
+    this.accountService.currentUser$.subscribe( x => {
+      if(x){
+        this.UserId = x.id;
+        this.Activeuser = x;
+      }
+    });
+    // this.QuantityCheck();
 
     this.categoryService.getchangeid().subscribe( res =>{
       const cid = JSON.parse(localStorage.getItem('changeid'));
@@ -61,8 +68,6 @@ export class AppComponent {
     })
 
    
-
-    this.QuantityCheck();
     this.getCategoryes();
     this.basketService.getBasket();
     this.basket$ = this.basketService.basket$;
@@ -105,14 +110,14 @@ export class AppComponent {
         || this.Activeuser.roles.includes('Seller') 
         || this.Activeuser.roles.includes('Moderator')){
           this.basketService.deleteBasket();
-          this.router.navigateByUrl('');
+          // this.router.navigateByUrl('');
           this.toastr.warning('You Can,t Buy Product');
         }else{
           this.orderService.orderQuantityCheck(items.items).subscribe(res =>{
             if(res == true){
               this.basketService.deleteBasket();
               this.toastr.info('Product Not Available');
-              location.reload();
+              //location.reload();
             }
           })
         }
@@ -121,7 +126,7 @@ export class AppComponent {
           if(res == true){
             this.basketService.deleteBasket();
             this.toastr.info('Product Not Available');
-            location.reload();
+           // location.reload();
           }
         })
       }
@@ -143,13 +148,6 @@ export class AppComponent {
   setCurrentUser() {
     const user: User = JSON.parse(localStorage.getItem('eidhatuser'));
     if(user){
-      this.accountService.currentUser$.subscribe( x => {
-        if(x){
-          this.UserId = x.id;
-          this.Activeuser = x;
-        }
-      });
- 
       this.accountService.setUser(user);
     }
   }
