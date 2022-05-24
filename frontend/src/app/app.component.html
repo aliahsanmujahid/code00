@@ -1,0 +1,239 @@
+<ngx-spinner>
+</ngx-spinner>
+<input type="checkbox" id="check">
+<input type="checkbox" id="check2">
+<label class="showhide" for="check">
+</label>
+
+  <div (click)="alerttoggle()"  *ngIf="alert" class="backdrop"></div>
+  <div *ngIf="alert" class="alert-box">
+    <div class="menualert">
+      <ul >
+        <span *ngIf="accountService.currentUser$ | async">
+          <li (click)="goprofilemobile()">Profile</li>
+        </span>
+        <span *ngIf="(accountService.currentUser$ | async) === null">
+          <li (click)="loginpage()"><span>Log In</span></li>
+          <li (click)="signuppage()"><span>Sign Up</span></li>
+        </span>
+
+        <li (click)="gosellers()" >Sellers</li>
+
+        <span *ngIf="accountService.currentUser$ | async">
+          <li *appHasRole='["Member"]' (click)="customerordersmobile()">Orders</li>
+          <li (click)="goadmin()" *appHasRole='["Admin","Seller"]'>Admin</li>
+        </span>
+        <li *ngIf="accountService.currentUser$ | async" (click)="logout()">Logout</li>
+      </ul>
+    </div>
+    </div>
+
+
+
+  <div class="header">
+    <div class="left">
+      <label for="check">
+     <!-- <img class="leftmenu" src="../assets/menu.png" alt=""> -->
+    </label>
+     <img routerLink='' class="logo" src="../assets/logo.png" alt="">
+     <img  (click)="alerttoggle()" class="mobilemenu" src="../assets/more.png" alt="">
+    </div>
+    <div class="right">
+        <ul>
+            <li class="searchli">
+                <form #SearchForm="ngForm" (ngSubmit)="searchProduct()" novalidate>
+                  <span>
+                    <input id="search" type="search" [(ngModel)]="search" type="text" name="search" required minlength="3" placeholder="Search..">
+                    <!-- <button  class="searchbutton" [disabled]="SearchForm.invalid" type="submit" >Search</button> -->
+                  </span>
+                </form>
+            </li>
+            <li class="rightdash">
+                <a class="dash" >Menu</a>
+                <div class="dropdown-content">
+                    <span *ngIf="accountService.currentUser$ | async">
+                      <a routerLink='profile'>Profile</a>
+                    </span>
+
+                    <span *ngIf="(accountService.currentUser$ | async) === null">
+                      <a (click)="loginpage()"><span>Log In</span></a>
+                      <a (click)="signuppage()"><span>Sign Up</span></a>
+                    </span>
+                    <a routerLink='/sellers' >Sellers</a>
+
+                    <span *ngIf="accountService.currentUser$ | async">
+                      <a *appHasRole='["Member"]'  style="cursor: pointer;" (click)="customerorders()">Orders</a>
+                      <a style="cursor: pointer;" routerLink='/admin' *appHasRole='["Admin","Seller"]' >Admin</a>
+                    </span>
+                    <a style="cursor: pointer;" *ngIf="accountService.currentUser$ | async" (click)="logout()">Logout</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="sidebar">
+       <div class="item" *ngFor="let item of category" >
+          <input type="checkbox" name="" id="{{item.name}}">
+          <label for="{{item.name}}">
+              <h3 (click)="getCatProduct(item.id)" routerLinkActive='active' >
+                {{item.name}}
+              </h3>
+        </label>
+        <ul class="subul" *ngFor="let sub of item.subDto">
+          <li (click)="getsubCatProduct(sub.id)" routerLinkActive='active'>
+            {{sub.name}}
+          </li>
+        </ul>
+       </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span *ngIf="(basketService.basket$ | async) as basket" class="cart-no">
+  <label for="check2">
+  <div class="cart">
+      <h4 *ngIf="basket.items.length == 1">
+        {{basket.items.length}} item
+      </h4>
+      <h4 *ngIf="basket.items.length > 1">
+        {{basket.items.length}} items
+      </h4>
+      <p>
+        ৳{{(basketTotal$ | async).subtotal}}
+      </p>
+  </div>
+  </label>
+  </span>
+
+<div class="rightbar">
+  <label for="check2">
+    <h2 class="close">Close</h2>
+  </label>
+
+  <div class="rightmenu">
+    <label for="check2">
+      <img class="toggle2" src="../assets/left.png" alt="">
+    </label>
+  </div>
+  <div class="cartnull" *ngIf="(basket$ | async) == null">
+    <h3>There are no items in your basket</h3>
+ </div>
+
+  <span *ngIf="basket$ | async">
+  <div *ngFor="let item of (basket$ | async).items" class="row">
+
+    <div class="smcolumn" >
+      <div class="unitControl">
+        <span (click)="incrementItemQuantity(item)" class="control icon-plus"></span>
+        <span class="control unitCount">{{item.quantity}}</span>
+        <span (click)="decrementItemQuantity(item)" class="control icon-minus"></span>
+      </div>
+    </div>
+    <div class="column" >
+      <img src="{{item.pictureUrl}}"  alt="">
+    </div>
+    <div class="bigcolumn" >
+      <div class="bigcontent">
+        <table id="customers" style="table-layout: fixed; width: 100%">
+          <tr>
+            <td>{{item.productName}}</td>
+          </tr>
+          <tr *ngIf="item.color.length > 0 " >
+            <td>Color: {{item.color[0].name | uppercase }}</td>
+          </tr>
+          <tr *ngIf="item.size.length > 0 ">
+            <td>Size: {{item.size[0].name | uppercase }}</td>
+          </tr>
+          <tr>
+            <td>৳{{item.price * item.quantity}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="smcolumn" >
+      <div class="unitControl">
+        <span (click)="removeBasketItem(item)" class="control icon-trush"></span>
+      </div>
+    </div>
+  </div>
+</span>
+
+<span *ngIf="(basketTotal$ | async)">
+<h1>Order Summary</h1>
+
+<table id="customers2" style="table-layout: fixed; width: 100%">
+  <tr>
+    <td>Order SubTotal</td>
+    <td>৳{{(basketTotal$ | async).subtotal}}</td>
+  </tr>
+  <tr>
+    <td>Delivery Charge</td>
+    <td>৳{{(basketTotal$ | async).delevary}}</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td>৳{{(basketTotal$ | async).total }}</td>
+  </tr>
+</table>
+</span>
+
+<ul class="items" *ngIf="(basketTotal$ | async)">
+  <label for="check2">
+    <h1 class="checkout" routerLink='checkout' >Place Order</h1>
+  </label>
+</ul>
+</div>
+
+
+
+<!-- <div (click)="showmessage()" *ngIf="fbmessage == true" class="backdrop2"></div>
+<div class="fbmessage">
+<span *ngIf="fbmessage">
+  <a class="messa" href="https://m.me/eidhatcom" target="blank">
+    <button>Messenger</button>
+  </a>
+  <a class="messa" href="http://facebook.com/eidhatcom" target="blank">
+  <button class="messab">Facebook Page</button>
+  </a>
+</span>
+  <button (click)="showmessage()" class="messagebtn">
+    <img class="fbimg" src="../assets/fb.png" alt="">
+     <p class="mesp">Send Message</p>
+  </button>
+</div> -->
+
+
+
+
+<div class="content">
+  <router-outlet ></router-outlet>
+</div>
